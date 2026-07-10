@@ -1,5 +1,4 @@
 import { BookOpenCheck } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 
 import { curriculumModules } from "@/data/gacf-landing";
 
@@ -13,88 +12,14 @@ interface CurriculumSectionProps {
 }
 
 export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
-    const sectionRef = useRef<HTMLElement>(null);
-    const viewportRef = useRef<HTMLDivElement>(null);
-    const listRef = useRef<HTMLOListElement>(null);
-    const [scrollOffset, setScrollOffset] = useState(0);
-    const [sectionHeight, setSectionHeight] = useState<number>();
-
-    useEffect(() => {
-        let frame = 0;
-        let maxTravel = 0;
-
-        const calculate = () => {
-            const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-
-            if (!isDesktop || !viewportRef.current || !listRef.current) {
-                maxTravel = 0;
-                setScrollOffset(0);
-                setSectionHeight(undefined);
-                return;
-            }
-
-            const viewportHeight = viewportRef.current.clientHeight;
-            const listHeight = listRef.current.scrollHeight;
-            maxTravel = Math.max(0, listHeight - viewportHeight);
-            setSectionHeight(window.innerHeight + maxTravel);
-        };
-
-        const update = () => {
-            frame = 0;
-
-            if (!sectionRef.current || maxTravel === 0) {
-                setScrollOffset(0);
-                return;
-            }
-
-            const sectionTop =
-                sectionRef.current.getBoundingClientRect().top + window.scrollY;
-            const scrollableDistance =
-                sectionRef.current.offsetHeight - window.innerHeight;
-            const progress =
-                scrollableDistance > 0
-                    ? (window.scrollY - sectionTop) / scrollableDistance
-                    : 0;
-            const clampedProgress = Math.min(1, Math.max(0, progress));
-
-            setScrollOffset(maxTravel * clampedProgress);
-        };
-
-        const requestUpdate = () => {
-            if (frame === 0) {
-                frame = window.requestAnimationFrame(update);
-            }
-        };
-
-        const recalculate = () => {
-            calculate();
-            requestUpdate();
-        };
-
-        recalculate();
-        window.addEventListener("resize", recalculate);
-        window.addEventListener("scroll", requestUpdate, { passive: true });
-
-        return () => {
-            window.removeEventListener("resize", recalculate);
-            window.removeEventListener("scroll", requestUpdate);
-
-            if (frame !== 0) {
-                window.cancelAnimationFrame(frame);
-            }
-        };
-    }, []);
-
     return (
         <section
-            ref={sectionRef}
-            className="relative scroll-mt-16 bg-[#07070a] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-0"
+            className="relative scroll-mt-16 bg-[#07070a] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
             id="curriculum"
-            style={sectionHeight ? { height: sectionHeight } : undefined}
         >
             <div className="gacf-grid absolute inset-0 opacity-20" />
-            <div className="relative mx-auto max-w-6xl lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:overflow-hidden">
-                <div className="grid gap-10 lg:h-full lg:grid-cols-[0.9fr_1.1fr] lg:items-center xl:gap-12">
+            <div className="relative mx-auto max-w-6xl">
+                <div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-start xl:gap-12">
                     <div className="lg:max-w-[29rem]">
                         <Reveal>
                             <div className="text-left">
@@ -160,22 +85,13 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                         </CtaButton>
                     </div>
 
-                    <div
-                        className="relative lg:h-[calc(100vh-8rem)] lg:max-h-[620px] lg:min-h-[520px] lg:overflow-hidden"
-                        ref={viewportRef}
-                    >
-                        <ol
-                            className="grid gap-0 transition-transform duration-75 ease-out sm:gap-3 lg:py-2"
-                            ref={listRef}
-                            style={{
-                                transform: `translate3d(0, -${scrollOffset}px, 0)`,
-                            }}
-                        >
+                    <div className="relative">
+                        <ol className="grid gap-0 sm:gap-3 lg:grid-cols-2 lg:gap-3">
                             {curriculumModules.map((module, index) => (
                                 <li className="list-none" key={module.title}>
                                     <Reveal delay={Math.min(index * 55, 220)}>
                                         <div
-                                            className={`grid grid-cols-[2.75rem_1fr] gap-3 border-b border-white/10 py-4 transition duration-200 sm:grid-cols-[3.75rem_1fr] sm:gap-4 sm:rounded-lg sm:border sm:bg-[#111115] sm:p-4 sm:hover:-translate-y-0.5 sm:hover:border-amber-300/35 sm:hover:bg-[#17171c] lg:min-h-[6.35rem] lg:grid-cols-[3rem_1fr] lg:content-center lg:gap-3 lg:p-3.5 ${
+                                            className={`grid grid-cols-[2.75rem_1fr] gap-3 border-b border-white/10 py-4 transition duration-200 sm:grid-cols-[3.75rem_1fr] sm:gap-4 sm:rounded-lg sm:border sm:bg-[#111115] sm:p-4 sm:hover:-translate-y-0.5 sm:hover:border-amber-300/35 sm:hover:bg-[#17171c] lg:min-h-[7rem] lg:grid-cols-[3rem_1fr] lg:content-center lg:gap-3 lg:p-3.5 ${
                                                 index ===
                                                 curriculumModules.length - 1
                                                     ? "border-b-0"
