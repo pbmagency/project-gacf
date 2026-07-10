@@ -59,43 +59,95 @@ export interface TestimonialItem {
     title: string;
     type: "video" | "image";
     description: string;
+    embedSrc?: string;
     mediaSrc?: string;
+    posterPosition?: string;
+    posterSrc?: string;
     isPublished: boolean;
 }
 
-// Keep unpublished until the final video files/links are ready.
 export const testimonialItems: TestimonialItem[] = [
     {
-        title: "Video Testimoni Member 1",
+        title: "Pak Adi Member GACF",
         type: "video",
-        description: "Cerita member GACF setelah belajar dan praktik.",
+        description:
+            "Pak Adi berhasil menemukan winning campaign setelah belajar di E-course GACF. Hasilnya ROAS hingga 10x.",
+        embedSrc:
+            "https://player.mediadelivery.net/embed/701542/0d7c3c25-cdd0-4764-bc26-4b0a213a8b6a?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+        posterSrc:
+            "https://vz-e2df73f9-1fd.b-cdn.net/0d7c3c25-cdd0-4764-bc26-4b0a213a8b6a/thumbnail.jpg",
         isPublished: true,
     },
     {
-        title: "Video Testimoni Member 2",
+        title: "Mas Reno Member GACF",
         type: "video",
-        description: "Cerita member GACF setelah belajar dan praktik.",
+        description:
+            "Peningkatan 70% Potensial Leads setelah belajar E-Course GACF.",
+        embedSrc:
+            "https://player.mediadelivery.net/embed/701542/9545f93b-3f1e-4974-96dc-19d08c2024af?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+        posterSrc:
+            "https://vz-e2df73f9-1fd.b-cdn.net/9545f93b-3f1e-4974-96dc-19d08c2024af/thumbnail.jpg",
         isPublished: true,
     },
     {
-        title: "Video Testimoni Member 3",
+        title: "Testimoni Bu Yulie",
         type: "video",
         description: "Cerita member GACF setelah belajar dan praktik.",
+        embedSrc:
+            "https://player.mediadelivery.net/embed/701542/bb50e777-cdbe-4fc1-b662-685ee30daad4?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+        posterSrc:
+            "https://vz-e2df73f9-1fd.b-cdn.net/bb50e777-cdbe-4fc1-b662-685ee30daad4/thumbnail.jpg",
+        posterPosition: "center",
         isPublished: true,
     },
     {
-        title: "Video Testimoni Member 4",
+        title: "Testimoni Pak Agus",
         type: "video",
         description: "Cerita member GACF setelah belajar dan praktik.",
-        isPublished: true,
+        embedSrc:
+            "https://player.mediadelivery.net/embed/701542/0a8f19a3-c4c0-4bcb-a28e-8c7058db9738?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+        posterSrc:
+            "https://vz-e2df73f9-1fd.b-cdn.net/0a8f19a3-c4c0-4bcb-a28e-8c7058db9738/thumbnail.jpg",
+        isPublished: false,
     },
     {
-        title: "Video Testimoni Member 5",
+        title: "Testimoni Member 3",
         type: "video",
         description: "Cerita member GACF setelah belajar dan praktik.",
-        isPublished: true,
+        embedSrc:
+            "https://player.mediadelivery.net/embed/701542/dde65514-a908-403d-bd2f-31790bd4bb0e?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+        posterSrc:
+            "https://vz-e2df73f9-1fd.b-cdn.net/dde65514-a908-403d-bd2f-31790bd4bb0e/thumbnail.jpg",
+        isPublished: false,
     },
 ];
+
+export const imageTestimonials = [
+    {
+        imageKey: "bukTari",
+        name: "Buk Tari",
+        quote: "Dari ibu rumah tangga yang gaptek, sekarang bisa menghasilkan omset jutaan rupiah dari bisnis sendiri berkat GACF.",
+        role: "Ibu Rumah Tangga",
+    },
+    {
+        imageKey: "pakMahfuddin",
+        name: "Pak Mahfuddin",
+        quote: "Iklan saya muncul di halaman utama Google. Konversi naik berkali-kali lipat setelah ikut GACF!",
+        role: "Business Owner",
+    },
+    {
+        imageKey: "pakSalim",
+        name: "Pak Salim",
+        quote: "Satu-satunya e-course yang gamblang open dashboard dan bebas bertanya kapan saja.",
+        role: "Entrepreneur",
+    },
+    {
+        imageKey: "pakSandi",
+        name: "Pak Sandi",
+        quote: "Dari gaptek sampai sekarang expert di Google Ads. Gampang dipahami dan dipraktekkan!",
+        role: "UMKM Owner",
+    },
+] as const;
 
 export const mentorBullets = [
     "Owner agency dan Google Partner Premier",

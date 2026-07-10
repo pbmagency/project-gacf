@@ -85,28 +85,18 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                         </CtaButton>
                     </div>
 
-                    <div className="relative">
-                        <ol className="grid gap-0 sm:gap-3 lg:grid-cols-2 lg:gap-3">
+                    <div className="relative rounded-lg border border-white/10 bg-[#111115]/65">
+                        <ol className="divide-y divide-white/10">
                             {curriculumModules.map((module, index) => (
                                 <li className="list-none" key={module.title}>
                                     <Reveal delay={Math.min(index * 55, 220)}>
-                                        <div
-                                            className={`grid grid-cols-[2.75rem_1fr] gap-3 border-b border-white/10 py-4 transition duration-200 sm:grid-cols-[3.75rem_1fr] sm:gap-4 sm:rounded-lg sm:border sm:bg-[#111115] sm:p-4 sm:hover:-translate-y-0.5 sm:hover:border-amber-300/35 sm:hover:bg-[#17171c] lg:min-h-[7rem] lg:grid-cols-[3rem_1fr] lg:content-center lg:gap-3 lg:p-3.5 ${
-                                                index ===
-                                                curriculumModules.length - 1
-                                                    ? "border-b-0"
-                                                    : ""
-                                            }`}
-                                        >
+                                        <div className="grid grid-cols-[2.75rem_1fr] gap-3 px-4 py-4 transition duration-200 hover:bg-white/[0.035] sm:grid-cols-[3.5rem_1fr] sm:gap-4 lg:grid-cols-[3.25rem_1fr] lg:gap-4">
                                             <div className="sm:block">
                                                 <span className="grid h-10 w-10 place-items-center rounded-lg border border-amber-300/30 bg-amber-300/10 font-mono text-sm font-black text-amber-300 lg:h-9 lg:w-9 lg:text-xs">
                                                     {String(index + 1).padStart(
                                                         2,
                                                         "0",
                                                     )}
-                                                </span>
-                                                <span className="hidden text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 sm:mt-3 sm:block lg:mt-2 lg:text-[0.65rem]">
-                                                    Modul
                                                 </span>
                                             </div>
                                             <div>
