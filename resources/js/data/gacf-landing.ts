@@ -1,46 +1,34 @@
 export const heroBullets = [
-    "Buat kamu yang kliknya ramai, tapi WhatsApp dan closing masih sepi",
-    "Gue breakdown penyebab iklan boncos dan cara fix lewat data pembeli asli",
-    "Pakai OCT supaya Google belajar nyari pembeli, bukan sekadar pengklik",
+    "Klik rame belum tentu bagus kalau Google cuma belajar dari pengklik",
+    "Closing WhatsApp/manual harus ikut kebaca sebagai data pembeli asli",
+    "GACF ngajarin alurnya dari tracking sampai OCT, step-by-step",
 ];
 
 export const problemPoints = [
     {
-        title: "Dashboard ramai, WhatsApp sepi",
-        copy: "Klik bisa masuk terus, tapi chat dan closing yang beneran menghasilkan tetap minim.",
+        title: "Iklan bakar duit, konversi minim",
+        copy: "Klik bisa masuk, budget tetap kepakai, tapi closing dan omset nyata belum ikut naik.",
     },
     {
-        title: "Leads masuk, tapi banyak yang ghosting",
-        copy: "Banyak yang cuma tanya harga, susah difollow-up, dan akhirnya budget habis buat leads yang tidak qualified.",
+        title: "Dashboard nggak nyambung ke penjualan asli",
+        copy: "Di laporan terlihat ada klik atau event, tapi datanya nggak mencerminkan siapa yang benar-benar transfer.",
     },
     {
-        title: "Mau scale, tapi takut makin boncos",
-        copy: "Budget mau dinaikkan, tapi kamu belum yakin closing datang dari keyword, campaign, atau audience yang mana.",
-    },
-    {
-        title: "Dashboard tidak nyambung dengan penjualan asli",
-        copy: "Google melihat klik dan event permukaan, tapi tidak selalu tahu mana orang yang benar-benar transfer.",
-    },
-    {
-        title: "Optimasi jadi tebak-tebakan",
-        copy: "Karena data closing tidak masuk, keputusan cut, scale, dan optimasi terasa seperti nebak arah.",
+        title: "Google belajar dari data yang salah",
+        copy: "Konversi offline dari WhatsApp/manual nggak dikirim balik, jadi algoritma terus belajar dari sinyal yang bias.",
     },
 ];
 
 export const octComparison = {
     without: [
-        "Tracking cuma baca klik, form, atau tombol WhatsApp",
-        "Closing asli dari chat/manual tidak masuk ke Google",
-        "Algoritma tetap mencari orang yang mirip pengklik",
-        "Leads banyak, tapi kualitasnya random dan susah closing",
-        "Budget gampang habis tanpa tahu sumber masalahnya",
+        "Google dikasih sinyal klik, form, atau tombol WhatsApp",
+        "Closing asli dari chat/manual berhenti di luar dashboard",
+        "Campaign makin pintar cari pengklik, bukan pembeli",
     ],
     with: [
         "Data closing WhatsApp/manual dikirim balik ke Google",
-        "Google belajar dari pembeli nyata, bukan sekadar klik",
-        "Targeting diarahkan ke profil yang mirip pembeli asli",
-        "Optimasi lebih cepat karena data yang dipakai lebih valid",
-        "Scale budget jadi lebih masuk akal dan tidak asal gas",
+        "Google mulai belajar dari pembeli nyata, bukan sekadar klik",
+        "Optimasi dan scale lebih masuk akal karena sinyalnya lebih bersih",
     ],
 };
 
@@ -48,17 +36,17 @@ export const coursePillars = [
     {
         value: "3.500+",
         label: "Business Owners",
-        detail: "Dibantu belajar Google Ads berbasis data.",
+        detail: "Dibantu memahami Google Ads dengan alur data yang lebih rapi.",
     },
     {
         value: "Rp45M+",
         label: "Total Ad Spend",
-        detail: "Budget Google Ads yang pernah ter-manage.",
+        detail: "Budget Google Ads yang pernah dibaca, dikelola, dan dievaluasi.",
     },
     {
         value: "7",
         label: "Modul E-Course",
-        detail: "Dari blueprint sampai Offline Conversion.",
+        detail: "Dari pondasi campaign sampai data closing dikirim balik ke Google.",
     },
     {
         value: "30",
@@ -71,61 +59,55 @@ export const testimonialItems = [
     {
         title: "Video Testimoni Member 1",
         type: "video",
-        description: "Slot video testimoni resmi dari client GACF.",
+        description:
+            "Slot video resmi dari member GACF saat asset sudah masuk.",
     },
     {
         title: "Video Testimoni Member 2",
         type: "video",
-        description: "Slot video testimoni resmi dari client GACF.",
+        description:
+            "Slot video resmi dari member GACF saat asset sudah masuk.",
     },
     {
-        title: "Screenshot Chat / Hasil 1",
-        type: "image",
-        description: "Slot screenshot resmi, akan diisi dari asset client.",
+        title: "Video Testimoni Member 3",
+        type: "video",
+        description:
+            "Slot video resmi dari member GACF saat asset sudah masuk.",
     },
     {
-        title: "Screenshot Chat / Hasil 2",
-        type: "image",
-        description: "Slot screenshot resmi, akan diisi dari asset client.",
-    },
-    {
-        title: "Before-After Campaign 1",
-        type: "image",
-        description: "Slot before-after resmi, akan diisi dari asset client.",
-    },
-    {
-        title: "Before-After Campaign 2",
-        type: "image",
-        description: "Slot before-after resmi, akan diisi dari asset client.",
+        title: "Video Testimoni Member 4",
+        type: "video",
+        description:
+            "Slot video resmi dari member GACF saat asset sudah masuk.",
     },
 ] as const;
 
 export const mentorBullets = [
     "Owner agency dan Google Partner Premier",
-    "Bongkar strategi Google Ads yang dipakai agensi secara praktis",
-    "Fokus ngajarin mesin Google mencari pembeli asli, bukan leads ghosting",
+    "Ngebedah Google Ads dari data, bukan feeling dashboard",
+    "Fokus bikin mesin Google belajar dari pembeli asli",
 ];
 
 export const curriculumModules = [
     {
         title: "Fundamental Anti-Boncos",
-        copy: "Bangun mindset, struktur, dan pondasi campaign supaya tidak salah langkah dari awal.",
+        copy: "Benerin cara baca masalah supaya lo tahu kenapa iklan terlihat rame tapi tetap boncos.",
     },
     {
         title: "Setup Tracking GTM & GA4",
-        copy: "Pasang tracking supaya pergerakan pengunjung dan conversion lebih kebaca.",
+        copy: "Rapikan event penting supaya sinyal awal pengunjung dan conversion mulai kebaca.",
     },
     {
         title: "Racik Campaign Search",
-        copy: "Riset keyword dan struktur iklan Search untuk menarget orang yang lebih siap beli.",
+        copy: "Bangun campaign Search yang lebih dekat ke orang dengan niat beli.",
     },
     {
         title: "Bedah & Optimasi Iklan",
-        copy: "Belajar baca data, cut bagian yang boncos, dan tekan biaya iklan yang tidak efisien.",
+        copy: "Pisahkan bagian yang bawa sinyal bagus dari bagian yang cuma ngabisin budget.",
     },
     {
         title: "Remarketing Anti-Ghosting",
-        copy: "Kejar lagi orang yang sudah klik atau chat tapi belum jadi beli.",
+        copy: "Follow up ulang orang yang sudah klik atau chat tapi belum jadi pembeli.",
     },
     {
         title: "Scale dengan Demand Gen & PMax",
@@ -133,51 +115,51 @@ export const curriculumModules = [
     },
     {
         title: "Upload Offline Conversion (OCT)",
-        copy: "Kirim data real buyer ke Google supaya algoritma belajar dari pembeli asli, bukan klik sampah.",
+        copy: "Kirim data real buyer ke Google supaya algoritma belajar dari pembeli asli.",
     },
 ];
 
 export const pricingIncludes = [
     "Akses 7 modul e-course Google Ads",
-    "Blueprint, Tracking GTM & GA4, Campaign Search, Optimasi Iklan, Remarketing, Demand Gen & PMax, OCT",
-    "Komunitas aktif dan expert support untuk tanya jawab",
-    "Webinar rutin untuk update strategi dan bedah campaign",
-    "1.000+ Winning Ads Template siap pakai",
+    "Blueprint, Tracking GTM & GA4, Preparation Campaign Search, Optimasi Iklan, Remarketing Ads, Demand Gen & PMax, Offline Conversion",
+    "Akses komunitas aktif dan supportive, bebas tanya expert kapanpun",
+    "Webinar rutin tiap bulan",
+    "1.000+ Winning Ads Template gratis",
+    "Garansi Setup Auto Campaign jika dalam 3 minggu belum bisa setup campaign sesuai syarat",
     "Bonus sesi audit 30 titik kesalahan dengan tim expert Upperclicks khusus order hari ini",
-    "Garansi Setup Auto Campaign selama 3 minggu sesuai syarat garansi",
 ];
 
 export const faqs = [
     {
-        question: "Apakah e-course ini online atau offline?",
-        answer: "Online. Kamu bisa akses materi dari mana saja, lalu tetap dapat support komunitas dan webinar rutin sesuai jadwal tim GACF.",
+        question: "E-course ini online atau offline?",
+        answer: "Online. Lo bisa akses materi dari mana saja, lalu tetap dapat support komunitas dan webinar rutin sesuai jadwal tim GACF.",
     },
     {
         question: "Berapa modul yang didapatkan di e-course ini?",
-        answer: "Kamu dapat 7 modul: Blueprint, Tracking GTM & GA4, Preparation Campaign Search, Optimasi Iklan, Remarketing Ads, Demand Gen & PMax, dan Offline Conversion.",
+        answer: "Lo dapat 7 modul: Blueprint, Tracking GTM & GA4, Preparation Campaign Search, Optimasi Iklan, Remarketing Ads, Demand Gen & PMax, dan Offline Conversion.",
     },
     {
-        question: "Saya masih gaptek dan baru mau mulai Google Ads, bisa ikut?",
-        answer: "Bisa. Materinya dibuat step-by-step untuk pemilik bisnis yang ingin mulai lebih rapi dan tidak asal bakar budget dari awal.",
+        question: "Gua masih gaptek dan baru mau mulai Google Ads, bisa ikut?",
+        answer: "Bisa. Materinya dibuat step-by-step untuk pemilik bisnis yang ingin mulai lebih rapi dan nggak asal bakar budget dari awal.",
     },
     {
-        question: "Kalau iklan saya sudah pernah boncos, apakah masih cocok?",
-        answer: "Cocok, karena GACF membahas penyebab umum boncos: tracking yang tidak rapi, data dashboard yang tidak mencerminkan penjualan asli, dan optimasi yang masih nebak-nebak.",
+        question: "Kalau iklan gua sudah pernah boncos, masih cocok?",
+        answer: "Cocok, karena GACF membahas penyebab umum boncos: tracking yang nggak rapi, data dashboard yang nggak mencerminkan penjualan asli, dan optimasi yang masih nebak-nebak.",
     },
     {
         question: "Apa itu OCT dan kenapa penting?",
         answer: "OCT atau Offline Conversion Tracking adalah metode mengirim data transaksi offline/manual seperti WhatsApp ke Google, supaya algoritma belajar dari pembeli asli, bukan hanya dari orang yang klik iklan.",
     },
     {
-        question: "Apakah ROAS atau omzet saya pasti naik setelah ikut?",
-        answer: "Tidak ada janji hasil pasti. Hasil tiap bisnis bisa berbeda tergantung niche, budget, offer, eksekusi, kualitas data, dan kondisi market. GACF memberi framework praktik dan sistem belajar yang lebih rapi.",
+        question: "ROAS atau omzet gua pasti naik setelah ikut?",
+        answer: "Nggak ada janji hasil pasti. Hasil tiap bisnis bisa berbeda tergantung niche, budget, offer, eksekusi, kualitas data, dan kondisi market. GACF memberi framework praktik dan sistem belajar yang lebih rapi.",
     },
     {
-        question: "Apa saja bonus yang didapat?",
-        answer: "Kamu dapat 1.000+ Winning Ads Template, sesi audit 30 titik kesalahan khusus order hari ini, webinar rutin bulanan, dan akses komunitas untuk tanya expert.",
+        question: "Apa aja bonus yang didapat?",
+        answer: "Lo dapat 1.000+ Winning Ads Template, sesi audit 30 titik kesalahan khusus order hari ini, webinar rutin bulanan, dan akses komunitas untuk tanya expert.",
     },
     {
         question: "Bagaimana garansi setup campaign-nya?",
-        answer: "Jika dalam 3 minggu setelah belajar dan praktik semua modul kamu masih belum bisa setup campaign, tim Hariyanto Chung akan bantu setup campaign Google Ads secara penuh sesuai syarat garansi.",
+        answer: "Jika dalam 3 minggu setelah belajar dan praktik semua modul lo masih belum bisa setup campaign, tim Hariyanto Chung akan bantu setup Google Ads secara penuh sesuai syarat garansi, mulai dari strategi bidding, keyword research, grouping keyword, ads copy, GTM, GA4, sampai conversion tracking.",
     },
 ];

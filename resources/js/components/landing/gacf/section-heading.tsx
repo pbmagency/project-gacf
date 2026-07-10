@@ -17,20 +17,20 @@ export function SectionHeading({
         >
             {eyebrow ? (
                 <div
-                    className={`mb-4 flex items-center gap-3 ${
+                    className={`mb-4 flex max-w-full items-center gap-2 sm:gap-3 ${
                         align === "center" ? "justify-center" : "justify-start"
                     }`}
                 >
-                    <span className="h-px w-8 bg-amber-300/70" />
-                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">
+                    <span className="h-px w-5 shrink-0 bg-amber-300/70 sm:w-8" />
+                    <p className="min-w-0 text-xs font-bold uppercase leading-5 tracking-[0.12em] text-amber-300 sm:tracking-[0.18em]">
                         {eyebrow}
                     </p>
                     {align === "center" ? (
-                        <span className="h-px w-8 bg-amber-300/70" />
+                        <span className="h-px w-5 shrink-0 bg-amber-300/70 sm:w-8" />
                     ) : null}
                 </div>
             ) : null}
-            <h2 className="text-balance text-3xl font-black leading-tight text-white sm:text-4xl lg:text-[2.75rem]">
+            <h2 className="text-balance text-2xl font-black leading-tight text-white sm:text-4xl lg:text-[2.75rem]">
                 {title}
             </h2>
             {subtitle ? (

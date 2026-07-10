@@ -127,7 +127,7 @@ export default function GacfCourse() {
                 <title>New E-Course GACF 2026 | Google Ads Cuan Formula</title>
                 <meta
                     name="description"
-                    content="Pelajari Google Ads Cuan Formula dan Offline Conversion Tracking supaya Google Ads belajar dari pembeli asli, bukan cuma klik kosong."
+                    content="Google Ads Cuan Formula ngajarin alur tracking sampai Offline Conversion Tracking supaya Google belajar dari pembeli asli, bukan klik kosong."
                 />
                 <meta name="robots" content="index, follow" />
                 <meta
@@ -136,7 +136,7 @@ export default function GacfCourse() {
                 />
                 <meta
                     property="og:description"
-                    content="Strategi praktis Google Ads + OCT untuk UMKM dan business owner yang ingin tracking lebih bersih, ROAS lebih terbaca, dan scaling lebih percaya diri."
+                    content="Strategi Google Ads + OCT buat benerin sinyal campaign: dari klik, tracking, optimasi, sampai data closing dikirim balik ke Google."
                 />
                 <meta property="og:type" content="website" />
             </Head>

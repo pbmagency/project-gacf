@@ -3,18 +3,19 @@ import { Award, CheckCircle2, Quote } from "lucide-react";
 import { mentorBullets } from "@/data/gacf-landing";
 
 import { googlePremierBadge, mentorGoogleVisitImage } from "./assets";
+import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
 export function MentorSection() {
     return (
         <section
-            className="bg-[#101014] px-4 py-20 sm:px-6 lg:px-8"
+            className="scroll-mt-16 bg-[#101014] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
             id="mentor"
         >
             <div className="mx-auto grid max-w-6xl items-center gap-9 lg:grid-cols-[0.74fr_1.26fr]">
-                <div className="gacf-panel-muted rounded-lg p-3">
+                <Reveal className="gacf-panel-muted rounded-lg p-3">
                     <div
-                        className="group relative min-h-[360px] overflow-hidden rounded-lg border border-white/10 bg-[#0b0b0f] outline-none sm:min-h-[420px]"
+                        className="group relative min-h-[320px] overflow-hidden rounded-lg border border-white/10 bg-[#0b0b0f] outline-none sm:min-h-[420px]"
                         tabIndex={0}
                     >
                         <div className="gacf-grid absolute inset-0 opacity-30" />
@@ -43,19 +44,20 @@ export function MentorSection() {
                             </p>
                         </div>
                     </div>
-                </div>
+                </Reveal>
 
-                <div>
+                <Reveal delay={100}>
                     <SectionHeading
                         align="left"
-                        eyebrow="Mentor"
-                        title="Strategi Ini Dibedah Langsung oleh Hariyanto Chung"
+                        eyebrow="Bab 5 - Mentor"
+                        title="Yang dibedah bukan sekadar dashboard, tapi cara Google belajar."
                     />
                     <p className="mt-5 text-base leading-7 text-zinc-300">
-                        Gue Hariyanto Chung, owner agency dan Google Partner
+                        Gua Hariyanto Chung, owner agency dan Google Partner
                         Premier. Dari pengalaman ngelola campaign dan budget
-                        iklan besar, gue rangkum cara bikin Google berhenti
-                        mengejar klik kosong dan mulai belajar dari pembeli
+                        iklan besar, gua rangkum satu pelajaran penting: iklan
+                        boncos sering bukan karena Google bodoh, tapi karena
+                        sinyal yang dikasih ke Google belum nunjukin pembeli
                         asli.
                     </p>
 
@@ -65,8 +67,8 @@ export function MentorSection() {
                             className="mb-2 h-4 w-4 text-amber-300"
                         />
                         <p className="text-base font-black leading-7 text-white">
-                            Bukan cuma cari pengklik. Ajari Google membaca siapa
-                            pembeli asli kamu.
+                            Jangan cuma minta Google cari traffic. Ajari dia
+                            mengenali siapa pembeli lo.
                         </p>
                     </div>
 
@@ -85,14 +87,17 @@ export function MentorSection() {
                         ))}
                     </ul>
 
-                    <div className="mt-6 inline-flex items-center gap-3 rounded-lg border border-amber-300/25 bg-amber-300/[0.06] px-4 py-3 text-amber-100">
-                        <Award aria-hidden="true" className="h-4 w-4" />
+                    <div className="mt-6 inline-flex max-w-full items-start gap-3 rounded-lg border border-amber-300/25 bg-amber-300/[0.06] px-4 py-3 text-amber-100">
+                        <Award
+                            aria-hidden="true"
+                            className="mt-0.5 h-4 w-4 shrink-0"
+                        />
                         <span className="text-sm font-bold">
                             Strategi praktis Google Ads, bukan teori dashboard
                             doang.
                         </span>
                     </div>
-                </div>
+                </Reveal>
             </div>
         </section>
     );

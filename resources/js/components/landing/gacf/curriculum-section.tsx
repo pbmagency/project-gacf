@@ -5,6 +5,7 @@ import { curriculumModules } from "@/data/gacf-landing";
 
 import { gacfCourseCover } from "./assets";
 import { CtaButton } from "./cta-button";
+import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import type { TrackCta } from "./types";
 
@@ -88,7 +89,7 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
     return (
         <section
             ref={sectionRef}
-            className="relative bg-[#07070a] px-4 py-20 sm:px-6 lg:px-8 lg:py-0"
+            className="relative scroll-mt-16 bg-[#07070a] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-0"
             id="curriculum"
             style={sectionHeight ? { height: sectionHeight } : undefined}
         >
@@ -96,14 +97,19 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
             <div className="relative mx-auto max-w-7xl lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:overflow-hidden">
                 <div className="grid gap-10 lg:h-full lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
                     <div>
-                        <SectionHeading
-                            align="left"
-                            eyebrow="Kurikulum Lengkap"
-                            subtitle="Dari fundamental anti-boncos, setup tracking, campaign Search, optimasi, remarketing, sampai upload data pembeli asli lewat OCT."
-                            title="Ini yang Akan Kamu Praktekkan Langsung"
-                        />
+                        <Reveal>
+                            <SectionHeading
+                                align="left"
+                                eyebrow="Bab 6 - Alur Belajar"
+                                subtitle="Setiap modul disusun sebagai perjalanan: pahami kenapa datanya salah, rapikan tracking, jalankan campaign, lalu kirim data pembeli asli balik ke Google."
+                                title="Dari klik kosong sampai Google mulai belajar dari closing."
+                            />
+                        </Reveal>
 
-                        <div className="mt-7 rounded-lg border border-white/10 bg-white/[0.035] p-4 sm:p-5">
+                        <Reveal
+                            className="mt-7 rounded-lg border border-white/10 bg-white/[0.035] p-4 sm:p-5"
+                            delay={90}
+                        >
                             <div className="grid gap-4 sm:grid-cols-[6rem_1fr] sm:items-center">
                                 <img
                                     alt="Cover Google Ads Cuan Formula"
@@ -121,14 +127,13 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                                         </span>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-zinc-400">
-                                        Urutannya dibuat supaya kamu tidak cuma
-                                        ngerti dashboard, tapi juga paham alur
-                                        campaign sampai data closing ikut
-                                        kebaca.
+                                        Urutannya dibuat supaya lo ngikutin
+                                        ceritanya dari awal: sinyal, campaign,
+                                        optimasi, sampai OCT.
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </Reveal>
 
                         <CtaButton
                             className="mt-8 w-full sm:w-auto"
@@ -136,7 +141,7 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                             location="curriculum_primary"
                             onTrack={onCtaClick}
                         >
-                            Akses Semua Modul
+                            Lihat Semua Modul
                         </CtaButton>
                     </div>
 
@@ -152,26 +157,37 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                             }}
                         >
                             {curriculumModules.map((module, index) => (
-                                <li
-                                    className="grid grid-cols-[2.75rem_1fr] gap-3 border-b border-white/10 py-4 transition duration-200 last:border-b-0 sm:grid-cols-[3.75rem_1fr] sm:gap-4 sm:rounded-lg sm:border sm:bg-[#111115] sm:p-4 sm:hover:-translate-y-0.5 sm:hover:border-amber-300/35 sm:hover:bg-[#17171c] lg:min-h-[8.75rem] lg:content-center"
-                                    key={module.title}
-                                >
-                                    <div className="sm:block">
-                                        <span className="grid h-10 w-10 place-items-center rounded-lg border border-amber-300/30 bg-amber-300/10 font-mono text-sm font-black text-amber-300">
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <span className="hidden text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 sm:mt-3 sm:block">
-                                            Modul
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-black leading-tight text-white">
-                                            {module.title}
-                                        </h3>
-                                        <p className="mt-2 text-sm leading-6 text-zinc-400">
-                                            {module.copy}
-                                        </p>
-                                    </div>
+                                <li className="list-none" key={module.title}>
+                                    <Reveal delay={Math.min(index * 55, 220)}>
+                                        <div
+                                            className={`grid grid-cols-[2.75rem_1fr] gap-3 border-b border-white/10 py-4 transition duration-200 sm:grid-cols-[3.75rem_1fr] sm:gap-4 sm:rounded-lg sm:border sm:bg-[#111115] sm:p-4 sm:hover:-translate-y-0.5 sm:hover:border-amber-300/35 sm:hover:bg-[#17171c] lg:min-h-[8.75rem] lg:content-center ${
+                                                index ===
+                                                curriculumModules.length - 1
+                                                    ? "border-b-0"
+                                                    : ""
+                                            }`}
+                                        >
+                                            <div className="sm:block">
+                                                <span className="grid h-10 w-10 place-items-center rounded-lg border border-amber-300/30 bg-amber-300/10 font-mono text-sm font-black text-amber-300">
+                                                    {String(index + 1).padStart(
+                                                        2,
+                                                        "0",
+                                                    )}
+                                                </span>
+                                                <span className="hidden text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 sm:mt-3 sm:block">
+                                                    Modul
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg font-black leading-tight text-white">
+                                                    {module.title}
+                                                </h3>
+                                                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                                                    {module.copy}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Reveal>
                                 </li>
                             ))}
                         </ol>

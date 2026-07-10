@@ -23,7 +23,7 @@ export function CtaButton({
     className = "",
 }: CtaButtonProps) {
     const base =
-        "inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-lg px-5 py-3 text-center text-sm font-bold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08080b]";
+        "gacf-cta inline-flex min-h-12 max-w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-5 py-3 text-center text-sm font-bold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08080b]";
     const variants = {
         primary:
             "bg-amber-400 text-zinc-950 shadow-[0_16px_40px_rgba(251,191,36,0.22)] hover:-translate-y-0.5 hover:bg-amber-300",
@@ -57,8 +57,11 @@ export function CtaButton({
             href={href}
             onClick={handleClick}
         >
-            <span>{children}</span>
-            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            <span className="min-w-0">{children}</span>
+            <ArrowRight
+                aria-hidden="true"
+                className="gacf-cta-arrow h-4 w-4 shrink-0"
+            />
         </a>
     );
 }

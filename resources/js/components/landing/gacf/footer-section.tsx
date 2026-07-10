@@ -29,9 +29,10 @@ export function FooterSection({ onCtaClick }: FooterSectionProps) {
                         </h2>
                     </div>
                     <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400">
-                        Google Ads Cuan Formula untuk bantu business owner
-                        belajar Google Ads, tracking, optimasi, dan Offline
-                        Conversion Tracking dengan data yang lebih bersih.
+                        Google Ads Cuan Formula bantu business owner benerin
+                        alur data iklan: dari klik, tracking, optimasi, sampai
+                        Offline Conversion Tracking supaya Google belajar dari
+                        pembeli asli.
                     </p>
                     <p className="mt-6 border-l border-white/10 pl-4 text-xs leading-6 text-zinc-500">
                         Disclaimer: Hasil setiap peserta dapat berbeda

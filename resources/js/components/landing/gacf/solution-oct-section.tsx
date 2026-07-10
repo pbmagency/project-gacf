@@ -3,6 +3,7 @@ import { ArrowRight, Check, X } from "lucide-react";
 import { octComparison } from "@/data/gacf-landing";
 
 import { CtaButton } from "./cta-button";
+import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import type { TrackCta } from "./types";
 
@@ -13,32 +14,39 @@ interface SolutionOctSectionProps {
 export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
     return (
         <section
-            className="relative overflow-hidden bg-[#07070a] px-4 py-20 sm:px-6 lg:px-8"
+            className="relative scroll-mt-16 overflow-hidden bg-[#07070a] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
             id="oct"
         >
             <div className="gacf-grid absolute inset-0 opacity-25" />
             <div className="mx-auto max-w-6xl">
-                <SectionHeading
-                    eyebrow="Offline Conversion Tracking"
-                    subtitle="Tanpa data penjualan yang akurat, Google akan terus belajar dari klik. OCT bikin Google menerima sinyal closing asli dari WhatsApp atau transaksi manual."
-                    title="Sebelum vs Sesudah Pasang OCT"
-                />
+                <Reveal>
+                    <SectionHeading
+                        eyebrow="Bab 2 - Turning Point"
+                        subtitle="Offline Conversion Tracking jadi jembatan antara closing asli di WhatsApp/manual dan mesin Google Ads."
+                        title="Begitu data pembeli asli masuk, cerita campaign mulai berubah."
+                    />
+                </Reveal>
 
                 <div className="relative mt-10 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
                     <ComparisonCard
+                        delay={70}
                         icon="bad"
                         items={octComparison.without}
                         title="Sebelum OCT"
                     />
-                    <div className="flex items-center justify-center lg:w-12">
+                    <Reveal
+                        className="flex items-center justify-center lg:w-12"
+                        delay={140}
+                    >
                         <div className="grid h-11 w-11 place-items-center rounded-lg border border-amber-300/35 bg-amber-300 text-zinc-950 shadow-[0_0_36px_rgba(251,191,36,0.2)] lg:h-12 lg:w-12">
                             <ArrowRight
                                 aria-hidden="true"
                                 className="h-6 w-6 rotate-90 lg:rotate-0"
                             />
                         </div>
-                    </div>
+                    </Reveal>
                     <ComparisonCard
+                        delay={210}
                         icon="good"
                         items={octComparison.with}
                         title="Sesudah OCT"
@@ -64,20 +72,23 @@ function ComparisonCard({
     title,
     items,
     icon,
+    delay = 0,
 }: {
     title: string;
     items: string[];
     icon: "good" | "bad";
+    delay?: number;
 }) {
     const isGood = icon === "good";
 
     return (
-        <div
+        <Reveal
             className={`rounded-lg border p-5 sm:p-6 ${
                 isGood
                     ? "border-amber-300/30 bg-[linear-gradient(180deg,rgba(251,191,36,0.10),rgba(255,255,255,0.025))]"
                     : "border-red-400/20 bg-[linear-gradient(180deg,rgba(248,113,113,0.08),rgba(255,255,255,0.02))]"
             }`}
+            delay={delay}
         >
             <h3 className="flex items-center justify-between gap-4 text-xl font-black text-white sm:text-2xl">
                 {title}
@@ -110,6 +121,6 @@ function ComparisonCard({
                     </li>
                 ))}
             </ul>
-        </div>
+        </Reveal>
     );
 }

@@ -2,26 +2,30 @@ import { AlertTriangle } from "lucide-react";
 
 import { problemPoints } from "@/data/gacf-landing";
 
+import { Reveal, RevealListItem } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
 export function ProblemSection() {
     return (
         <section
-            className="relative bg-[#0d0d11] px-4 py-20 sm:px-6 lg:px-8"
+            className="relative scroll-mt-16 bg-[#0d0d11] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
             id="problem"
         >
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <div className="mx-auto max-w-5xl">
-                <SectionHeading
-                    eyebrow="Warning"
-                    subtitle="Kalau kamu masih stuck di salah satu fase ini, jangan buru-buru naikin budget dulu."
-                    title="Fase Berdarah-darah Main Google Ads. Kamu Lagi di Tahap Mana?"
-                />
+                <Reveal>
+                    <SectionHeading
+                        eyebrow="Bab 1 - Akar Boncos"
+                        subtitle="Sebelum mikir scale, lo harus tahu dulu data apa yang selama ini lo kasih ke Google."
+                        title="Google makin pintar. Masalahnya, dia pintar dari sinyal yang salah."
+                    />
+                </Reveal>
 
                 <ul className="mx-auto mt-9 grid max-w-4xl gap-0 overflow-hidden rounded-lg border border-white/10 bg-[#131317]">
                     {problemPoints.map((point, index) => (
-                        <li
+                        <RevealListItem
                             className="grid grid-cols-[auto_1fr] gap-4 border-b border-white/10 p-4 last:border-b-0 sm:p-5"
+                            delay={index * 70}
                             key={point.title}
                         >
                             <span className="font-mono text-xs font-bold text-zinc-500">
@@ -41,17 +45,19 @@ export function ProblemSection() {
                                     </p>
                                 </div>
                             </div>
-                        </li>
+                        </RevealListItem>
                     ))}
                 </ul>
 
-                <div className="mx-auto mt-8 max-w-4xl rounded-lg border border-amber-300/25 bg-amber-300/[0.06] p-5 sm:p-6">
+                <Reveal
+                    className="mx-auto mt-8 max-w-4xl rounded-lg border border-amber-300/25 bg-amber-300/[0.06] p-5 sm:p-6"
+                    delay={120}
+                >
                     <p className="text-lg font-black leading-8 text-white sm:text-xl">
-                        Masalahnya bukan selalu budget kamu kurang besar. Mesin
-                        Google belum kamu ajarin cara bedain mana orang iseng
-                        dan mana pembeli asli.
+                        Selama Google cuma dikasih makan klik kosong, dia akan
+                        makin jago cari orang yang klik. Bukan orang yang beli.
                     </p>
-                </div>
+                </Reveal>
             </div>
         </section>
     );

@@ -18,26 +18,28 @@ interface HeroSectionProps {
 export function HeroSection({ onCtaClick }: HeroSectionProps) {
     return (
         <section
-            className="relative isolate overflow-hidden bg-[#07070a] px-4 pb-20 pt-8 sm:px-6 sm:pb-24 sm:pt-10 lg:px-8 lg:pb-24 lg:pt-10 xl:pt-12"
+            className="relative isolate scroll-mt-16 overflow-hidden bg-[#07070a] px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-10 lg:px-8 lg:pb-24 lg:pt-10 xl:pt-12"
             id="top"
         >
             <div className="gacf-grid absolute inset-0 opacity-45" />
 
             <div className="relative mx-auto grid max-w-7xl items-center gap-9 lg:grid-cols-[1.05fr_0.95fr]">
                 <div>
-                    <div className="mb-5 inline-flex items-center gap-2 rounded-lg border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-amber-200">
+                    <div className="mb-5 inline-flex max-w-full items-start gap-2 rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-xs font-bold uppercase leading-5 tracking-[0.1em] text-amber-200 sm:px-4 sm:tracking-[0.14em]">
                         <span className="h-2 w-2 rounded-full bg-amber-300" />
-                        New E-Course GACF - Google Ads Cuan Formula
+                        <span className="min-w-0">
+                            New E-Course GACF - Google Ads Cuan Formula
+                        </span>
                     </div>
-                    <h1 className="max-w-4xl text-balance text-4xl font-black leading-[1.03] text-white sm:text-5xl lg:text-[3.6rem] xl:text-6xl">
-                        Iklan Google Ads Kamu Rame Klik, Tapi WhatsApp Tetap
-                        Sepi?
+                    <h1 className="max-w-4xl text-balance text-3xl font-black leading-[1.05] text-white sm:text-5xl lg:text-[3.6rem] xl:text-6xl">
+                        Google Ads lo bukan kurang klik. Google lagi belajar
+                        dari orang yang salah.
                     </h1>
                     <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-zinc-300 sm:text-xl">
-                        Gue breakdown penyebab iklan terus boncos dan cara
-                        fix-nya di Google Ads Cuan Formula, pakai strategi
-                        Offline Conversion Tracking supaya Google belajar dari
-                        pembeli asli.
+                        Di GACF, gua ajak lo benerin alur datanya: dari klik,
+                        tracking, campaign, sampai closing WhatsApp/manual
+                        dikirim balik ke Google lewat Offline Conversion
+                        Tracking.
                     </p>
 
                     <ul className="mt-6 grid gap-3">
@@ -62,7 +64,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                             location="hero_primary"
                             onTrack={onCtaClick}
                         >
-                            Ubah Iklan Jadi Profit
+                            Benerin Data Iklan Gua
                         </CtaButton>
                         <CtaButton
                             className="w-full sm:w-auto"
@@ -71,7 +73,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                             onTrack={onCtaClick}
                             variant="secondary"
                         >
-                            Lihat Modul
+                            Lihat Alur Belajar
                         </CtaButton>
                     </div>
 
@@ -120,11 +122,11 @@ function HeroLearningVisual() {
                             GACF E-Course
                         </p>
                         <h2 className="mt-2 text-2xl font-black leading-tight text-white sm:text-[2rem]">
-                            Bukan cuma klik. Baca data closing.
+                            Ceritanya dimulai dari data yang salah.
                         </h2>
                         <p className="mt-3 max-w-xs text-sm leading-6 text-zinc-400">
-                            Dari pondasi campaign sampai data closing
-                            offline/manual ikut kebaca.
+                            Kalau yang masuk ke Google cuma klik, jangan heran
+                            kalau yang dicari mesin juga cuma pengklik.
                         </p>
                     </div>
                     <div className="hidden rounded-lg border border-white/10 bg-white/[0.04] p-3 text-amber-300 sm:block">

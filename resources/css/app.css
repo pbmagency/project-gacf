@@ -178,6 +178,104 @@ html {
     background: linear-gradient(90deg, rgba(251, 191, 36, 0), rgba(251, 191, 36, 0.9), rgba(251, 191, 36, 0));
 }
 
+.gacf-reveal {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+        opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.gacf-reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+}
+
+.gacf-cta {
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
+}
+
+.gacf-cta::before {
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.34) 48%,
+        transparent 56%
+    );
+    content: "";
+    inset: -45% -85%;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: translate3d(-36%, 0, 0) skewX(-18deg);
+    transition:
+        opacity 620ms ease,
+        transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gacf-cta:hover::before {
+    opacity: 1;
+    transform: translate3d(36%, 0, 0) skewX(-18deg);
+}
+
+.gacf-cta > * {
+    position: relative;
+    z-index: 1;
+}
+
+.gacf-cta-arrow {
+    transition: transform 220ms ease;
+}
+
+.gacf-cta:hover .gacf-cta-arrow {
+    transform: translate3d(4px, 0, 0);
+}
+
+.gacf-cta:active {
+    transform: translate3d(0, 1px, 0) scale(0.985);
+}
+
+@media (max-width: 639px) {
+    .gacf-reveal {
+        transform: translate3d(0, 14px, 0);
+        transition-duration: 560ms;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .gacf-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        transition-delay: 0ms;
+        will-change: auto;
+    }
+
+    .ticker-track,
+    .infinite-track,
+    .animate-fade-in,
+    .animate-scale-in,
+    .gacf-cta::before {
+        animation: none;
+        opacity: 0;
+        transition: none;
+    }
+
+    .gacf-cta:active,
+    .gacf-cta:hover .gacf-cta-arrow {
+        transform: none;
+    }
+}
+
 /* Infinite Scroll Ticker (Social Proof) */
 @keyframes scroll-ticker {
     0%   { transform: translateX(0); }

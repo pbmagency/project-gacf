@@ -4,6 +4,7 @@ import { useState } from "react";
 import { faqs } from "@/data/gacf-landing";
 
 import { CtaButton } from "./cta-button";
+import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import type { TrackCta } from "./types";
 
@@ -15,23 +16,35 @@ export function FaqSection({ onCtaClick }: FaqSectionProps) {
     const [openIndex, setOpenIndex] = useState(0);
 
     return (
-        <section className="bg-[#08080b] px-4 py-20 sm:px-6 lg:px-8" id="faq">
+        <section
+            className="scroll-mt-16 bg-[#08080b] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
+            id="faq"
+        >
             <div className="mx-auto max-w-4xl">
-                <SectionHeading eyebrow="FAQ" title="Pertanyaan yang Sering Ditanyain" />
+                <Reveal>
+                    <SectionHeading
+                        eyebrow="Penutup"
+                        title="Sebelum lo masuk, ini yang perlu jelas."
+                    />
+                </Reveal>
 
                 <div className="mt-10 divide-y divide-white/10 overflow-hidden rounded-lg border border-white/10 bg-[#151519]">
                     {faqs.map((faq, index) => {
                         const isOpen = openIndex === index;
 
                         return (
-                            <div key={faq.question}>
+                            <Reveal delay={index * 55} key={faq.question}>
                                 <button
                                     aria-expanded={isOpen}
                                     className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-5 text-left text-base font-bold text-white transition hover:bg-white/[0.035]"
-                                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                                    onClick={() =>
+                                        setOpenIndex(isOpen ? -1 : index)
+                                    }
                                     type="button"
                                 >
-                                    <span>{faq.question}</span>
+                                    <span className="min-w-0">
+                                        {faq.question}
+                                    </span>
                                     <ChevronDown
                                         aria-hidden="true"
                                         className={`h-5 w-5 shrink-0 text-amber-300 transition ${
@@ -52,7 +65,7 @@ export function FaqSection({ onCtaClick }: FaqSectionProps) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Reveal>
                         );
                     })}
                 </div>
@@ -64,7 +77,7 @@ export function FaqSection({ onCtaClick }: FaqSectionProps) {
                         location="faq_primary"
                         onTrack={onCtaClick}
                     >
-                        Ambil Promo GACF Hari Ini
+                        Mulai Benerin Data Iklan
                     </CtaButton>
                 </div>
             </div>

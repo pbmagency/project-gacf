@@ -9,13 +9,17 @@ const isExternalWhatsapp = whatsappUrl.startsWith("http");
 
 export function FloatingWhatsapp({ onCtaClick }: FloatingWhatsappProps) {
     return (
-        <div className="fixed bottom-5 right-5 z-50">
+        <div className="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5">
             <a
                 aria-label="Chat tim GACF via WhatsApp"
-                className="peer grid h-14 w-14 cursor-pointer place-items-center rounded-full bg-[#25D366] text-white shadow-[0_18px_45px_rgba(37,211,102,0.28)] transition duration-200 hover:-translate-y-1 hover:bg-[#1fc45c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08080b]"
+                className="peer grid h-12 w-12 cursor-pointer place-items-center rounded-full bg-[#25D366] text-white shadow-[0_18px_45px_rgba(37,211,102,0.28)] transition duration-200 hover:-translate-y-1 hover:bg-[#1fc45c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08080b] sm:h-14 sm:w-14"
                 href={whatsappUrl}
                 onClick={() =>
-                    onCtaClick("floating_whatsapp", "WhatsApp Floating", whatsappUrl)
+                    onCtaClick(
+                        "floating_whatsapp",
+                        "WhatsApp Floating",
+                        whatsappUrl,
+                    )
                 }
                 rel={isExternalWhatsapp ? "noreferrer" : undefined}
                 target={isExternalWhatsapp ? "_blank" : undefined}
@@ -23,7 +27,9 @@ export function FloatingWhatsapp({ onCtaClick }: FloatingWhatsappProps) {
                 <WhatsappIcon />
             </a>
             <div className="pointer-events-none absolute bottom-16 right-8 hidden w-max max-w-[250px] origin-bottom-right translate-y-3 scale-95 rounded-[18px] bg-[#DCF8C6] px-4 py-3 text-sm leading-6 text-[#123524] opacity-0 shadow-2xl shadow-black/40 transition duration-200 peer-hover:translate-y-0 peer-hover:scale-100 peer-hover:opacity-100 peer-focus-visible:translate-y-0 peer-focus-visible:scale-100 peer-focus-visible:opacity-100 sm:block">
-                <span className="font-black text-[#075E54]">Butuh tanya dulu?</span>
+                <span className="font-black text-[#075E54]">
+                    Butuh tanya dulu?
+                </span>
                 <br />
                 Chat tim GACF via WhatsApp.
                 <span className="absolute -bottom-1.5 right-4 h-4 w-4 rotate-45 rounded-br-sm bg-[#DCF8C6]" />
@@ -36,7 +42,7 @@ function WhatsappIcon() {
     return (
         <svg
             aria-hidden="true"
-            className="h-8 w-8"
+            className="h-7 w-7 sm:h-8 sm:w-8"
             fill="currentColor"
             viewBox="0 0 32 32"
         >
