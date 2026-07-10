@@ -82,7 +82,9 @@ export default function GacfCourse() {
                 });
             }
 
-            trackCTA(location, text, destination, undefined, eventId);
+            trackCTA(location, text, destination, "AddToCart", eventId, {
+                fireBrowserPixel: false,
+            });
             trackInitiateCheckout({
                 button_text: text,
                 destination,

@@ -22,14 +22,22 @@ export function MentorSection() {
                         <img
                             alt="Hariyanto Chung di Google Indonesia"
                             className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03] group-focus:scale-[1.03]"
+                            decoding="async"
+                            height={900}
+                            loading="lazy"
                             src={mentorGoogleVisitImage}
+                            width={720}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                         <div className="absolute left-3 top-3">
                             <img
                                 alt="Google Partner Premier 2026"
                                 className="h-12 w-auto rounded-lg border border-white/10 bg-white object-contain"
+                                decoding="async"
+                                height={48}
+                                loading="lazy"
                                 src={googlePremierBadge}
+                                width={144}
                             />
                         </div>
                         <div className="absolute bottom-3 left-3 right-3 rounded-lg border border-white/10 bg-black/55 p-3 backdrop-blur">

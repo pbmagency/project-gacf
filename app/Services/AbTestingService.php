@@ -317,17 +317,23 @@ class AbTestingService
     {
         // Human-readable labels for known sections (fallback to raw ID for unknowns)
         $labels = [
+            'top'           => 'Hero',
             'hero'          => 'Hero',
-            'success-story' => 'Success Story',
-            'solusi'        => 'Solution',
             'problem'       => 'Problem',
+            'oct'           => 'Solution: Before vs After OCT',
+            'solusi'        => 'Solution',
+            'stats'         => 'Stats / Social Proof',
             'benefits'      => 'Benefits',
+            'testimonials'  => 'Testimonials',
             'testimoni'     => 'Testimonials',
+            'mentor'        => 'Mentor Profile',
             'pengajar'      => 'Instructor',
             'media-features'=> 'Media Features',
             'curriculum'    => 'Curriculum',
+            'pricing'       => 'Pricing',
             'harga'         => 'Pricing',
             'faq'           => 'FAQ',
+            'success-story' => 'Success Story',
         ];
 
         // Query: aggregate views per section AND capture earliest first_seen

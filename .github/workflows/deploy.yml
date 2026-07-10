@@ -14,6 +14,7 @@ jobs:
       SERVER_USER: "root"
       TARGET_DIR_LARAVEL: "/home/pbmagency.id/laravel-sub1"
       TARGET_DIR_PUBLIC: "/home/pbmagency.id/sub1"
+      DOMAIN_USERNAME: "pbmag2242"
 
     steps:
       - name: Checkout Code
@@ -41,12 +42,29 @@ jobs:
       - name: Setup SSH Key
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_KEY_VPS2 }}
 
       - name: Add Server to Known Hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          for attempt in 1 2 3; do
+            keyscan_error_file="$(mktemp)"
+            if ssh-keyscan -T 30 -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts 2>"$keyscan_error_file"; then
+              rm -f "$keyscan_error_file"
+              break
+            fi
+            echo "ssh-keyscan attempt $attempt failed:"
+            cat "$keyscan_error_file"
+            rm -f "$keyscan_error_file"
+            if [ "$attempt" -eq 3 ]; then
+              echo "Failed to fetch SSH host key for ${{ env.SERVER_IP }} after 3 attempts."
+              exit 1
+            else
+              sleep 5
+            fi
+          done
+          chmod 600 ~/.ssh/known_hosts
 
       # ---------------------------------------------------------
       # SYNC 1: Pindahkan Core Laravel
@@ -88,19 +106,19 @@ jobs:
         with:
           host: ${{ env.SERVER_IP }}
           username: ${{ env.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.DEPLOY_KEY_VPS2 }}
           script: |
             mkdir -p ${{ env.TARGET_DIR_LARAVEL }}/public/build
             cp ${{ env.TARGET_DIR_PUBLIC }}/build/manifest.json ${{ env.TARGET_DIR_LARAVEL }}/public/build/manifest.json
 
             cd ${{ env.TARGET_DIR_PUBLIC }}
-            ln -sfn ../laravel-sub1/storage/app/public storage
+            ln -sfn ${{ env.TARGET_DIR_LARAVEL }}/storage/app/public storage
 
             cd ${{ env.TARGET_DIR_LARAVEL }}
             php artisan optimize:clear
             php artisan migrate --force
 
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_LARAVEL }}
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_PUBLIC }}
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_LARAVEL }}/storage
-            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache
+            chown -R ${{ env.DOMAIN_USERNAME }}:${{ env.DOMAIN_USERNAME }} ${{ env.TARGET_DIR_LARAVEL }}
+            chown -R ${{ env.DOMAIN_USERNAME }}:${{ env.DOMAIN_USERNAME }} ${{ env.TARGET_DIR_PUBLIC }}
+            chown -R ${{ env.DOMAIN_USERNAME }}:${{ env.DOMAIN_USERNAME }} ${{ env.TARGET_DIR_LARAVEL }}/storage
+            chown -R ${{ env.DOMAIN_USERNAME }}:${{ env.DOMAIN_USERNAME }} ${{ env.TARGET_DIR_LARAVEL }}/bootstrap/cache

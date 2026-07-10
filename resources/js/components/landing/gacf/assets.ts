@@ -22,3 +22,8 @@ export const mentorGoogleVisitImage = new URL(
     "../../../../../storage/app/public/Profile/koko 1.webp",
     import.meta.url,
 ).href;
+
+export const testimonialProofImage = new URL(
+    "../../../../../storage/app/public/Testimoni/Testimoni gambar.webp",
+    import.meta.url,
+).href;

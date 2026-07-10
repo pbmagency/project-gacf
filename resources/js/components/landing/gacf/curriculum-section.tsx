@@ -114,7 +114,11 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                                 <img
                                     alt="Cover Google Ads Cuan Formula"
                                     className="aspect-[3/4] w-24 rounded-lg border border-white/10 object-cover sm:w-full"
+                                    decoding="async"
+                                    height={320}
+                                    loading="lazy"
                                     src={gacfCourseCover}
+                                    width={240}
                                 />
                                 <div>
                                     <div className="flex items-center gap-3 text-amber-300">

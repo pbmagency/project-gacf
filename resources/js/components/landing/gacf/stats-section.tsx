@@ -23,8 +23,9 @@ export function StatsSection() {
                         pembeli asli buat dipelajari.
                     </p>
                     <p className="mx-auto mt-4 max-w-3xl text-sm font-semibold leading-6 text-zinc-400">
-                        Angka ini dipakai sebagai social proof pengalaman, bukan
-                        janji hasil yang pasti sama untuk setiap bisnis.
+                        Berdasarkan data internal dan hasil member. Hasil tiap
+                        bisnis bisa berbeda tergantung niche, budget, offer,
+                        eksekusi, dan kondisi market.
                     </p>
                 </Reveal>
 

@@ -16,6 +16,8 @@ interface PricingSectionProps {
     onPricingAction: PricingAction;
 }
 
+// TODO production: set VITE_GACF_CHECKOUT_URL and VITE_GACF_WHATSAPP_URL.
+// The #pricing fallback keeps local/empty env builds safe without crashing.
 const whatsappUrl = import.meta.env.VITE_GACF_WHATSAPP_URL || "#pricing";
 const checkoutUrl = import.meta.env.VITE_GACF_CHECKOUT_URL || whatsappUrl;
 

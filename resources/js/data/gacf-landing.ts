@@ -36,51 +36,66 @@ export const coursePillars = [
     {
         value: "3.500+",
         label: "Business Owners",
-        detail: "Dibantu memahami Google Ads dengan alur data yang lebih rapi.",
+        detail: "Membantu sukses beriklan di Google Ads",
     },
     {
-        value: "Rp45M+",
+        value: "45M+",
         label: "Total Ad Spend",
-        detail: "Budget Google Ads yang pernah dibaca, dikelola, dan dievaluasi.",
+        detail: "Yang sudah ter-manage dengan GACF",
     },
     {
-        value: "7",
-        label: "Modul E-Course",
-        detail: "Dari pondasi campaign sampai data closing dikirim balik ke Google.",
+        value: "85X",
+        label: "Rata-rata ROAS",
+        detail: "Peningkatan dalam 90 hari pertama",
     },
     {
-        value: "30",
-        label: "Titik Audit",
-        detail: "Bonus audit kesalahan campaign khusus order hari ini.",
+        value: "87%",
+        label: "Success Rate",
+        detail: "Member capai target closing mereka",
     },
 ];
 
-export const testimonialItems = [
+export interface TestimonialItem {
+    title: string;
+    type: "video" | "image";
+    description: string;
+    mediaSrc?: string;
+    isPublished: boolean;
+}
+
+// Keep unpublished until the final video files/links are ready.
+export const testimonialItems: TestimonialItem[] = [
     {
         title: "Video Testimoni Member 1",
         type: "video",
-        description:
-            "Slot video resmi dari member GACF saat asset sudah masuk.",
+        description: "Cerita member GACF setelah belajar dan praktik.",
+        isPublished: true,
     },
     {
         title: "Video Testimoni Member 2",
         type: "video",
-        description:
-            "Slot video resmi dari member GACF saat asset sudah masuk.",
+        description: "Cerita member GACF setelah belajar dan praktik.",
+        isPublished: true,
     },
     {
         title: "Video Testimoni Member 3",
         type: "video",
-        description:
-            "Slot video resmi dari member GACF saat asset sudah masuk.",
+        description: "Cerita member GACF setelah belajar dan praktik.",
+        isPublished: true,
     },
     {
         title: "Video Testimoni Member 4",
         type: "video",
-        description:
-            "Slot video resmi dari member GACF saat asset sudah masuk.",
+        description: "Cerita member GACF setelah belajar dan praktik.",
+        isPublished: true,
     },
-] as const;
+    {
+        title: "Video Testimoni Member 5",
+        type: "video",
+        description: "Cerita member GACF setelah belajar dan praktik.",
+        isPublished: true,
+    },
+];
 
 export const mentorBullets = [
     "Owner agency dan Google Partner Premier",

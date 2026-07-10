@@ -2,6 +2,22 @@ import { useCallback, useEffect } from "react";
 
 const LANDING_SOURCE_KEY = "landing_source";
 
+type MetaPixel = (
+    command: "track",
+    eventName: string,
+    payload?: Record<string, unknown>,
+    options?: { eventID?: string },
+) => void;
+
+declare global {
+    interface Window {
+        fbq?: MetaPixel;
+        __META_PAGE_VIEW_EVENT_ID?: string;
+        __META_PAGE_VIEW_TRACKED?: boolean;
+        __GACF_VISIT_TRACKED?: boolean;
+    }
+}
+
 /**
  * Generate a unique event ID for Meta Pixel ↔ CAPI deduplication.
  */
@@ -20,6 +36,31 @@ function getCookieValue(name: string): string | null {
     const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
 
     return match ? decodeURIComponent(match[2]) : null;
+}
+
+function getPageViewEventId(): string {
+    if (typeof window === "undefined") {
+        return generateEventId();
+    }
+
+    if (!window.__META_PAGE_VIEW_EVENT_ID) {
+        window.__META_PAGE_VIEW_EVENT_ID = generateEventId();
+    }
+
+    return window.__META_PAGE_VIEW_EVENT_ID;
+}
+
+function trackBrowserPageView(eventId: string) {
+    if (
+        typeof window === "undefined" ||
+        window.__META_PAGE_VIEW_TRACKED ||
+        typeof window.fbq !== "function"
+    ) {
+        return;
+    }
+
+    window.fbq("track", "PageView", {}, { eventID: eventId });
+    window.__META_PAGE_VIEW_TRACKED = true;
 }
 
 interface AnalyticsEvent {
@@ -122,8 +163,17 @@ export function useAnalytics() {
     }, []);
 
     const trackVisit = useCallback(() => {
-        const eventId =
-            (window as any).__META_PAGE_VIEW_EVENT_ID || generateEventId();
+        const eventId = getPageViewEventId();
+
+        trackBrowserPageView(eventId);
+
+        if (typeof window !== "undefined") {
+            if (window.__GACF_VISIT_TRACKED) {
+                return;
+            }
+
+            window.__GACF_VISIT_TRACKED = true;
+        }
 
         track({
             event_type: "visit",
@@ -204,16 +254,19 @@ export function useAnalytics() {
             destination?: string,
             metaEvent?: string,
             eventId?: string,
+            options?: { fireBrowserPixel?: boolean },
         ) => {
+            const pixelEventId = metaEvent
+                ? eventId || generateEventId()
+                : eventId;
+
             // Fire client-side Meta Pixel event for browser-side attribution
-            if (metaEvent && typeof (window as any).fbq === "function") {
-                const pixelEventId = eventId || generateEventId();
-                (window as any).fbq(
-                    "track",
-                    metaEvent,
-                    {},
-                    { eventID: pixelEventId },
-                );
+            if (
+                metaEvent &&
+                options?.fireBrowserPixel !== false &&
+                typeof window.fbq === "function"
+            ) {
+                window.fbq("track", metaEvent, {}, { eventID: pixelEventId });
             }
 
             track({
@@ -225,7 +278,7 @@ export function useAnalytics() {
                     page: window.location.pathname,
                     timestamp: new Date().toISOString(),
                     meta_event: metaEvent,
-                    event_id: eventId,
+                    event_id: pixelEventId,
                     ...(metaEvent
                         ? {
                               _fbp: getCookieValue("_fbp"),

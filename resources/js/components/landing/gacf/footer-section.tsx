@@ -21,7 +21,11 @@ export function FooterSection({ onCtaClick }: FooterSectionProps) {
                             <img
                                 alt="GACF"
                                 className="h-full w-full object-contain"
+                                decoding="async"
+                                height={48}
+                                loading="lazy"
                                 src={gacfLogo}
+                                width={48}
                             />
                         </span>
                         <h2 className="text-xl font-black text-white">
