@@ -1,14 +1,42 @@
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { lazy, Suspense } from 'react';
 import { initializeTheme } from '@/hooks/use-appearance';
-import AppLayout from '@/layouts/app-layout';
-import AuthLayout from '@/layouts/auth-layout';
-import SettingsLayout from '@/layouts/settings/layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const AppLayout = lazy(() => import('@/layouts/app-layout'));
+const AuthLayout = lazy(() => import('@/layouts/auth-layout'));
+const SettingsLayout = lazy(() => import('@/layouts/settings/layout'));
+const AppProviders = lazy(() => import('@/components/app-providers'));
+
+function getInitialComponentName() {
+    if (typeof document === 'undefined') {
+        return '';
+    }
+
+    const pageElement = document.querySelector<HTMLElement>('[data-page]');
+    const pageJson =
+        pageElement?.getAttribute('data-page') || pageElement?.textContent;
+
+    if (!pageJson) {
+        return '';
+    }
+
+    try {
+        const page = JSON.parse(pageJson) as { component?: string };
+
+        return page.component || '';
+    } catch {
+        return '';
+    }
+}
+
+function needsAppProviders() {
+    const componentName = getInitialComponentName();
+
+    return componentName !== 'welcome' && componentName !== 'gacf-course';
+}
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
@@ -29,11 +57,14 @@ createInertiaApp({
     },
     strictMode: true,
     withApp(app) {
+        if (!needsAppProviders()) {
+            return <Suspense fallback={null}>{app}</Suspense>;
+        }
+
         return (
-            <TooltipProvider delayDuration={0}>
-                {app}
-                <Toaster />
-            </TooltipProvider>
+            <Suspense fallback={null}>
+                <AppProviders>{app}</AppProviders>
+            </Suspense>
         );
     },
     progress: {

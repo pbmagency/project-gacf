@@ -8,7 +8,7 @@ interface NavbarProps {
 
 export function Navbar({ onCtaClick }: NavbarProps) {
     return (
-        <header className="sticky top-0 z-40 bg-[#08080b]/88 backdrop-blur-xl">
+        <header className="sticky top-0 z-40 bg-[#08080b]/95 sm:bg-[#08080b]/88 sm:backdrop-blur-xl">
             <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
                 <a
                     className="flex items-center gap-3"
@@ -19,7 +19,10 @@ export function Navbar({ onCtaClick }: NavbarProps) {
                         <img
                             alt="GACF"
                             className="h-full w-full object-contain"
+                            decoding="async"
+                            height={40}
                             src={gacfLogo}
+                            width={40}
                         />
                     </span>
                     <span>

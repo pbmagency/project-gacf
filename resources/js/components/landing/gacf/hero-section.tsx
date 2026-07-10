@@ -111,7 +111,7 @@ function HeroLearningVisual() {
     ];
 
     return (
-        <div className="relative sm:min-h-[540px] lg:min-h-[560px]">
+        <div className="relative hidden sm:block sm:min-h-[540px] lg:min-h-[560px]">
             <div className="gacf-panel relative overflow-hidden rounded-lg p-5 pb-0 sm:min-h-[490px] sm:overflow-visible sm:pb-5 lg:mr-8">
                 <div className="gacf-grid absolute inset-0 opacity-25" />
                 <div className="absolute inset-x-0 bottom-0 h-3/4 rounded-b-lg bg-gradient-to-t from-black via-black/55 to-transparent" />
@@ -161,7 +161,10 @@ function HeroLearningVisual() {
                 <img
                     alt="Bundle materi Google Ads Cuan Formula"
                     className="pointer-events-none relative z-10 mx-auto mt-4 h-56 w-full max-w-[23rem] object-contain object-bottom drop-shadow-[0_24px_48px_rgba(0,0,0,0.5)] sm:absolute sm:bottom-[-18px] sm:right-[-30px] sm:mt-0 sm:h-[62%] sm:w-auto sm:max-w-none lg:bottom-[-24px] lg:right-[-50px] lg:h-[66%]"
+                    decoding="async"
+                    height={640}
                     src={gacfBundleImage}
+                    width={640}
                 />
             </div>
         </div>
