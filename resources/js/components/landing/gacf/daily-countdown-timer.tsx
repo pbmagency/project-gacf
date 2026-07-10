@@ -49,7 +49,7 @@ export function DailyCountdownTimer() {
     return (
         <div className="mt-5">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-amber-200">
-                Promo reset hari ini dalam
+                Ambil promo sebelum berakhir
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2">
                 {units.map(([label, value]) => (

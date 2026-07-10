@@ -40,20 +40,20 @@ export function TestimonialLightbox({
     return (
         <div
             aria-modal="true"
-            className="fixed inset-0 z-50 grid cursor-pointer place-items-center bg-black/80 p-4"
+            className="animate-fade-in fixed inset-0 z-50 grid cursor-pointer place-items-center bg-black/80 p-4"
             onClick={onClose}
             role="dialog"
         >
             <button
                 aria-label="Tutup lightbox"
-                className="absolute right-4 top-4 grid h-11 w-11 cursor-pointer place-items-center rounded-lg border border-white/10 bg-white/10 text-white hover:bg-white/20"
+                className="absolute right-4 top-4 grid h-11 w-11 cursor-pointer place-items-center rounded-lg border border-white/10 bg-white/10 text-white transition duration-200 hover:bg-white/20"
                 onClick={onClose}
                 type="button"
             >
                 <X className="h-5 w-5" />
             </button>
             <div
-                className="w-full max-w-5xl cursor-default overflow-hidden rounded-lg border border-white/10 bg-[#111114] shadow-2xl"
+                className="animate-scale-in w-full max-w-5xl cursor-default overflow-hidden rounded-lg border border-white/10 bg-[#111114] shadow-2xl"
                 onClick={(event) => event.stopPropagation()}
             >
                 <div className="border-b border-white/10 px-4 py-3 sm:px-5">

@@ -1,4 +1,4 @@
-import { Maximize2, Play, PlayCircle, X } from "lucide-react";
+import { Play, PlayCircle, X } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -14,7 +14,7 @@ import {
     pakSandiTestimonialImage,
     testimonialProofImage,
 } from "./assets";
-import { CtaButton } from "./cta-button";
+import { CtaCluster } from "./cta-cluster";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import { TestimonialLightbox } from "./testimonial-lightbox";
@@ -31,6 +31,9 @@ const imageTestimonialAssets = {
     pakSandi: pakSandiTestimonialImage,
 };
 
+const threeColumnDirections = ["left", "up", "right"] as const;
+const fourColumnDirections = ["left", "up", "up", "right"] as const;
+
 export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
     const [selected, setSelected] = useState<TestimonialItem | null>(null);
     const [isProofOpen, setIsProofOpen] = useState(false);
@@ -46,55 +49,11 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
             <div className="mx-auto max-w-7xl">
                 <Reveal>
                     <SectionHeading
-                        eyebrow="Bab 4 - Bukti Lapangan"
+                        eyebrow="Bab 3 - Bukti Lapangan"
                         subtitle="Bukti visual yang tersedia ditampilkan apa adanya. Tanpa cerita karangan, tanpa klaim hasil pasti buat semua bisnis."
                         title="Lihat bukti nyata dari orang yang sudah masuk ekosistem GACF."
                     />
                 </Reveal>
-
-                <div className="mx-auto mt-10 grid max-w-6xl gap-5 md:grid-cols-2 xl:grid-cols-4">
-                    {imageTestimonials.map((item, index) => (
-                        <Reveal
-                            className="h-full"
-                            delay={Math.min(index * 70, 220)}
-                            key={item.name}
-                        >
-                            <article className="flex h-full min-h-[20rem] flex-col items-center rounded-lg border border-amber-300/20 bg-[#111114] px-6 py-7 text-center shadow-[0_22px_60px_rgba(0,0,0,0.24)] transition duration-200 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-[#151519]">
-                                <img
-                                    alt={item.name}
-                                    className="h-20 w-20 rounded-full border-2 border-amber-300 object-cover shadow-[0_14px_35px_rgba(250,204,21,0.18)]"
-                                    decoding="async"
-                                    height={96}
-                                    loading="lazy"
-                                    src={imageTestimonialAssets[item.imageKey]}
-                                    width={96}
-                                />
-                                <p className="mt-7 text-pretty text-base font-semibold italic leading-8 text-zinc-100">
-                                    "{item.quote}"
-                                </p>
-                                <div className="mt-auto pt-8">
-                                    <h3 className="font-black text-amber-300">
-                                        {item.name}
-                                    </h3>
-                                    <p className="mt-5 text-sm text-zinc-500">
-                                        {item.role}
-                                    </p>
-                                </div>
-                            </article>
-                        </Reveal>
-                    ))}
-                </div>
-
-                <div className="mt-6 flex justify-center">
-                    <button
-                        className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-black text-white transition hover:border-amber-300/40 hover:bg-white/[0.07]"
-                        onClick={() => setIsProofOpen(true)}
-                        type="button"
-                    >
-                        <Maximize2 className="h-4 w-4 text-amber-300" />
-                        Lihat kumpulan screenshot feedback lainnya
-                    </button>
-                </div>
 
                 {publishedTestimonials.length > 0 && (
                     <div className="mx-auto mt-10 grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -107,6 +66,11 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                                 <Reveal
                                     className="h-full"
                                     delay={index * 70}
+                                    direction={
+                                        threeColumnDirections[
+                                            index % threeColumnDirections.length
+                                        ]
+                                    }
                                     key={item.title}
                                 >
                                     <button
@@ -197,16 +161,74 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                     </div>
                 )}
 
-                <div className="mt-10 text-center">
-                    <CtaButton
-                        className="w-full sm:w-auto"
-                        href="#pricing"
-                        location="testimonials_primary"
-                        onTrack={onCtaClick}
-                    >
-                        Gua Mau Lanjut ke Penawaran
-                    </CtaButton>
+                <div className="mx-auto mt-10 grid max-w-6xl gap-5 md:grid-cols-2 xl:grid-cols-4">
+                    {imageTestimonials.map((item, index) => (
+                        <Reveal
+                            className="h-full"
+                            delay={Math.min(index * 70, 220)}
+                            direction={
+                                fourColumnDirections[
+                                    index % fourColumnDirections.length
+                                ]
+                            }
+                            key={item.name}
+                        >
+                            <article className="flex h-full min-h-[20rem] flex-col items-center rounded-lg border border-amber-300/20 bg-[#111114] px-6 py-7 text-center shadow-[0_22px_60px_rgba(0,0,0,0.24)] transition duration-200 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-[#151519]">
+                                <img
+                                    alt={item.name}
+                                    className="h-20 w-20 rounded-full border-2 border-amber-300 object-cover shadow-[0_14px_35px_rgba(250,204,21,0.18)]"
+                                    decoding="async"
+                                    height={96}
+                                    loading="lazy"
+                                    src={imageTestimonialAssets[item.imageKey]}
+                                    width={96}
+                                />
+                                <p className="mt-7 text-pretty text-base font-semibold italic leading-8 text-zinc-100">
+                                    "{item.quote}"
+                                </p>
+                                <div className="mt-auto pt-8">
+                                    <h3 className="font-black text-amber-300">
+                                        {item.name}
+                                    </h3>
+                                    <p className="mt-5 text-sm text-zinc-500">
+                                        {item.role}
+                                    </p>
+                                </div>
+                            </article>
+                        </Reveal>
+                    ))}
                 </div>
+
+                <Reveal
+                    className="mx-auto mt-8 max-w-3xl"
+                    delay={120}
+                >
+                    <button
+                        aria-label="Perbesar screenshot feedback WhatsApp member GACF"
+                        className="block w-full cursor-pointer"
+                        onClick={() => setIsProofOpen(true)}
+                        type="button"
+                    >
+                        <img
+                            alt="Kumpulan screenshot feedback WhatsApp member GACF"
+                            className="max-h-[28rem] w-full object-contain"
+                            decoding="async"
+                            height={1080}
+                            loading="lazy"
+                            src={testimonialProofImage}
+                            width={1080}
+                        />
+                    </button>
+                </Reveal>
+
+                <Reveal delay={180}>
+                    <CtaCluster
+                        className="mt-10"
+                        onTrack={onCtaClick}
+                        primaryLocation="testimonials_primary"
+                        secondaryLocation="testimonials_secondary"
+                    />
+                </Reveal>
             </div>
 
             <TestimonialLightbox
@@ -217,12 +239,12 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
             {isProofOpen && (
                 <div
                     aria-modal="true"
-                    className="fixed inset-0 z-50 grid cursor-pointer place-items-center bg-black/85 p-4"
+                    className="animate-fade-in fixed inset-0 z-50 grid cursor-pointer place-items-center bg-black/85 p-4"
                     onClick={() => setIsProofOpen(false)}
                     role="dialog"
                 >
                     <button
-                        aria-label="Tutup proof image"
+                        aria-label="Tutup screenshot feedback"
                         className="absolute right-4 top-4 grid h-11 w-11 cursor-pointer place-items-center rounded-lg border border-white/10 bg-white/10 text-white transition hover:bg-white/20"
                         onClick={() => setIsProofOpen(false)}
                         type="button"
@@ -230,12 +252,12 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                         <X className="h-5 w-5" />
                     </button>
                     <div
-                        className="w-full max-w-4xl cursor-default overflow-hidden rounded-lg border border-white/10 bg-[#101014] p-3 shadow-2xl"
+                        className="animate-scale-in w-full max-w-5xl cursor-default"
                         onClick={(event) => event.stopPropagation()}
                     >
                         <img
-                            alt="Collage screenshot feedback member GACF"
-                            className="max-h-[82vh] w-full object-contain"
+                            alt="Kumpulan screenshot feedback WhatsApp member GACF diperbesar"
+                            className="max-h-[88vh] w-full object-contain"
                             decoding="async"
                             height={1080}
                             src={testimonialProofImage}

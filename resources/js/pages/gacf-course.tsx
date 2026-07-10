@@ -1,6 +1,7 @@
 import { Head } from "@inertiajs/react";
 import { useCallback, useEffect, useRef } from "react";
 
+import { BonusSection } from "@/components/landing/gacf/bonus-section";
 import { CurriculumSection } from "@/components/landing/gacf/curriculum-section";
 import { FaqSection } from "@/components/landing/gacf/faq-section";
 import { FloatingWhatsapp } from "@/components/landing/gacf/floating-whatsapp";
@@ -153,6 +154,7 @@ export default function GacfCourse() {
                     <TestimonialsSection onCtaClick={handleCtaClick} />
                     <MentorSection />
                     <CurriculumSection onCtaClick={handleCtaClick} />
+                    <BonusSection />
                     <PricingSection onPricingAction={handlePricingAction} />
                     <FaqSection onCtaClick={handleCtaClick} />
                 </main>

@@ -1,14 +1,16 @@
 import {
-    BookOpenCheck,
     CheckCircle2,
     ClipboardCheck,
-    UsersRound,
+    ShieldCheck,
+    Star,
+    TrendingUp,
 } from "lucide-react";
 
 import { heroBullets } from "@/data/gacf-landing";
 
 import { gacfBundleImage } from "./assets";
-import { CtaButton } from "./cta-button";
+import { CtaCluster } from "./cta-cluster";
+import { Reveal } from "./reveal";
 import type { TrackCta } from "./types";
 
 interface HeroSectionProps {
@@ -24,22 +26,32 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
             <div className="gacf-grid absolute inset-0 opacity-45" />
 
             <div className="relative mx-auto grid max-w-7xl items-center gap-9 lg:grid-cols-[1.05fr_0.95fr]">
-                <div>
-                    <div className="mb-5 inline-flex max-w-full items-start gap-2 rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-xs font-bold uppercase leading-5 tracking-[0.1em] text-amber-200 sm:px-4 sm:tracking-[0.14em]">
-                        <span className="h-2 w-2 rounded-full bg-amber-300" />
+                <Reveal direction="left">
+                    <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-xs font-bold uppercase leading-5 tracking-[0.1em] text-amber-200 sm:px-4 sm:tracking-[0.14em]">
+                        <span className="h-2 w-2 shrink-0 rounded-full bg-amber-300" />
                         <span className="min-w-0">
-                            New E-Course GACF - Google Ads Cuan Formula
+                            New Strategy 2026 &middot; Google Ads Cuan Formula
                         </span>
                     </div>
+                    <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-300/25 bg-white/[0.04] px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-amber-100 sm:px-4">
+                        <span className="flex items-center gap-0.5 text-amber-300">
+                            {Array.from({ length: 5 }).map((_, index) => (
+                                <Star
+                                    aria-hidden="true"
+                                    className="h-3.5 w-3.5 fill-current"
+                                    key={index}
+                                />
+                            ))}
+                        </span>
+                        <span>3.500+ Members</span>
+                    </div>
                     <h1 className="max-w-4xl text-balance text-3xl font-black leading-[1.05] text-white sm:text-5xl lg:text-[3.6rem] xl:text-6xl">
-                        Google Ads lo bukan kurang klik. Google lagi belajar
-                        dari orang yang salah.
+                        Iklan Lo Ratusan Yang Klik, Tapi Yang Chat Dikit?
                     </h1>
                     <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-zinc-300 sm:text-xl">
-                        Di GACF, gua ajak lo benerin alur datanya: dari klik,
-                        tracking, campaign, sampai closing WhatsApp/manual
-                        dikirim balik ke Google lewat Offline Conversion
-                        Tracking.
+                        Pelajari cara tingkatin jumlah chat tanpa nambah budget
+                        iklan dengan metode OCT yang sukses membantu 3.500+
+                        business owners.
                     </p>
 
                     <ul className="mt-6 grid gap-3">
@@ -57,47 +69,35 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                         ))}
                     </ul>
 
-                    <div className="mt-7 grid gap-3 sm:flex">
-                        <CtaButton
-                            className="w-full sm:w-auto"
-                            href="#pricing"
-                            location="hero_primary"
-                            onTrack={onCtaClick}
-                        >
-                            Benerin Data Iklan Gua
-                        </CtaButton>
-                        <CtaButton
-                            className="w-full sm:w-auto"
-                            href="#curriculum"
-                            location="hero_secondary"
-                            onTrack={onCtaClick}
-                            variant="secondary"
-                        >
-                            Lihat Alur Belajar
-                        </CtaButton>
-                    </div>
-
-                    <div className="mt-6 flex flex-wrap gap-3">
-                        <div className="inline-flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2">
-                            <UsersRound
+                    <div className="mt-6 grid gap-3 sm:flex">
+                        <div className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/[0.08] px-4 py-2 text-sm font-black text-amber-100">
+                            <ShieldCheck
                                 aria-hidden="true"
-                                className="h-5 w-5 text-amber-300"
+                                className="h-4 w-4 text-amber-300"
                             />
-                            <span className="text-sm font-bold text-zinc-100">
-                                Buat business owner yang capek bakar budget
-                            </span>
+                            87% Success Rate
                         </div>
-                        <div className="inline-flex items-center gap-2 rounded-lg border border-amber-300/25 bg-amber-300/[0.06] px-3 py-2 text-sm font-bold text-amber-100">
-                            <BookOpenCheck
+                        <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-black text-zinc-100">
+                            <TrendingUp
                                 aria-hidden="true"
-                                className="h-4 w-4"
+                                className="h-4 w-4 text-amber-300"
                             />
-                            Strategi GACF + OCT
+                            Peningkatan ROAS 85X
                         </div>
                     </div>
-                </div>
 
-                <HeroLearningVisual />
+                    <CtaCluster
+                        align="left"
+                        className="mt-7"
+                        onTrack={onCtaClick}
+                        primaryLocation="hero_primary"
+                        secondaryLocation="hero_secondary"
+                    />
+                </Reveal>
+
+                <Reveal delay={120} direction="right">
+                    <HeroLearningVisual />
+                </Reveal>
             </div>
         </section>
     );
@@ -144,10 +144,10 @@ function HeroLearningVisual() {
                     <div className="mt-3 grid gap-2">
                         {learningSteps.map(([number, title]) => (
                             <div
-                                className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5"
+                                className="group flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 transition duration-300 ease-out hover:border-amber-300/30 hover:bg-white/[0.055]"
                                 key={number}
                             >
-                                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-amber-300/25 bg-amber-300/10 font-mono text-[0.68rem] font-black text-amber-300">
+                                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-amber-300/25 bg-amber-300/10 font-mono text-[0.68rem] font-black text-amber-300 transition duration-300 ease-out group-hover:scale-105">
                                     {number}
                                 </span>
                                 <span className="text-sm font-black text-white">

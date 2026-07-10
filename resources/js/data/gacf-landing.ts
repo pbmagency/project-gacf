@@ -158,37 +158,59 @@ export const mentorBullets = [
 export const curriculumModules = [
     {
         title: "Fundamental Anti-Boncos",
-        copy: "Benerin cara baca masalah supaya lo tahu kenapa iklan terlihat rame tapi tetap boncos.",
+        copy: "Setup pondasi dan mindset yang bener dari nol supaya algoritma Google Ads nggak salah langkah dari hari pertama.",
     },
     {
-        title: "Setup Tracking GTM & GA4",
-        copy: "Rapikan event penting supaya sinyal awal pengunjung dan conversion mulai kebaca.",
+        title: "Setup Intel Website (GTM & GA4)",
+        copy: "Pasang Google Tag Manager dan GA4 supaya pergerakan pengunjung di website atau landing page lo terekam akurat.",
     },
     {
-        title: "Racik Campaign Search",
-        copy: "Bangun campaign Search yang lebih dekat ke orang dengan niat beli.",
+        title: "Racik Campaign Search Yang Nendang",
+        copy: "Riset keyword dan bikin struktur iklan Search yang menarget orang siap beli, bukan orang yang cuma cari informasi gratisan.",
     },
     {
         title: "Bedah & Optimasi Iklan",
-        copy: "Pisahkan bagian yang bawa sinyal bagus dari bagian yang cuma ngabisin budget.",
+        copy: "Baca data, cut keyword yang bikin boncos, dan tekan biaya per klik supaya campaign makin efisien.",
     },
     {
         title: "Remarketing Anti-Ghosting",
-        copy: "Follow up ulang orang yang sudah klik atau chat tapi belum jadi pembeli.",
+        copy: "Kejar lagi orang yang sudah klik atau chat tapi belum jadi pembeli dengan strategi yang lebih rapi.",
     },
     {
-        title: "Scale dengan Demand Gen & PMax",
-        copy: "Pahami cara scale campaign modern Google tanpa asal menaikkan budget.",
+        title: "Scale-Up Pakai PMax & Demand Gen",
+        copy: "Pahami cara scale campaign modern Google tanpa asal naik budget, termasuk framework pakai Performance Max dan Demand Gen.",
     },
     {
         title: "Upload Offline Conversion (OCT)",
-        copy: "Kirim data real buyer ke Google supaya algoritma belajar dari pembeli asli.",
+        copy: "Panduan upload data real buyer ke sistem supaya Google belajar dari pembeli asli, bukan klik sampah.",
+    },
+    {
+        title: "Analisa Keyword Winning Google",
+        copy: "Temukan keyword paling profitable yang kompetitor garap, lalu pakai strategi keyword research dengan data real.",
     },
 ];
 
+export const bonusItems = [
+    {
+        title: "Komunitas Aktif & Supportif",
+        copy: "Bebas tanya dengan expert kapanpun. Komunitas selalu update strategi terbaru.",
+        icon: "community",
+    },
+    {
+        title: "Webinar Rutin Tiap Bulan",
+        copy: "Bahas update Google terbaru, bedah akun iklan, dan sharing strategi yang works.",
+        icon: "webinar",
+    },
+    {
+        title: "1.000+ Winning Ads Template",
+        copy: "Template iklan terbukti jalan di Google & Meta. Tinggal pakai, tinggal profit.",
+        icon: "template",
+    },
+] as const;
+
 export const pricingIncludes = [
-    "Akses 7 modul e-course Google Ads",
-    "Blueprint, Tracking GTM & GA4, Preparation Campaign Search, Optimasi Iklan, Remarketing Ads, Demand Gen & PMax, Offline Conversion",
+    "Akses 8 modul e-course Google Ads",
+    "Fundamental Anti-Boncos, Setup Intel Website GTM & GA4, Racik Campaign Search, Optimasi Iklan, Remarketing, PMax & Demand Gen, OCT, Analisa Keyword Winning",
     "Akses komunitas aktif dan supportive, bebas tanya expert kapanpun",
     "Webinar rutin tiap bulan",
     "1.000+ Winning Ads Template gratis",
@@ -203,7 +225,7 @@ export const faqs = [
     },
     {
         question: "Berapa modul yang didapatkan di e-course ini?",
-        answer: "Lo dapat 7 modul: Blueprint, Tracking GTM & GA4, Preparation Campaign Search, Optimasi Iklan, Remarketing Ads, Demand Gen & PMax, dan Offline Conversion.",
+        answer: "Lo dapat 8 modul: Fundamental Anti-Boncos, Setup Intel Website GTM & GA4, Racik Campaign Search, Optimasi Iklan, Remarketing, PMax & Demand Gen, OCT, dan Analisa Keyword Winning Google.",
     },
     {
         question: "Gua masih gaptek dan baru mau mulai Google Ads, bisa ikut?",

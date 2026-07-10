@@ -3,7 +3,7 @@ import { BookOpenCheck } from "lucide-react";
 import { curriculumModules } from "@/data/gacf-landing";
 
 import { gacfCourseCover } from "./assets";
-import { CtaButton } from "./cta-button";
+import { CtaCluster } from "./cta-cluster";
 import { Reveal } from "./reveal";
 import type { TrackCta } from "./types";
 
@@ -21,12 +21,12 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
             <div className="relative mx-auto max-w-6xl">
                 <div className="grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-start xl:gap-12">
                     <div className="lg:max-w-[29rem]">
-                        <Reveal>
+                        <Reveal direction="left">
                             <div className="text-left">
                                 <div className="mb-4 flex items-center gap-3">
                                     <span className="h-px w-8 shrink-0 bg-amber-300/70" />
                                     <p className="text-xs font-bold uppercase leading-5 tracking-[0.18em] text-amber-300">
-                                        Bab 6 - Alur Belajar
+                                        Bab 5 - Alur Belajar
                                     </p>
                                 </div>
                                 <h2 className="text-balance text-3xl font-black leading-tight text-white sm:text-4xl lg:text-[2.35rem]">
@@ -45,6 +45,7 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                         <Reveal
                             className="mt-6 rounded-lg border border-white/10 bg-white/[0.035] p-4"
                             delay={90}
+                            direction="left"
                         >
                             <div className="grid gap-4 sm:grid-cols-[5rem_1fr] sm:items-center">
                                 <img
@@ -75,24 +76,32 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                             </div>
                         </Reveal>
 
-                        <CtaButton
-                            className="mt-6 w-full sm:w-auto"
-                            href="#pricing"
-                            location="curriculum_primary"
-                            onTrack={onCtaClick}
-                        >
-                            Lihat Semua Modul
-                        </CtaButton>
+                        <Reveal delay={180} direction="left">
+                            <CtaCluster
+                                align="left"
+                                className="mt-6"
+                                onTrack={onCtaClick}
+                                primaryLocation="curriculum_primary"
+                                secondaryLocation="curriculum_secondary"
+                            />
+                        </Reveal>
                     </div>
 
-                    <div className="relative rounded-lg border border-white/10 bg-[#111115]/65">
+                    <Reveal
+                        className="relative rounded-lg border border-white/10 bg-[#111115]/65"
+                        delay={140}
+                        direction="right"
+                    >
                         <ol className="divide-y divide-white/10">
                             {curriculumModules.map((module, index) => (
                                 <li className="list-none" key={module.title}>
-                                    <Reveal delay={Math.min(index * 55, 220)}>
-                                        <div className="grid grid-cols-[2.75rem_1fr] gap-3 px-4 py-4 transition duration-200 hover:bg-white/[0.035] sm:grid-cols-[3.5rem_1fr] sm:gap-4 lg:grid-cols-[3.25rem_1fr] lg:gap-4">
+                                    <Reveal
+                                        delay={220 + index * 70}
+                                        direction="right"
+                                    >
+                                        <div className="group grid grid-cols-[2.75rem_1fr] gap-3 px-4 py-4 transition duration-300 ease-out hover:bg-white/[0.04] sm:grid-cols-[3.5rem_1fr] sm:gap-4 lg:grid-cols-[3.25rem_1fr] lg:gap-4">
                                             <div className="sm:block">
-                                                <span className="grid h-10 w-10 place-items-center rounded-lg border border-amber-300/30 bg-amber-300/10 font-mono text-sm font-black text-amber-300 lg:h-9 lg:w-9 lg:text-xs">
+                                                <span className="grid h-10 w-10 place-items-center rounded-lg border border-amber-300/30 bg-amber-300/10 font-mono text-sm font-black text-amber-300 transition duration-300 ease-out group-hover:scale-105 group-hover:border-amber-300/50 lg:h-9 lg:w-9 lg:text-xs">
                                                     {String(index + 1).padStart(
                                                         2,
                                                         "0",
@@ -112,7 +121,7 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                                 </li>
                             ))}
                         </ol>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </section>

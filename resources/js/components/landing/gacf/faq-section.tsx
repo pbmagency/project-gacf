@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { faqs } from "@/data/gacf-landing";
 
-import { CtaButton } from "./cta-button";
+import { CtaCluster } from "./cta-cluster";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import type { TrackCta } from "./types";
@@ -36,7 +36,7 @@ export function FaqSection({ onCtaClick }: FaqSectionProps) {
                             <Reveal delay={index * 55} key={faq.question}>
                                 <button
                                     aria-expanded={isOpen}
-                                    className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-5 text-left text-base font-bold text-white transition hover:bg-white/[0.035]"
+                                    className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-5 text-left text-base font-bold text-white transition duration-200 hover:bg-white/[0.035]"
                                     onClick={() =>
                                         setOpenIndex(isOpen ? -1 : index)
                                     }
@@ -47,7 +47,7 @@ export function FaqSection({ onCtaClick }: FaqSectionProps) {
                                     </span>
                                     <ChevronDown
                                         aria-hidden="true"
-                                        className={`h-5 w-5 shrink-0 text-amber-300 transition ${
+                                        className={`h-5 w-5 shrink-0 text-amber-300 transition duration-300 ease-out ${
                                             isOpen ? "rotate-180" : ""
                                         }`}
                                     />
@@ -70,16 +70,14 @@ export function FaqSection({ onCtaClick }: FaqSectionProps) {
                     })}
                 </div>
 
-                <div className="mt-10 text-center">
-                    <CtaButton
-                        className="w-full sm:w-auto"
-                        href="#pricing"
-                        location="faq_primary"
+                <Reveal delay={160}>
+                    <CtaCluster
+                        className="mt-10"
                         onTrack={onCtaClick}
-                    >
-                        Mulai Benerin Data Iklan
-                    </CtaButton>
-                </div>
+                        primaryLocation="faq_primary"
+                        secondaryLocation="faq_secondary"
+                    />
+                </Reveal>
             </div>
         </section>
     );

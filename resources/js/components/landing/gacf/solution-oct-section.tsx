@@ -2,7 +2,7 @@ import { ArrowRight, Check, X } from "lucide-react";
 
 import { octComparison } from "@/data/gacf-landing";
 
-import { CtaButton } from "./cta-button";
+import { CtaCluster } from "./cta-cluster";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import type { TrackCta } from "./types";
@@ -30,6 +30,7 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
                 <div className="relative mt-10 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
                     <ComparisonCard
                         delay={70}
+                        direction="left"
                         icon="bad"
                         items={octComparison.without}
                         title="Sebelum OCT"
@@ -37,6 +38,7 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
                     <Reveal
                         className="flex items-center justify-center lg:w-12"
                         delay={140}
+                        direction="scale"
                     >
                         <div className="grid h-11 w-11 place-items-center rounded-lg border border-amber-300/35 bg-amber-300 text-zinc-950 shadow-[0_0_36px_rgba(251,191,36,0.2)] lg:h-12 lg:w-12">
                             <ArrowRight
@@ -47,22 +49,21 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
                     </Reveal>
                     <ComparisonCard
                         delay={210}
+                        direction="right"
                         icon="good"
                         items={octComparison.with}
                         title="Sesudah OCT"
                     />
                 </div>
 
-                <div className="mt-10 text-center">
-                    <CtaButton
-                        className="w-full sm:w-auto"
-                        href="#pricing"
-                        location="solution_primary"
+                <Reveal delay={260}>
+                    <CtaCluster
+                        className="mt-10"
                         onTrack={onCtaClick}
-                    >
-                        Pasang Strategi OCT
-                    </CtaButton>
-                </div>
+                        primaryLocation="solution_primary"
+                        secondaryLocation="solution_secondary"
+                    />
+                </Reveal>
             </div>
         </section>
     );
@@ -73,11 +74,13 @@ function ComparisonCard({
     items,
     icon,
     delay = 0,
+    direction = "up",
 }: {
     title: string;
     items: string[];
     icon: "good" | "bad";
     delay?: number;
+    direction?: "up" | "down" | "left" | "right" | "scale";
 }) {
     const isGood = icon === "good";
 
@@ -89,6 +92,7 @@ function ComparisonCard({
                     : "border-red-400/20 bg-[linear-gradient(180deg,rgba(248,113,113,0.08),rgba(255,255,255,0.02))]"
             }`}
             delay={delay}
+            direction={direction}
         >
             <h3 className="flex items-center justify-between gap-4 text-xl font-black text-white sm:text-2xl">
                 {title}

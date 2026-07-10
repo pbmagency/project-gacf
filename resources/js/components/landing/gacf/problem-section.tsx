@@ -1,46 +1,62 @@
-import { AlertTriangle } from "lucide-react";
-
-import { problemPoints } from "@/data/gacf-landing";
+import { CircleDot } from "lucide-react";
 
 import { Reveal, RevealListItem } from "./reveal";
-import { SectionHeading } from "./section-heading";
+
+const bleedingPhases = [
+    {
+        title: "Dashboard Rame, WA Sepi",
+        copy: "Klik iklan bisa masuk ratusan, tapi yang benar-benar nge-chat ke WhatsApp tetap tipis.",
+    },
+    {
+        title: "Leads Masuk, Tapi Tukang Ghosting",
+        copy: "Banyak yang nanya harga, minta info, lalu hilang pas di-follow up. Tim lo capek ngurus leads yang nggak jelas niat belinya.",
+    },
+    {
+        title: "Susah Di-Scale Up (Mentok)",
+        copy: "Mau naikin budget takut makin boncos, karena lo nggak tahu closing yang bagus datang dari keyword, campaign, atau audience yang mana.",
+    },
+];
+
+const phaseDirections = ["left", "up", "right"] as const;
 
 export function ProblemSection() {
     return (
         <section
-            className="relative scroll-mt-16 bg-[#0d0d11] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
+            className="relative scroll-mt-16 bg-[#050506] px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-[4.5rem]"
             id="problem"
         >
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-7xl">
                 <Reveal>
-                    <SectionHeading
-                        eyebrow="Bab 1 - Akar Boncos"
-                        subtitle="Sebelum mikir scale, lo harus tahu dulu data apa yang selama ini lo kasih ke Google."
-                        title="Google makin pintar. Masalahnya, dia pintar dari sinyal yang salah."
-                    />
+                    <div>
+                        <p className="text-xs font-black uppercase tracking-[0.18em] text-red-300">
+                            Bab 1 - Warning
+                        </p>
+                        <h2 className="mt-3 max-w-6xl text-3xl font-black uppercase leading-[1.02] text-white sm:text-4xl lg:text-[3.35rem]">
+                            Fase 'berdarah-darah' main Google Ads. Lo lagi di
+                            tahap mana?
+                        </h2>
+                    </div>
                 </Reveal>
 
-                <ul className="mx-auto mt-9 grid max-w-4xl gap-0 overflow-hidden rounded-lg border border-white/10 bg-[#131317]">
-                    {problemPoints.map((point, index) => (
+                <ul className="mt-8 grid gap-3 lg:grid-cols-3 lg:gap-4">
+                    {bleedingPhases.map((point, index) => (
                         <RevealListItem
-                            className="grid grid-cols-[auto_1fr] gap-4 border-b border-white/10 p-4 last:border-b-0 sm:p-5"
+                            className="rounded-lg border border-red-500/35 bg-red-950/[0.12] p-4 shadow-[0_18px_48px_rgba(127,29,29,0.08)] lg:min-h-32 lg:p-5"
                             delay={index * 70}
+                            direction={phaseDirections[index]}
                             key={point.title}
                         >
-                            <span className="font-mono text-xs font-bold text-zinc-500">
-                                0{index + 1}
-                            </span>
-                            <div className="flex gap-3">
-                                <AlertTriangle
+                            <div className="flex items-start gap-3">
+                                <CircleDot
                                     aria-hidden="true"
-                                    className="mt-0.5 hidden h-5 w-5 shrink-0 text-amber-300 sm:block"
+                                    className="mt-1 h-4 w-4 shrink-0 text-red-400"
                                 />
                                 <div>
-                                    <h3 className="text-base font-black leading-7 text-white sm:text-lg">
+                                    <h3 className="text-base font-black leading-6 text-white sm:text-lg sm:leading-7">
                                         {point.title}
                                     </h3>
-                                    <p className="mt-1 text-sm leading-6 text-zinc-400 sm:text-base">
+                                    <p className="mt-1 text-sm leading-6 text-zinc-400 lg:text-[0.95rem]">
                                         {point.copy}
                                     </p>
                                 </div>
@@ -50,14 +66,73 @@ export function ProblemSection() {
                 </ul>
 
                 <Reveal
-                    className="mx-auto mt-8 max-w-4xl rounded-lg border border-amber-300/25 bg-amber-300/[0.06] p-5 sm:p-6"
+                    className="mt-7 rounded-lg border border-red-500/30 bg-red-950/[0.14] p-4 text-center sm:p-5"
                     delay={120}
                 >
-                    <p className="text-lg font-black leading-8 text-white sm:text-xl">
-                        Selama Google cuma dikasih makan klik kosong, dia akan
-                        makin jago cari orang yang klik. Bukan orang yang beli.
+                    <p className="text-base font-black leading-7 text-white">
+                        Kalau lo masih stuck di salah satu fase di atas,{" "}
+                        <span className="text-amber-300">
+                            stop bakar budget sekarang juga.
+                        </span>
+                    </p>
+                    <p className="mx-auto mt-2 max-w-4xl text-sm font-semibold leading-6 text-zinc-300 sm:leading-7">
+                        Masalahnya bukan budget lo yang kurang gede. Mesin
+                        Google belum lo ajarin cara bedain mana{" "}
+                        <span className="text-amber-300">orang iseng</span>{" "}
+                        dan mana{" "}
+                        <span className="text-amber-300">pembeli asli</span>.
                     </p>
                 </Reveal>
+
+                <div className="mt-10 grid max-w-6xl gap-6 lg:grid-cols-[0.42fr_0.58fr] lg:gap-10">
+                    <Reveal className="lg:pt-1" delay={160} direction="left">
+                        <h3 className="text-2xl font-black uppercase leading-tight text-white sm:text-3xl lg:text-[2.35rem]">
+                            Terus, salahnya di mana kok boncos terus?
+                        </h3>
+                    </Reveal>
+
+                    <div className="grid gap-4 text-base font-medium leading-7 text-zinc-300">
+                        <Reveal delay={200} direction="right">
+                            <p>
+                                Ibarat nyuruh sales keliling, selama ini lo
+                                cuma nyuruh Google:{" "}
+                                <span className="font-black text-amber-300">
+                                    cariin orang yang mau ngeklik tombol WA.
+                                </span>
+                            </p>
+                        </Reveal>
+                        <Reveal delay={260} direction="right">
+                            <p>
+                                Wajar kalau yang datang banyak yang cuma nanya,
+                                bandingin harga, atau ngilang. Buat Google,
+                                tugasnya dianggap selesai begitu ada klik,
+                                padahal lo butuh orang yang beneran transfer.
+                            </p>
+                        </Reveal>
+                        <Reveal delay={320} direction="right">
+                            <p>
+                                Supaya iklan lo jadi mesin pencetak profit,
+                                algoritma Google harus disuapin{" "}
+                                <span className="font-black text-amber-300">
+                                    data penjualan asli
+                                </span>
+                                , bukan cuma event klik yang kelihatan bagus di
+                                dashboard.
+                            </p>
+                        </Reveal>
+                        <Reveal delay={380} direction="right">
+                            <p>
+                                Di GACF, senjata yang dipakai buat ini adalah{" "}
+                                <span className="font-black text-amber-300">
+                                    Offline Conversion Tracking (OCT)
+                                </span>
+                                : cara ngirim data closing WhatsApp/manual balik
+                                ke Google, supaya mesin mulai belajar dari
+                                pembeli asli.
+                            </p>
+                        </Reveal>
+                    </div>
+                </div>
             </div>
         </section>
     );

@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 import { gacfLogo } from "./assets";
+import { Reveal } from "./reveal";
 import type { TrackCta } from "./types";
 
 interface FooterSectionProps {
@@ -15,7 +16,7 @@ export function FooterSection({ onCtaClick }: FooterSectionProps) {
             <div className="gacf-grid absolute inset-0 opacity-15" />
 
             <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-                <div className="max-w-3xl">
+                <Reveal className="max-w-3xl">
                     <div className="flex items-center gap-3">
                         <span className="grid h-12 w-12 place-items-center overflow-hidden rounded-lg bg-white p-1.5 shadow-[0_14px_36px_rgba(251,191,36,0.12)]">
                             <img
@@ -45,9 +46,9 @@ export function FooterSection({ onCtaClick }: FooterSectionProps) {
                         dan framework praktik, bukan jaminan hasil finansial
                         tertentu.
                     </p>
-                </div>
+                </Reveal>
 
-                <div className="lg:min-w-72 lg:text-right">
+                <Reveal className="lg:min-w-72 lg:text-right" delay={100}>
                     <p className="text-sm font-black uppercase tracking-[0.16em] text-amber-300">
                         Kontak
                     </p>
@@ -58,7 +59,7 @@ export function FooterSection({ onCtaClick }: FooterSectionProps) {
                         Chat tim GACF via WhatsApp.
                     </p>
                     <a
-                        className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-black text-white shadow-[0_18px_45px_rgba(37,211,102,0.18)] transition hover:-translate-y-0.5 hover:bg-[#1fc45c]"
+                        className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-black text-white shadow-[0_18px_45px_rgba(37,211,102,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#1fc45c]"
                         href={whatsappUrl}
                         onClick={() =>
                             onCtaClick(
@@ -75,7 +76,7 @@ export function FooterSection({ onCtaClick }: FooterSectionProps) {
                         Copyright {new Date().getFullYear()} GACF. All rights
                         reserved.
                     </p>
-                </div>
+                </Reveal>
             </div>
         </footer>
     );

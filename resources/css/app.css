@@ -179,18 +179,40 @@ html {
 }
 
 .gacf-reveal {
+    --reveal-scale: 0.985;
+    --reveal-x: 0;
+    --reveal-y: 30px;
     opacity: 0;
-    transform: translate3d(0, 22px, 0);
+    transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(var(--reveal-scale));
     transition:
-        opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
 }
 
+.gacf-reveal--down {
+    --reveal-y: -26px;
+}
+
+.gacf-reveal--left {
+    --reveal-x: -34px;
+    --reveal-y: 0;
+}
+
+.gacf-reveal--right {
+    --reveal-x: 34px;
+    --reveal-y: 0;
+}
+
+.gacf-reveal--scale {
+    --reveal-scale: 0.95;
+    --reveal-y: 0;
+}
+
 .gacf-reveal.is-visible {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1);
     will-change: auto;
 }
 
@@ -198,6 +220,7 @@ html {
     isolation: isolate;
     overflow: hidden;
     position: relative;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .gacf-cta::before {
@@ -242,8 +265,29 @@ html {
 
 @media (max-width: 639px) {
     .gacf-reveal {
-        transform: translate3d(0, 14px, 0);
-        transition-duration: 560ms;
+        --reveal-scale: 0.99;
+        --reveal-y: 18px;
+        transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(var(--reveal-scale));
+        transition-duration: 620ms;
+    }
+
+    .gacf-reveal--down {
+        --reveal-y: -16px;
+    }
+
+    .gacf-reveal--left {
+        --reveal-x: -18px;
+        --reveal-y: 0;
+    }
+
+    .gacf-reveal--right {
+        --reveal-x: 18px;
+        --reveal-y: 0;
+    }
+
+    .gacf-reveal--scale {
+        --reveal-scale: 0.97;
+        --reveal-y: 0;
     }
 }
 
@@ -271,8 +315,9 @@ html {
     }
 
     .gacf-cta:active,
+    .gacf-cta:hover,
     .gacf-cta:hover .gacf-cta-arrow {
-        transform: none;
+        transform: none !important;
     }
 }
 

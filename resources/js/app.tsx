@@ -2,6 +2,7 @@ import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
 import { lazy, Suspense } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
 import { initializeTheme } from '@/hooks/use-appearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -10,31 +11,13 @@ const AuthLayout = lazy(() => import('@/layouts/auth-layout'));
 const SettingsLayout = lazy(() => import('@/layouts/settings/layout'));
 const AppProviders = lazy(() => import('@/components/app-providers'));
 
-function getInitialComponentName() {
-    if (typeof document === 'undefined') {
-        return '';
-    }
-
-    const pageElement = document.querySelector<HTMLElement>('[data-page]');
-    const pageJson =
-        pageElement?.getAttribute('data-page') || pageElement?.textContent;
-
-    if (!pageJson) {
-        return '';
-    }
-
-    try {
-        const page = JSON.parse(pageJson) as { component?: string };
-
-        return page.component || '';
-    } catch {
-        return '';
+declare global {
+    interface Window {
+        __inertiaReactRoot?: Root;
     }
 }
 
-function needsAppProviders() {
-    const componentName = getInitialComponentName();
-
+function shouldWrapWithAppProviders(componentName: string) {
     return componentName !== 'welcome' && componentName !== 'gacf-course';
 }
 
@@ -56,16 +39,28 @@ createInertiaApp({
         }
     },
     strictMode: true,
-    withApp(app) {
-        if (!needsAppProviders()) {
-            return <Suspense fallback={null}>{app}</Suspense>;
+    setup({ el, App, props }) {
+        if (!el) {
+            return;
         }
 
-        return (
+        const app = <App {...props} />;
+        const wrappedApp = shouldWrapWithAppProviders(
+            props.initialPage.component,
+        ) ? (
             <Suspense fallback={null}>
                 <AppProviders>{app}</AppProviders>
             </Suspense>
+        ) : (
+            <Suspense fallback={null}>{app}</Suspense>
         );
+
+        if (!window.__inertiaReactRoot) {
+            el.replaceChildren();
+            window.__inertiaReactRoot = createRoot(el);
+        }
+
+        window.__inertiaReactRoot.render(wrappedApp);
     },
     progress: {
         color: '#4B5563',

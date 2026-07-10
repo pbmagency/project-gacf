@@ -12,6 +12,7 @@ interface RevealBaseProps {
     children: ReactNode;
     className?: string;
     delay?: number;
+    direction?: "up" | "down" | "left" | "right" | "scale";
     style?: CSSProperties;
 }
 
@@ -62,8 +63,17 @@ function useReveal<TElement extends HTMLElement>() {
     return { isVisible, ref };
 }
 
-function getRevealClassName(isVisible: boolean, className = "") {
-    return ["gacf-reveal", isVisible ? "is-visible" : "", className]
+function getRevealClassName(
+    isVisible: boolean,
+    className = "",
+    direction: RevealBaseProps["direction"] = "up",
+) {
+    return [
+        "gacf-reveal",
+        direction !== "up" ? `gacf-reveal--${direction}` : "",
+        isVisible ? "is-visible" : "",
+        className,
+    ]
         .filter(Boolean)
         .join(" ");
 }
@@ -79,6 +89,7 @@ export function Reveal({
     children,
     className,
     delay = 0,
+    direction = "up",
     style,
     ...props
 }: RevealProps) {
@@ -86,7 +97,7 @@ export function Reveal({
 
     return (
         <div
-            className={getRevealClassName(isVisible, className)}
+            className={getRevealClassName(isVisible, className, direction)}
             ref={ref}
             style={getRevealStyle(delay, style)}
             {...props}
@@ -100,6 +111,7 @@ export function RevealArticle({
     children,
     className,
     delay = 0,
+    direction = "up",
     style,
     ...props
 }: RevealArticleProps) {
@@ -107,7 +119,7 @@ export function RevealArticle({
 
     return (
         <article
-            className={getRevealClassName(isVisible, className)}
+            className={getRevealClassName(isVisible, className, direction)}
             ref={ref}
             style={getRevealStyle(delay, style)}
             {...props}
@@ -121,6 +133,7 @@ export function RevealListItem({
     children,
     className,
     delay = 0,
+    direction = "up",
     style,
     ...props
 }: RevealListItemProps) {
@@ -128,7 +141,7 @@ export function RevealListItem({
 
     return (
         <li
-            className={getRevealClassName(isVisible, className)}
+            className={getRevealClassName(isVisible, className, direction)}
             ref={ref}
             style={getRevealStyle(delay, style)}
             {...props}
