@@ -22,8 +22,7 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
                 <Reveal>
                     <SectionHeading
                         eyebrow="Bab 2 - Turning Point"
-                        subtitle="Offline Conversion Tracking jadi jembatan antara closing asli di WhatsApp/manual dan mesin Google Ads."
-                        title="Begitu data pembeli asli masuk, cerita campaign mulai berubah."
+                        title="Begitu data pembeli asli masuk, cara Google belajar ikut berubah."
                     />
                 </Reveal>
 

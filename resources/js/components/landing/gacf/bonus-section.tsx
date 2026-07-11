@@ -26,8 +26,7 @@ export function BonusSection() {
                 <Reveal>
                     <SectionHeading
                         eyebrow="Bonus Eksklusif Member"
-                        subtitle="Bukan cuma nonton modul. Lo juga dapat support dan aset bantu praktik supaya eksekusinya lebih rapi."
-                        title="Yang bantu lo jalan setelah belajar."
+                        title="Biar setelah belajar, lo nggak jalan sendiri."
                     />
                 </Reveal>
 

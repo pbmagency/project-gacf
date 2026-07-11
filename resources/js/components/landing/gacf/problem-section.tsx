@@ -5,15 +5,15 @@ import { Reveal, RevealListItem } from "./reveal";
 const bleedingPhases = [
     {
         title: "Dashboard Rame, WA Sepi",
-        copy: "Klik iklan bisa masuk ratusan, tapi yang benar-benar nge-chat ke WhatsApp tetap tipis.",
+        copy: "Klik bisa ratusan, tapi yang chat serius tetap sedikit.",
     },
     {
         title: "Leads Masuk, Tapi Tukang Ghosting",
-        copy: "Banyak yang nanya harga, minta info, lalu hilang pas di-follow up. Tim lo capek ngurus leads yang nggak jelas niat belinya.",
+        copy: "Banyak yang nanya harga, lalu hilang pas di-follow up.",
     },
     {
         title: "Susah Di-Scale Up (Mentok)",
-        copy: "Mau naikin budget takut makin boncos, karena lo nggak tahu closing yang bagus datang dari keyword, campaign, atau audience yang mana.",
+        copy: "Mau naikin budget takut boncos karena sumber closing belum kebaca.",
     },
 ];
 
@@ -77,7 +77,7 @@ export function ProblemSection() {
                     </p>
                     <p className="mx-auto mt-2 max-w-4xl text-sm font-semibold leading-6 text-zinc-300 sm:leading-7">
                         Masalahnya bukan budget lo yang kurang gede. Mesin
-                        Google belum lo ajarin cara bedain mana{" "}
+                        Google belum diajarin bedain mana{" "}
                         <span className="text-amber-300">orang iseng</span>{" "}
                         dan mana{" "}
                         <span className="text-amber-300">pembeli asli</span>.
@@ -94,8 +94,8 @@ export function ProblemSection() {
                     <div className="grid gap-4 text-base font-medium leading-7 text-zinc-300">
                         <Reveal delay={200} direction="right">
                             <p>
-                                Ibarat nyuruh sales keliling, selama ini lo
-                                cuma nyuruh Google:{" "}
+                                Selama ini, banyak campaign cuma ngasih tugas ke
+                                Google:{" "}
                                 <span className="font-black text-amber-300">
                                     cariin orang yang mau ngeklik tombol WA.
                                 </span>
@@ -103,32 +103,29 @@ export function ProblemSection() {
                         </Reveal>
                         <Reveal delay={260} direction="right">
                             <p>
-                                Wajar kalau yang datang banyak yang cuma nanya,
-                                bandingin harga, atau ngilang. Buat Google,
-                                tugasnya dianggap selesai begitu ada klik,
-                                padahal lo butuh orang yang beneran transfer.
+                                Makanya yang datang bisa banyak, tapi belum
+                                tentu niat beli. Buat Google, tugasnya selesai
+                                begitu ada klik. Padahal lo butuh orang yang
+                                beneran transfer.
                             </p>
                         </Reveal>
                         <Reveal delay={320} direction="right">
                             <p>
-                                Supaya iklan lo jadi mesin pencetak profit,
-                                algoritma Google harus disuapin{" "}
+                                Biar iklan lebih waras, Google perlu dikasih{" "}
                                 <span className="font-black text-amber-300">
                                     data penjualan asli
                                 </span>
-                                , bukan cuma event klik yang kelihatan bagus di
-                                dashboard.
+                                , bukan cuma event klik yang kelihatan bagus.
                             </p>
                         </Reveal>
                         <Reveal delay={380} direction="right">
                             <p>
-                                Di GACF, senjata yang dipakai buat ini adalah{" "}
+                                Di GACF, ini yang dibenerin lewat{" "}
                                 <span className="font-black text-amber-300">
                                     Offline Conversion Tracking (OCT)
                                 </span>
-                                : cara ngirim data closing WhatsApp/manual balik
-                                ke Google, supaya mesin mulai belajar dari
-                                pembeli asli.
+                                : data closing WhatsApp/manual dikirim balik ke
+                                Google, supaya mesin belajar dari pembeli asli.
                             </p>
                         </Reveal>
                     </div>

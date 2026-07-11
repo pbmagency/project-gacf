@@ -32,8 +32,7 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
                 <Reveal>
                     <SectionHeading
                         eyebrow="Bab Akhir - Mulai Benerin Datanya"
-                        subtitle="Kalau selama ini Google belajar dari klik kosong, sekarang waktunya lo kasih sinyal yang lebih bersih."
-                        title="Masuk GACF dan mulai ajari Google membaca pembeli asli."
+                        title="Kalau mau benerin iklan, mulai dari data yang Google baca."
                     />
                 </Reveal>
 

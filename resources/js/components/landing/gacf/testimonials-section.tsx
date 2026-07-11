@@ -50,8 +50,7 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                 <Reveal>
                     <SectionHeading
                         eyebrow="Bab 3 - Bukti Lapangan"
-                        subtitle="Bukti visual yang tersedia ditampilkan apa adanya. Tanpa cerita karangan, tanpa klaim hasil pasti buat semua bisnis."
-                        title="Lihat bukti nyata dari orang yang sudah masuk ekosistem GACF."
+                        title="Bukti dari orang yang sudah belajar di GACF."
                     />
                 </Reveal>
 

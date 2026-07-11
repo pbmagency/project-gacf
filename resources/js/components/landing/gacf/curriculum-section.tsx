@@ -34,10 +34,8 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                                     dari closing.
                                 </h2>
                                 <p className="mt-4 text-pretty text-base leading-7 text-zinc-300">
-                                    Setiap modul disusun sebagai perjalanan:
-                                    pahami kenapa datanya salah, rapikan
-                                    tracking, jalankan campaign, lalu kirim data
-                                    pembeli asli balik ke Google.
+                                    Urutannya dibuat biar lo tahu harus mulai
+                                    dari mana, bukan lompat-lompat optimasi.
                                 </p>
                             </div>
                         </Reveal>
@@ -68,9 +66,8 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                                         </span>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-zinc-400">
-                                        Urutannya dibuat supaya lo ngikutin
-                                        ceritanya dari awal: sinyal, campaign,
-                                        optimasi, sampai OCT.
+                                        Mulai dari sinyal, campaign, optimasi,
+                                        sampai OCT.
                                     </p>
                                 </div>
                             </div>

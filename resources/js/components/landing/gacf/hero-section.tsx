@@ -49,9 +49,8 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                         Iklan Lo Ratusan Yang Klik, Tapi Yang Chat Dikit?
                     </h1>
                     <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-zinc-300 sm:text-xl">
-                        Pelajari cara tingkatin jumlah chat tanpa nambah budget
-                        iklan dengan metode OCT yang sukses membantu 3.500+
-                        business owners.
+                        Belajar naikin jumlah chat tanpa asal nambah budget,
+                        dengan ngebenerin data yang Google baca lewat OCT.
                     </p>
 
                     <ul className="mt-6 grid gap-3">
@@ -125,8 +124,8 @@ function HeroLearningVisual() {
                             Ceritanya dimulai dari data yang salah.
                         </h2>
                         <p className="mt-3 max-w-xs text-sm leading-6 text-zinc-400">
-                            Kalau yang masuk ke Google cuma klik, jangan heran
-                            kalau yang dicari mesin juga cuma pengklik.
+                            Kalau sinyalnya cuma klik, Google juga akan terus
+                            cari orang yang mirip pengklik.
                         </p>
                     </div>
                     <div className="hidden rounded-lg border border-white/10 bg-white/[0.04] p-3 text-amber-300 sm:block">

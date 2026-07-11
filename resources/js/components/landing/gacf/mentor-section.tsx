@@ -62,15 +62,14 @@ export function MentorSection() {
                         <SectionHeading
                             align="left"
                             eyebrow="Bab 4 - Mentor"
-                            title="Yang dibedah bukan sekadar dashboard, tapi cara Google belajar."
+                            title="Gua nggak cuma bedah dashboard. Gua bedah sinyal yang Google baca."
                         />
                         <p className="mt-5 text-base leading-7 text-zinc-300">
                             Gua Hariyanto Chung, owner agency dan Google Partner
-                            Premier. Dari pengalaman ngelola campaign dan budget
-                            iklan besar, gua rangkum satu pelajaran penting:
-                            iklan boncos sering bukan karena Google bodoh, tapi
-                            karena sinyal yang dikasih ke Google belum nunjukin
-                            pembeli asli.
+                            Premier. Setelah ngelola banyak campaign dan budget
+                            iklan besar, gua lihat pola yang sering kejadian:
+                            iklannya bukan selalu jelek, tapi sinyal yang masuk
+                            ke Google belum nunjukin pembeli asli.
                         </p>
 
                         <div className="mt-5 max-w-2xl rounded-lg border-l-2 border-amber-300 bg-white/[0.035] p-4">
@@ -105,8 +104,8 @@ export function MentorSection() {
                                 className="mt-0.5 h-4 w-4 shrink-0"
                             />
                             <span className="text-sm font-bold">
-                                Strategi praktis Google Ads, bukan teori
-                                dashboard doang.
+                                Strategi Google Ads yang dibaca dari data, bukan
+                                feeling doang.
                             </span>
                         </div>
                     </Reveal>
