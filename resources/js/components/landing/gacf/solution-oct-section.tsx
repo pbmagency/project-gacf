@@ -21,7 +21,7 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
             <div className="mx-auto max-w-6xl">
                 <Reveal>
                     <SectionHeading
-                        eyebrow="Bab 2 - Turning Point"
+                        eyebrow="Metode Offline Conversion Tracking (OCT)"
                         title="Begitu data pembeli asli masuk, cara Google belajar ikut berubah."
                     />
                 </Reveal>

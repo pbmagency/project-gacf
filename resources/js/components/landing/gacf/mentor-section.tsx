@@ -61,7 +61,7 @@ export function MentorSection() {
                     <Reveal delay={100} direction="right">
                         <SectionHeading
                             align="left"
-                            eyebrow="Bab 4 - Mentor"
+                            eyebrow="Mentor Pengalaman"
                             title="Gua nggak cuma bedah dashboard. Gua bedah sinyal yang Google baca."
                         />
                         <p className="mt-5 text-base leading-7 text-zinc-300">

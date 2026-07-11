@@ -1,14 +1,17 @@
 import {
-    CheckCircle2,
+    ChevronDown,
     ClipboardCheck,
     ShieldCheck,
     Star,
     TrendingUp,
 } from "lucide-react";
 
-import { heroBullets } from "@/data/gacf-landing";
-
-import { gacfBundleImage } from "./assets";
+import {
+    bukTariTestimonialImage,
+    gacfBundleImage,
+    pakMahfuddinTestimonialImage,
+    pakSandiTestimonialImage,
+} from "./assets";
 import { CtaCluster } from "./cta-cluster";
 import { Reveal } from "./reveal";
 import type { TrackCta } from "./types";
@@ -17,10 +20,16 @@ interface HeroSectionProps {
     onCtaClick: TrackCta;
 }
 
+const memberAvatarImages = [
+    bukTariTestimonialImage,
+    pakMahfuddinTestimonialImage,
+    pakSandiTestimonialImage,
+] as const;
+
 export function HeroSection({ onCtaClick }: HeroSectionProps) {
     return (
         <section
-            className="relative isolate scroll-mt-16 overflow-hidden bg-[#07070a] px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-10 lg:px-8 lg:pb-24 lg:pt-10 xl:pt-12"
+            className="relative isolate scroll-mt-16 overflow-hidden bg-[#07070a] px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-10 lg:px-8 lg:pb-12 lg:pt-8 xl:pt-10"
             id="top"
         >
             <div className="gacf-grid absolute inset-0 opacity-45" />
@@ -44,6 +53,21 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                             ))}
                         </span>
                         <span>3.500+ Members</span>
+                        <span className="ml-1 flex -space-x-2">
+                            {memberAvatarImages.map((image, index) => (
+                                <img
+                                    alt=""
+                                    aria-hidden="true"
+                                    className="h-6 w-6 rounded-full border-2 border-[#111114] object-cover"
+                                    decoding="async"
+                                    height={32}
+                                    key={image}
+                                    loading={index === 0 ? "eager" : "lazy"}
+                                    src={image}
+                                    width={32}
+                                />
+                            ))}
+                        </span>
                     </div>
                     <h1 className="max-w-4xl text-balance text-3xl font-black leading-[1.05] text-white sm:text-5xl lg:text-[3.6rem] xl:text-6xl">
                         Iklan Lo Ratusan Yang Klik, Tapi Yang Chat Dikit?
@@ -52,21 +76,6 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                         Belajar naikin jumlah chat tanpa asal nambah budget,
                         dengan ngebenerin data yang Google baca lewat OCT.
                     </p>
-
-                    <ul className="mt-6 grid gap-3">
-                        {heroBullets.map((bullet) => (
-                            <li
-                                className="flex items-start gap-3 text-zinc-200"
-                                key={bullet}
-                            >
-                                <CheckCircle2
-                                    aria-hidden="true"
-                                    className="mt-0.5 h-5 w-5 shrink-0 text-amber-300"
-                                />
-                                <span>{bullet}</span>
-                            </li>
-                        ))}
-                    </ul>
 
                     <div className="mt-6 grid gap-3 sm:flex">
                         <div className="inline-flex items-center justify-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/[0.08] px-4 py-2 text-sm font-black text-amber-100">
@@ -98,6 +107,23 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                     <HeroLearningVisual />
                 </Reveal>
             </div>
+
+            <Reveal
+                className="relative mx-auto mt-8 flex max-w-7xl justify-center lg:mt-6"
+                delay={220}
+                direction="scale"
+            >
+                <a
+                    aria-label="Lanjut ke bagian warning"
+                    className="group grid h-10 w-10 cursor-pointer place-items-center rounded-full text-amber-300 transition duration-200 hover:-translate-y-0.5 hover:text-amber-200"
+                    href="#problem"
+                >
+                    <ChevronDown
+                        aria-hidden="true"
+                        className="h-8 w-8 motion-safe:animate-bounce"
+                    />
+                </a>
+            </Reveal>
         </section>
     );
 }
@@ -110,8 +136,8 @@ function HeroLearningVisual() {
     ];
 
     return (
-        <div className="relative hidden sm:block sm:min-h-[540px] lg:min-h-[560px]">
-            <div className="gacf-panel relative overflow-hidden rounded-lg p-5 pb-0 sm:min-h-[490px] sm:overflow-visible sm:pb-5 lg:mr-8">
+        <div className="relative hidden sm:block sm:min-h-[480px] lg:min-h-[500px]">
+            <div className="gacf-panel relative overflow-hidden rounded-lg p-5 pb-0 sm:min-h-[445px] sm:overflow-visible sm:pb-5 lg:mr-8">
                 <div className="gacf-grid absolute inset-0 opacity-25" />
                 <div className="absolute inset-x-0 bottom-0 h-3/4 rounded-b-lg bg-gradient-to-t from-black via-black/55 to-transparent" />
 

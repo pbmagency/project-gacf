@@ -30,7 +30,7 @@ export function ProblemSection() {
                 <Reveal>
                     <div>
                         <p className="text-xs font-black uppercase tracking-[0.18em] text-red-300">
-                            Bab 1 - Warning
+                            Warning!
                         </p>
                         <h2 className="mt-3 max-w-6xl text-3xl font-black uppercase leading-[1.02] text-white sm:text-4xl lg:text-[3.35rem]">
                             Fase 'berdarah-darah' main Google Ads. Lo lagi di
@@ -104,9 +104,11 @@ export function ProblemSection() {
                         <Reveal delay={260} direction="right">
                             <p>
                                 Makanya yang datang bisa banyak, tapi belum
-                                tentu niat beli. Buat Google, tugasnya selesai
-                                begitu ada klik. Padahal lo butuh orang yang
-                                beneran transfer.
+                                tentu niat beli.{" "}
+                                <span className="font-black text-amber-300">
+                                    Buat Google, tugasnya selesai begitu ada
+                                    klik.
+                                </span>
                             </p>
                         </Reveal>
                         <Reveal delay={320} direction="right">

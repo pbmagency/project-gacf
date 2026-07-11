@@ -1,9 +1,3 @@
-export const heroBullets = [
-    "Biar Google ngerti mana klik iseng dan mana calon pembeli",
-    "Closing WhatsApp/manual ikut jadi sinyal iklan",
-    "Alurnya dipandu dari tracking, campaign, sampai OCT",
-];
-
 export const octComparison = {
     without: [
         "Google cuma lihat klik, form, atau tombol WhatsApp",

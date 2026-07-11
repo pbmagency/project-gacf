@@ -49,7 +49,7 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
             <div className="mx-auto max-w-7xl">
                 <Reveal>
                     <SectionHeading
-                        eyebrow="Bab 3 - Bukti Lapangan"
+                        eyebrow="Testimoni Member Kami"
                         title="Bukti dari orang yang sudah belajar di GACF."
                     />
                 </Reveal>

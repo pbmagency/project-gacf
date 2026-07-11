@@ -8,6 +8,7 @@ import { pricingIncludes } from "@/data/gacf-landing";
 
 import { TrustRow } from "./cta-cluster";
 import { DailyCountdownTimer } from "./daily-countdown-timer";
+import { OrderOnlineEmbed } from "./order-online-embed";
 import { Reveal, RevealListItem } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import type { PricingAction } from "./types";
@@ -17,9 +18,9 @@ interface PricingSectionProps {
 }
 
 // TODO production: set VITE_GACF_CHECKOUT_URL and VITE_GACF_WHATSAPP_URL.
-// The #pricing fallback keeps local/empty env builds safe without crashing.
+// The #order-form fallback keeps the primary pricing CTA on the embedded form.
 const whatsappUrl = import.meta.env.VITE_GACF_WHATSAPP_URL || "#pricing";
-const checkoutUrl = import.meta.env.VITE_GACF_CHECKOUT_URL || whatsappUrl;
+const checkoutUrl = import.meta.env.VITE_GACF_CHECKOUT_URL || "#order-form";
 
 export function PricingSection({ onPricingAction }: PricingSectionProps) {
     return (
@@ -31,8 +32,8 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
             <div className="mx-auto max-w-6xl">
                 <Reveal>
                     <SectionHeading
-                        eyebrow="Bab Akhir - Mulai Benerin Datanya"
-                        title="Kalau mau benerin iklan, mulai dari data yang Google baca."
+                        eyebrow="Penawaran Terbatas"
+                        title="Mulai Sekarang, Investasi Paling Worth It"
                     />
                 </Reveal>
 
@@ -117,6 +118,10 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
                             <TrustRow />
                         </Reveal>
                     </div>
+
+                    <Reveal className="mt-7" delay={180}>
+                        <OrderOnlineEmbed />
+                    </Reveal>
                 </div>
             </div>
         </section>

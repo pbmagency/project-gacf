@@ -1,0 +1,196 @@
+import { useEffect } from "react";
+
+const orderOnlineFormId = "oo-embed-form-gacf-2026-ref-mic-1205";
+const orderOnlineRedirectUrl = "https://dimancy.orderonline.id";
+const orderOnlineAccountId = "5e93168a84d0731f526c543e";
+const orderOnlineProductId = "69c50016fe45e02571074f61";
+const orderOnlineVariantId = "69c50016fe45e02571074f62";
+
+const loaderCss = `
+.ooef-loader{visibility:hidden;opacity:0;position:absolute;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;flex-direction:column;animation:ooLoadingIn 10s ease;-webkit-animation:ooLoadingIn 10s ease;animation-fill-mode:forwards;overflow:hidden}
+@keyframes ooLoadingIn{0%{visibility:hidden;opacity:0}20%{visibility:visible;opacity:0}100%{visibility:visible;opacity:1}}
+@-webkit-keyframes ooLoadingIn{0%{visibility:hidden;opacity:0}20%{visibility:visible;opacity:0}100%{visibility:visible;opacity:1}}
+.ooef-loader>div,.ooef-loader>div:after{border-radius:50%;width:2.5rem;height:2.5rem}
+.ooef-loader>div{font-size:10px;position:relative;text-indent:-9999em;border:.25rem solid #f5f5f5;border-left:.25rem solid #55c4cf;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0);-webkit-animation:ooLoading 1.1s infinite linear;animation:ooLoading 1.1s infinite linear}
+.ooef-loader.error>div{border-left:.25rem solid #ff4500;animation-duration:5s}
+@-webkit-keyframes ooLoading{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+@keyframes ooLoading{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+`;
+
+type OrderOnlineQueue = unknown[][];
+
+type OrderOnlineFunction = ((...args: unknown[]) => void) & {
+    callMethod?: (...args: unknown[]) => void;
+    loaded?: boolean;
+    push?: OrderOnlineFunction;
+    queue: OrderOnlineQueue;
+    version?: string;
+};
+
+type OrderOnlineWindow = Window & {
+    _ooe?: OrderOnlineFunction;
+    jQuery?: unknown;
+    ooe?: OrderOnlineFunction;
+};
+
+function appendScript(src: string, id: string, onLoad?: () => void) {
+    const existingScript = document.getElementById(id) as
+        | HTMLScriptElement
+        | null;
+
+    if (existingScript) {
+        if (!onLoad) {
+            return;
+        }
+
+        if (existingScript.dataset.loaded === "true") {
+            onLoad();
+            return;
+        }
+
+        existingScript.addEventListener("load", onLoad, { once: true });
+        return;
+    }
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.id = id;
+    script.src = src;
+    script.addEventListener(
+        "load",
+        () => {
+            script.dataset.loaded = "true";
+            onLoad?.();
+        },
+        { once: true },
+    );
+
+    const firstScript = document.getElementsByTagName("script")[0];
+    firstScript.parentNode?.insertBefore(script, firstScript);
+}
+
+function initOrderOnlineQueue(windowRef: OrderOnlineWindow) {
+    if (windowRef.ooe) {
+        return;
+    }
+
+    const ooe = function (...args: unknown[]) {
+        if (ooe.callMethod) {
+            ooe.callMethod(...args);
+            return;
+        }
+
+        ooe.queue.push(args);
+    } as OrderOnlineFunction;
+
+    if (!windowRef._ooe) {
+        windowRef._ooe = ooe;
+    }
+
+    ooe.push = ooe;
+    ooe.loaded = true;
+    ooe.version = "8.0.2";
+    ooe.queue = [];
+    windowRef.ooe = ooe;
+}
+
+function logOrderOnlineError(error: unknown) {
+    const normalizedError =
+        error instanceof Error ? error : new Error(String(error));
+    const payload = JSON.stringify({
+        stack: normalizedError.stack,
+        url: document.location.href,
+    });
+    const params = `message=${encodeURIComponent(
+        normalizedError.name,
+    )}&payload=${encodeURIComponent(payload)}&type=embed&level=error`;
+
+    const request = new XMLHttpRequest();
+    request.open("POST", "https://api.orderonline.id/log", true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.send(params);
+}
+
+function initOrderOnlineEmbed() {
+    const form = document.getElementById(orderOnlineFormId) as
+        | HTMLFormElement
+        | null;
+
+    if (!form || form.dataset.ooEmbedInitialized === "true") {
+        return;
+    }
+
+    try {
+        const windowRef = window as OrderOnlineWindow;
+
+        initOrderOnlineQueue(windowRef);
+        windowRef.ooe?.("setup", "redirect", orderOnlineRedirectUrl);
+        windowRef.ooe?.(
+            "init",
+            orderOnlineAccountId,
+            orderOnlineProductId,
+            orderOnlineVariantId,
+            orderOnlineFormId,
+            {
+                action: "Klik untuk pemesanan",
+                mode: "page",
+                title: "Form Pemesanan",
+                triggerGtm: false,
+                triggerPixel: false,
+            },
+        );
+
+        const loadEmbedScript = () => {
+            appendScript(
+                "https://cdn.orderonline.id/js/embed-v2-slim.min.js?v=8.0.2",
+                "oo-embed-js",
+            );
+        };
+
+        if (!windowRef.jQuery) {
+            appendScript(
+                "https://cdn.orderonline.id/js/vendor/jquery.min.js",
+                "oo-embed-jquery",
+                loadEmbedScript,
+            );
+        } else {
+            loadEmbedScript();
+        }
+
+        form.dataset.ooEmbedInitialized = "true";
+    } catch (error) {
+        logOrderOnlineError(error);
+        form.querySelector(".ooef-loader")?.classList.add("error");
+    }
+}
+
+export function OrderOnlineEmbed() {
+    useEffect(() => {
+        initOrderOnlineEmbed();
+    }, []);
+
+    return (
+        <div
+            className="scroll-mt-28 rounded-lg border border-amber-300/20 bg-white p-2 text-zinc-950 shadow-[0_22px_70px_rgba(0,0,0,0.24)] sm:p-3"
+            id="order-form"
+        >
+            <div className="ooef">
+                <form
+                    className="orderonline-embed-form relative min-h-[32rem] overflow-hidden rounded-md bg-white"
+                    data-origin="orderonline"
+                    data-product-id={orderOnlineProductId}
+                    data-product-slug="gacf-2026-ref-mic"
+                    data-username="dimancy"
+                    id={orderOnlineFormId}
+                >
+                    <div className="ooef-loader">
+                        <style>{loaderCss}</style>
+                        <div aria-live="polite" role="status">
+                            <div>Loading...</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}

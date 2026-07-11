@@ -1,8 +1,5 @@
-import { BookOpenCheck } from "lucide-react";
-
 import { curriculumModules } from "@/data/gacf-landing";
 
-import { gacfCourseCover } from "./assets";
 import { CtaCluster } from "./cta-cluster";
 import { Reveal } from "./reveal";
 import type { TrackCta } from "./types";
@@ -26,7 +23,7 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                                 <div className="mb-4 flex items-center gap-3">
                                     <span className="h-px w-8 shrink-0 bg-amber-300/70" />
                                     <p className="text-xs font-bold uppercase leading-5 tracking-[0.18em] text-amber-300">
-                                        Bab 5 - Alur Belajar
+                                        Alur Belajar
                                     </p>
                                 </div>
                                 <h2 className="text-balance text-3xl font-black leading-tight text-white sm:text-4xl lg:text-[2.35rem]">
@@ -41,42 +38,13 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                         </Reveal>
 
                         <Reveal
-                            className="mt-6 rounded-lg border border-white/10 bg-white/[0.035] p-4"
-                            delay={90}
+                            className="hidden lg:block"
+                            delay={120}
                             direction="left"
                         >
-                            <div className="grid gap-4 sm:grid-cols-[5rem_1fr] sm:items-center">
-                                <img
-                                    alt="Cover Google Ads Cuan Formula"
-                                    className="aspect-[3/4] w-20 rounded-lg border border-white/10 object-cover sm:w-full"
-                                    decoding="async"
-                                    height={320}
-                                    loading="lazy"
-                                    src={gacfCourseCover}
-                                    width={240}
-                                />
-                                <div>
-                                    <div className="flex items-center gap-3 text-amber-300">
-                                        <BookOpenCheck
-                                            aria-hidden="true"
-                                            className="h-5 w-5"
-                                        />
-                                        <span className="text-sm font-black uppercase tracking-[0.14em]">
-                                            Learning path
-                                        </span>
-                                    </div>
-                                    <p className="mt-3 text-sm leading-6 text-zinc-400">
-                                        Mulai dari sinyal, campaign, optimasi,
-                                        sampai OCT.
-                                    </p>
-                                </div>
-                            </div>
-                        </Reveal>
-
-                        <Reveal delay={180} direction="left">
                             <CtaCluster
                                 align="left"
-                                className="mt-6"
+                                className="mt-8"
                                 onTrack={onCtaClick}
                                 primaryLocation="curriculum_primary"
                                 secondaryLocation="curriculum_secondary"
@@ -120,6 +88,16 @@ export function CurriculumSection({ onCtaClick }: CurriculumSectionProps) {
                         </ol>
                     </Reveal>
                 </div>
+
+                <Reveal className="lg:hidden" delay={180} direction="up">
+                    <CtaCluster
+                        align="left"
+                        className="mt-7"
+                        onTrack={onCtaClick}
+                        primaryLocation="curriculum_primary"
+                        secondaryLocation="curriculum_secondary"
+                    />
+                </Reveal>
             </div>
         </section>
     );
