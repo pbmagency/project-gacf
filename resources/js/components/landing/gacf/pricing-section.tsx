@@ -1,7 +1,4 @@
-import {
-    CheckCircle2,
-    MessageCircle,
-} from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 import { pricingIncludes } from "@/data/gacf-landing";
 
@@ -11,16 +8,17 @@ import { DailyCountdownTimer } from "./daily-countdown-timer";
 import { OrderOnlineEmbed } from "./order-online-embed";
 import { Reveal, RevealListItem } from "./reveal";
 import { SectionHeading } from "./section-heading";
-import type { PricingAction } from "./types";
+import type { OrderFormTrack } from "./types";
 
 interface PricingSectionProps {
-    onPricingAction: PricingAction;
+    onOrderFormStart: OrderFormTrack;
+    onOrderFormSubmit: OrderFormTrack;
 }
 
-// TODO production: set VITE_GACF_WHATSAPP_URL.
-const whatsappUrl = import.meta.env.VITE_GACF_WHATSAPP_URL || "#pricing";
-
-export function PricingSection({ onPricingAction }: PricingSectionProps) {
+export function PricingSection({
+    onOrderFormStart,
+    onOrderFormSubmit,
+}: PricingSectionProps) {
     return (
         <section
             className="relative scroll-mt-16 overflow-hidden bg-[#101014] px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
@@ -84,7 +82,10 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
                             </ul>
 
                             <div className="mt-6">
-                                <OrderOnlineEmbed />
+                                <OrderOnlineEmbed
+                                    onFormStart={onOrderFormStart}
+                                    onFormSubmit={onOrderFormSubmit}
+                                />
                             </div>
 
                             <Reveal
@@ -113,22 +114,6 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
                                 </p>
                             </Reveal>
 
-                            <div className="mt-4">
-                                <button
-                                    className="gacf-cta inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-black text-white transition duration-200 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151519]"
-                                    onClick={() =>
-                                        onPricingAction(
-                                            "pricing_whatsapp",
-                                            "Tanya via WhatsApp",
-                                            whatsappUrl,
-                                        )
-                                    }
-                                    type="button"
-                                >
-                                    <MessageCircle className="h-4 w-4" />
-                                    <span>Tanya via WhatsApp</span>
-                                </button>
-                            </div>
                             <TrustRow />
                         </Reveal>
                     </div>

@@ -147,6 +147,7 @@ export function useAnalytics() {
                 credentials: "same-origin",
                 keepalive: true,
                 headers: {
+                    Accept: "application/json",
                     "Content-Type": "application/json",
 
                     "X-CSRF-TOKEN":

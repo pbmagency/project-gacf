@@ -33,22 +33,35 @@ class AnalyticsController extends Controller
 
     public function track(Request $request, MetaConversionService $metaService)
     {
-        // Debug request
-        Log::info('Analytics Request:', $request->all());
+        $validated = $request->validate([
+            'event_type'      => ['required', 'string', 'in:visit,scroll,engagement,conversion,payment,cta_click,initiate_checkout,lead,section_view'],
+            'event_data'      => ['nullable', 'array'],
+            'referral_source' => ['nullable', 'string', 'max:2048'],
+            'utm_source'      => ['nullable', 'string', 'max:255'],
+            'utm_medium'      => ['nullable', 'string', 'max:255'],
+            'utm_campaign'    => ['nullable', 'string', 'max:255'],
+            'utm_content'     => ['nullable', 'string', 'max:255'],
+            'utm_term'        => ['nullable', 'string', 'max:255'],
+        ]);
+
+        Log::debug('Analytics event received', [
+            'event_type' => $validated['event_type'],
+            'session_id' => $request->session()->getId(),
+        ]);
 
         $sessionId = $request->session()->getId();
         $ipHash = hash('sha256', $request->ip() . config('app.key'));
 
         UserAnalytic::create([
             'session_id' => $sessionId,
-            'event_type' => $request->input('event_type'),
-            'event_data' => $request->input('event_data') ?? [],
-            'referral_source' => $request->input('referral_source'),
-            'utm_source' => $request->input('utm_source'),
-            'utm_medium' => $request->input('utm_medium'),
-            'utm_campaign' => $request->input('utm_campaign'),
-            'utm_content' => $request->input('utm_content'),
-            'utm_term' => $request->input('utm_term'),
+            'event_type' => $validated['event_type'],
+            'event_data' => $validated['event_data'] ?? [],
+            'referral_source' => $validated['referral_source'] ?? null,
+            'utm_source' => $validated['utm_source'] ?? null,
+            'utm_medium' => $validated['utm_medium'] ?? null,
+            'utm_campaign' => $validated['utm_campaign'] ?? null,
+            'utm_content' => $validated['utm_content'] ?? null,
+            'utm_term' => $validated['utm_term'] ?? null,
             'ip_hash' => $ipHash,
             'user_agent' => $request->userAgent(),
             'user_id' => $request->user()?->id,
@@ -57,23 +70,23 @@ class AnalyticsController extends Controller
         ]);
 
         // Send server-side events to Meta Conversions API
-        $eventId = $request->input('event_data.event_id');
-        $eventType = $request->input('event_type');
+        $eventId = data_get($validated, 'event_data.event_id');
+        $eventType = $validated['event_type'];
 
         if ($eventId) {
             if ($eventType === 'visit') {
                 $metaService->sendPageView($request, $eventId);
             }
 
-            $metaEvent = $request->input('event_data.meta_event');
+            $metaEvent = data_get($validated, 'event_data.meta_event');
 
             if ($eventType === 'lead' && $metaEvent === 'AddToCart') {
                 $metaService->sendAddToCart($request, $eventId);
             }
 
             if ($eventType === 'lead' && $metaEvent === 'Purchase') {
-                $amount   = (float) ($request->input('event_data.amount') ?? 0);
-                $currency = $request->input('event_data.currency', 'IDR');
+                $amount   = (float) (data_get($validated, 'event_data.amount') ?? 0);
+                $currency = data_get($validated, 'event_data.currency', 'IDR');
                 $metaService->sendPurchase($request, $eventId, $amount, $currency);
             }
         }

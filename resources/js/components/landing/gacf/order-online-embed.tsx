@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import type { OrderFormTrack } from "./types";
+
 const orderOnlineFormId = "oo-embed-form-gacf-2026-ref-mic-1205";
 const orderOnlineRedirectUrl = "https://dimancy.orderonline.id";
 const orderOnlineAccountId = "5e93168a84d0731f526c543e";
@@ -164,10 +166,67 @@ function initOrderOnlineEmbed() {
     }
 }
 
-export function OrderOnlineEmbed() {
+interface OrderOnlineEmbedProps {
+    onFormStart?: OrderFormTrack;
+    onFormSubmit?: OrderFormTrack;
+}
+
+export function OrderOnlineEmbed({
+    onFormStart,
+    onFormSubmit,
+}: OrderOnlineEmbedProps) {
     useEffect(() => {
         initOrderOnlineEmbed();
-    }, []);
+
+        const form = document.getElementById(orderOnlineFormId);
+
+        if (!form) {
+            return;
+        }
+
+        let hasStarted = false;
+        let hasSubmitted = false;
+
+        const trackStart = () => {
+            if (hasStarted) {
+                return;
+            }
+
+            hasStarted = true;
+            onFormStart?.(
+                "pricing_order_form_start",
+                "Mulai Isi Form Pemesanan",
+                "#order-form",
+            );
+        };
+
+        const trackSubmit = () => {
+            trackStart();
+
+            if (hasSubmitted) {
+                return;
+            }
+
+            hasSubmitted = true;
+            onFormSubmit?.(
+                "pricing_order_form_submit",
+                "Kirim Form Pemesanan",
+                "#order-form",
+            );
+        };
+
+        form.addEventListener("focusin", trackStart, true);
+        form.addEventListener("input", trackStart, true);
+        form.addEventListener("change", trackStart, true);
+        form.addEventListener("submit", trackSubmit, true);
+
+        return () => {
+            form.removeEventListener("focusin", trackStart, true);
+            form.removeEventListener("input", trackStart, true);
+            form.removeEventListener("change", trackStart, true);
+            form.removeEventListener("submit", trackSubmit, true);
+        };
+    }, [onFormStart, onFormSubmit]);
 
     return (
         <div

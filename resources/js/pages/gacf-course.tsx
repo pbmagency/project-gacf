@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef } from "react";
 import { BonusSection } from "@/components/landing/gacf/bonus-section";
 import { CurriculumSection } from "@/components/landing/gacf/curriculum-section";
 import { FaqSection } from "@/components/landing/gacf/faq-section";
-import { FloatingWhatsapp } from "@/components/landing/gacf/floating-whatsapp";
 import { FooterSection } from "@/components/landing/gacf/footer-section";
 import { HeroSection } from "@/components/landing/gacf/hero-section";
 import { MentorSection } from "@/components/landing/gacf/mentor-section";
@@ -14,7 +13,7 @@ import { ProblemSection } from "@/components/landing/gacf/problem-section";
 import { SolutionOctSection } from "@/components/landing/gacf/solution-oct-section";
 import { StatsSection } from "@/components/landing/gacf/stats-section";
 import { TestimonialsSection } from "@/components/landing/gacf/testimonials-section";
-import type { PricingAction, TrackCta } from "@/components/landing/gacf/types";
+import type { OrderFormTrack, TrackCta } from "@/components/landing/gacf/types";
 import { generateEventId, useAnalytics } from "@/hooks/use-analytics";
 import { useDwellTime } from "@/hooks/use-dwell-time";
 import { useScrollTracking } from "@/hooks/use-scroll-tracking";
@@ -62,12 +61,31 @@ export default function GacfCourse() {
         [trackCTA],
     );
 
-    const handlePricingAction = useCallback<PricingAction>(
+    const trackOrderFormStart = useCallback<OrderFormTrack>(
         (location, text, destination) => {
             const eventId = generateEventId();
-            const pixelPayload = {
+
+            trackCTA(location, text, destination);
+            trackInitiateCheckout({
+                button_text: text,
+                destination,
+                event_id: eventId,
+                location,
+                product_id: "gacf-2026",
+                value: price,
+                currency: "IDR",
+            });
+        },
+        [trackCTA, trackInitiateCheckout],
+    );
+
+    const trackOrderFormSubmit = useCallback<OrderFormTrack>(
+        (location, text, destination) => {
+            const eventId = generateEventId();
+            const productPayload = {
                 content_name: "GACF 2026",
                 content_category: "E-Course",
+                product_id: "gacf-2026",
                 value: price,
                 currency: "IDR",
             };
@@ -78,7 +96,7 @@ export default function GacfCourse() {
                     : undefined;
 
             if (typeof fbq === "function") {
-                fbq("track", "AddToCart", pixelPayload, {
+                fbq("track", "AddToCart", productPayload, {
                     eventID: eventId,
                 });
             }
@@ -86,42 +104,24 @@ export default function GacfCourse() {
             trackCTA(location, text, destination, "AddToCart", eventId, {
                 fireBrowserPixel: false,
             });
-            trackInitiateCheckout({
+            trackLead("order-online-form-submit", {
+                ...productPayload,
                 button_text: text,
                 destination,
                 event_id: eventId,
-                value: price,
-                currency: "IDR",
-            });
-            trackLead("gacf-pricing-action", {
-                ...pixelPayload,
-                product_id: "gacf-2026",
-                button_text: text,
-                destination,
-                event_id: eventId,
+                location,
                 skip_browser_pixel: true,
             });
-            trackConversion("gacf_add_to_cart", {
-                ...pixelPayload,
+            trackConversion("gacf_order_form_submit", {
+                ...productPayload,
                 button_text: text,
                 destination,
                 event_id: eventId,
+                location,
                 meta_event: "AddToCart",
             });
-
-            window.setTimeout(() => {
-                if (destination.startsWith("#")) {
-                    document.querySelector(destination)?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    });
-                    return;
-                }
-
-                window.location.href = destination;
-            }, 150);
         },
-        [trackCTA, trackConversion, trackInitiateCheckout, trackLead],
+        [trackCTA, trackConversion, trackLead],
     );
 
     return (
@@ -155,11 +155,13 @@ export default function GacfCourse() {
                     <MentorSection />
                     <CurriculumSection onCtaClick={handleCtaClick} />
                     <BonusSection />
-                    <PricingSection onPricingAction={handlePricingAction} />
+                    <PricingSection
+                        onOrderFormStart={trackOrderFormStart}
+                        onOrderFormSubmit={trackOrderFormSubmit}
+                    />
                     <FaqSection onCtaClick={handleCtaClick} />
                 </main>
-                <FooterSection onCtaClick={handleCtaClick} />
-                <FloatingWhatsapp onCtaClick={handleCtaClick} />
+                <FooterSection />
             </div>
         </>
     );
