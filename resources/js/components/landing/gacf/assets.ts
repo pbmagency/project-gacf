@@ -13,6 +13,11 @@ export const gacfCourseCover = new URL(
     import.meta.url,
 ).href;
 
+export const guaranteeBadgeImage = new URL(
+    "../../../../../storage/app/public/Logo/guarantee.webp",
+    import.meta.url,
+).href;
+
 export const googlePremierBadge = new URL(
     "../../../../../storage/app/public/Logo/PremierBadge.webp",
     import.meta.url,

@@ -1,11 +1,11 @@
 import {
     CheckCircle2,
     MessageCircle,
-    ShoppingCart,
 } from "lucide-react";
 
 import { pricingIncludes } from "@/data/gacf-landing";
 
+import { guaranteeBadgeImage } from "./assets";
 import { TrustRow } from "./cta-cluster";
 import { DailyCountdownTimer } from "./daily-countdown-timer";
 import { OrderOnlineEmbed } from "./order-online-embed";
@@ -17,10 +17,8 @@ interface PricingSectionProps {
     onPricingAction: PricingAction;
 }
 
-// TODO production: set VITE_GACF_CHECKOUT_URL and VITE_GACF_WHATSAPP_URL.
-// The #order-form fallback keeps the primary pricing CTA on the embedded form.
+// TODO production: set VITE_GACF_WHATSAPP_URL.
 const whatsappUrl = import.meta.env.VITE_GACF_WHATSAPP_URL || "#pricing";
-const checkoutUrl = import.meta.env.VITE_GACF_CHECKOUT_URL || "#order-form";
 
 export function PricingSection({ onPricingAction }: PricingSectionProps) {
     return (
@@ -85,23 +83,39 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
                                 ))}
                             </ul>
 
-                            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                            <div className="mt-6">
+                                <OrderOnlineEmbed />
+                            </div>
+
+                            <Reveal
+                                className="mt-4 rounded-lg border border-amber-300/25 bg-amber-300/[0.06] px-5 py-6 text-center shadow-[0_18px_50px_rgba(251,191,36,0.08)]"
+                                delay={180}
+                                direction="scale"
+                            >
+                                <img
+                                    alt="Garansi Setup Auto Campaign"
+                                    className="mx-auto h-24 w-24 object-contain"
+                                    decoding="async"
+                                    height={128}
+                                    loading="lazy"
+                                    src={guaranteeBadgeImage}
+                                    width={128}
+                                />
+                                <p className="mx-auto mt-5 max-w-md text-base leading-8 text-zinc-200">
+                                    <span className="font-black text-white">
+                                        Garansi Setup Auto Campaign 3 Minggu:
+                                    </span>{" "}
+                                    Kalau dalam 3 minggu lo sudah praktikkan
+                                    semua materi dan masih belum bisa, tim kami
+                                    yang akan setup campaign Google Ads-mu
+                                    langsung mulai dari strategy, keyword, ads
+                                    copy, GTM, GA4, sampai conversion tracking.
+                                </p>
+                            </Reveal>
+
+                            <div className="mt-4">
                                 <button
-                                    className="gacf-cta inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-lg bg-amber-400 px-5 py-3 text-sm font-black text-zinc-950 shadow-[0_16px_40px_rgba(251,191,36,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151519]"
-                                    onClick={() =>
-                                        onPricingAction(
-                                            "pricing_pay",
-                                            "Ambil Promo Sekarang",
-                                            checkoutUrl,
-                                        )
-                                    }
-                                    type="button"
-                                >
-                                    <ShoppingCart className="h-4 w-4" />
-                                    <span>Ambil Promo Sekarang</span>
-                                </button>
-                                <button
-                                    className="gacf-cta inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-black text-white transition duration-200 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151519]"
+                                    className="gacf-cta inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-black text-white transition duration-200 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151519]"
                                     onClick={() =>
                                         onPricingAction(
                                             "pricing_whatsapp",
@@ -118,10 +132,6 @@ export function PricingSection({ onPricingAction }: PricingSectionProps) {
                             <TrustRow />
                         </Reveal>
                     </div>
-
-                    <Reveal className="mt-7" delay={180}>
-                        <OrderOnlineEmbed />
-                    </Reveal>
                 </div>
             </div>
         </section>
