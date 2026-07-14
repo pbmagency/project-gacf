@@ -86,9 +86,9 @@ export const testimonialItems: TestimonialItem[] = [
         description:
             "CTR naik, konversi juga naik setelah belajar di E-course GACF.",
         embedSrc:
-            "https://player.mediadelivery.net/embed/701542/0a8f19a3-c4c0-4bcb-a28e-8c7058db9738?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+            "https://player.mediadelivery.net/embed/701542/1dcc6aba-aab2-49b6-843e-722bf57553e4?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:
-            "https://vz-e2df73f9-1fd.b-cdn.net/0a8f19a3-c4c0-4bcb-a28e-8c7058db9738/thumbnail.jpg",
+            "https://vz-e2df73f9-1fd.b-cdn.net/1dcc6aba-aab2-49b6-843e-722bf57553e4/thumbnail.jpg",
         isPublished: true,
     },
     {
@@ -100,6 +100,16 @@ export const testimonialItems: TestimonialItem[] = [
             "https://player.mediadelivery.net/embed/701542/dde65514-a908-403d-bd2f-31790bd4bb0e?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:
             "https://vz-e2df73f9-1fd.b-cdn.net/dde65514-a908-403d-bd2f-31790bd4bb0e/thumbnail.jpg",
+        isPublished: true,
+    },
+    {
+        title: "Testimoni Member GACF",
+        type: "video",
+        description: "Cerita member setelah belajar dan praktik di E-course GACF.",
+        embedSrc:
+            "https://player.mediadelivery.net/embed/701542/6856a01a-2b28-4b17-8930-6df98e5a3c05?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+        posterSrc:
+            "https://vz-e2df73f9-1fd.b-cdn.net/6856a01a-2b28-4b17-8930-6df98e5a3c05/thumbnail.jpg",
         isPublished: true,
     },
 ];
