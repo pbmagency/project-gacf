@@ -74,7 +74,7 @@ interface AnalyticsEvent {
         | "initiate_checkout"
         | "lead"
         | "section_view";
-    event_data?: Record<string, any>;
+    event_data?: AnalyticsPayload;
     referral_source?: string;
     utm_source?: string;
     utm_medium?: string;
@@ -82,6 +82,8 @@ interface AnalyticsEvent {
     utm_content?: string;
     utm_term?: string;
 }
+
+type AnalyticsPayload = Record<string, unknown>;
 
 /**
  * Get landing source from sessionStorage
@@ -97,7 +99,7 @@ export function getLandingSource(): string {
 }
 
 export function useAnalytics() {
-    const coursePrice = import.meta.env.VITE_COURSE_PRICE;
+    const coursePrice = Number(import.meta.env.VITE_COURSE_PRICE || 0);
 
     // Initialize landing source on mount
     useEffect(() => {
@@ -203,7 +205,7 @@ export function useAnalytics() {
     );
 
     const trackEngagement = useCallback(
-        (type: string, data?: Record<string, any>) => {
+        (type: string, data?: AnalyticsPayload) => {
             track({
                 event_type: "engagement",
                 event_data: {
@@ -218,7 +220,7 @@ export function useAnalytics() {
     );
 
     const trackConversion = useCallback(
-        (type: string, data?: Record<string, any>) => {
+        (type: string, data?: AnalyticsPayload) => {
             track({
                 event_type: "conversion",
                 event_data: {
@@ -233,7 +235,7 @@ export function useAnalytics() {
     );
 
     const trackPayment = useCallback(
-        (status: string, data?: Record<string, any>) => {
+        (status: string, data?: AnalyticsPayload) => {
             track({
                 event_type: "payment",
                 event_data: {
@@ -293,7 +295,7 @@ export function useAnalytics() {
     );
 
     const trackInitiateCheckout = useCallback(
-        (data?: Record<string, any>) => {
+        (data?: AnalyticsPayload) => {
             track({
                 event_type: "initiate_checkout",
                 event_data: {
@@ -307,20 +309,21 @@ export function useAnalytics() {
     );
 
     const trackLead = useCallback(
-        (type: string, data?: Record<string, any>) => {
+        (type: string, data?: AnalyticsPayload) => {
             // Gunakan event_id dari caller jika ada, atau generate baru
-            const eventId: string = data?.event_id ?? generateEventId();
+            const eventId =
+                typeof data?.event_id === "string"
+                    ? data.event_id
+                    : generateEventId();
             const shouldFireBrowserPixel = data?.skip_browser_pixel !== true;
 
             // 1. Browser-side Meta Pixel AddToCart
-            if (
-                shouldFireBrowserPixel &&
-                typeof (window as any).fbq === "function"
-            ) {
-                const pixelPayload = data?.value
-                    ? { value: data.value, currency: data.currency ?? "IDR" }
-                    : {};
-                (window as any).fbq("track", "AddToCart", pixelPayload, {
+            if (shouldFireBrowserPixel && typeof window.fbq === "function") {
+                const value = data?.value;
+                const currency =
+                    typeof data?.currency === "string" ? data.currency : "IDR";
+                const pixelPayload = value ? { value, currency } : {};
+                window.fbq("track", "AddToCart", pixelPayload, {
                     eventID: eventId,
                 });
             }
@@ -348,16 +351,18 @@ export function useAnalytics() {
      * attribution, and sends the same event_id to the backend so CAPI deduplicates.
      */
     const trackPurchase = useCallback(
-        (amount: number, currency = "IDR", data?: Record<string, any>) => {
+        (amount: number, currency = "IDR", data?: AnalyticsPayload) => {
             const eventId = generateEventId();
 
             // 1. Browser-side Meta Pixel (for attribution in Meta Ads Manager)
-            if (typeof (window as any).fbq === "function") {
-                (window as any).fbq(
+            if (typeof window.fbq === "function") {
+                window.fbq(
                     "track",
                     "Purchase",
                     { value: amount, currency },
-                    { eventID: eventId },
+                    {
+                        eventID: eventId,
+                    },
                 );
             }
 
@@ -382,7 +387,7 @@ export function useAnalytics() {
     );
 
     const trackSectionView = useCallback(
-        (sectionId: string, data?: Record<string, any>) => {
+        (sectionId: string, data?: AnalyticsPayload) => {
             track({
                 event_type: "section_view",
                 event_data: {

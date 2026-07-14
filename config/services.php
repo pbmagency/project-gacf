@@ -1,5 +1,7 @@
 <?php
 
+$metaPixelIds = env('META_PIXEL_IDS') ?: env('META_PIXEL_ID', env('VITE_META_PIXEL_ID', ''));
+
 return [
 
     /*
@@ -37,11 +39,20 @@ return [
 
     'meta' => [
         'pixel_id'     => env('META_PIXEL_ID', env('VITE_META_PIXEL_ID', '')),
+        'pixel_ids'    => array_values(array_filter(array_map('trim', explode(',', $metaPixelIds)))),
         'access_token' => env('META_ACCESS_TOKEN', ''),
     ],
 
     'clarity' => [
         'id' => env('VITE_CLARITY_ID', ''),
+    ],
+
+    'gtm' => [
+        'id' => env('GTM_ID', env('VITE_GTM_ID', '')),
+    ],
+
+    'ga4' => [
+        'measurement_id' => env('GA4_MEASUREMENT_ID', env('VITE_GA4_MEASUREMENT_ID', '')),
     ],
 
 ];

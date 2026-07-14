@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import { useAnalytics } from '@/hooks/use-analytics';
+import { useEffect, useRef } from "react";
+import { useAnalytics } from "@/hooks/use-analytics";
 
-const SECTION_SEEN_PREFIX = 'section_seen_';
+const SECTION_SEEN_PREFIX = "section_seen_";
 
 /**
  * Minimum continuous visibility duration (ms) required to count a section as "seen".
@@ -34,16 +34,18 @@ export function useSectionTracking() {
 
     useEffect(() => {
         if (
-            typeof window === 'undefined' ||
-            !('IntersectionObserver' in window)
+            typeof window === "undefined" ||
+            !("IntersectionObserver" in window)
         ) {
             return;
         }
 
+        const timers = dwellTimers.current;
+
         // Clean up previous observer and any pending timers
         observerRef.current?.disconnect();
-        dwellTimers.current.forEach(clearTimeout);
-        dwellTimers.current.clear();
+        timers.forEach(clearTimeout);
+        timers.clear();
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -57,29 +59,29 @@ export function useSectionTracking() {
                         // Section entered viewport — start dwell timer if not already seen
                         if (
                             !sessionStorage.getItem(storageKey) &&
-                            !dwellTimers.current.has(sectionId)
+                            !timers.has(sectionId)
                         ) {
                             const timer = setTimeout(() => {
-                                dwellTimers.current.delete(sectionId);
+                                timers.delete(sectionId);
 
                                 // Guard: don't double-fire if somehow already tracked
                                 if (sessionStorage.getItem(storageKey)) return;
 
-                                sessionStorage.setItem(storageKey, '1');
+                                sessionStorage.setItem(storageKey, "1");
                                 trackSectionView(sectionId);
 
                                 // Stop observing — no need to watch anymore
                                 observer.unobserve(entry.target);
                             }, DWELL_MS);
 
-                            dwellTimers.current.set(sectionId, timer);
+                            timers.set(sectionId, timer);
                         }
                     } else {
                         // Section left viewport — cancel pending timer (fast-scroll → no event)
-                        const timer = dwellTimers.current.get(sectionId);
+                        const timer = timers.get(sectionId);
                         if (timer !== undefined) {
                             clearTimeout(timer);
-                            dwellTimers.current.delete(sectionId);
+                            timers.delete(sectionId);
                         }
                     }
                 });
@@ -96,7 +98,7 @@ export function useSectionTracking() {
         // Auto-discover all <section id="..."> elements (rAF ensures DOM is fully painted)
         requestAnimationFrame(() => {
             const sections =
-                document.querySelectorAll<HTMLElement>('section[id]');
+                document.querySelectorAll<HTMLElement>("section[id]");
             sections.forEach((el) => {
                 const storageKey = `${SECTION_SEEN_PREFIX}${el.id}`;
                 if (!sessionStorage.getItem(storageKey)) {
@@ -108,8 +110,8 @@ export function useSectionTracking() {
         return () => {
             observer.disconnect();
             // Cancel all pending dwell timers on unmount
-            dwellTimers.current.forEach(clearTimeout);
-            dwellTimers.current.clear();
+            timers.forEach(clearTimeout);
+            timers.clear();
         };
     }, [trackSectionView]); // no sectionIds dependency — DOM is the source of truth
 }

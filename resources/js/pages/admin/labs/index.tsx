@@ -1,5 +1,5 @@
-import { Head, router, useHttp } from '@inertiajs/react';
-import { format, parse } from 'date-fns';
+import { Head, router, useHttp } from "@inertiajs/react";
+import { format, parse } from "date-fns";
 import {
     Activity,
     AlertTriangle,
@@ -21,9 +21,9 @@ import {
     Trophy,
     Users,
     X,
-} from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-import type { DateRange } from 'react-day-picker';
+} from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type { DateRange } from "react-day-picker";
 import {
     Bar,
     BarChart,
@@ -33,45 +33,50 @@ import {
     Tooltip,
     XAxis,
     YAxis,
-} from 'recharts';
-import { DateRangePicker } from '@/components/date-range-picker';
-import { AudienceSegmentation } from '@/components/labs/audience-segmentation';
-import { CtaAnalysis } from '@/components/labs/cta-analysis';
-import { DeviceComparison } from '@/components/labs/device-comparison';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+} from "recharts";
+import { DateRangePicker } from "@/components/date-range-picker";
+import { AudienceSegmentation } from "@/components/labs/audience-segmentation";
+import { CtaAnalysis } from "@/components/labs/cta-analysis";
+import { DeviceComparison } from "@/components/labs/device-comparison";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
-import AdminLayout from '@/layouts/admin-layout';
+} from "@/components/ui/select";
+import AdminLayout from "@/layouts/admin-layout";
 import {
     formatCurrency,
     formatDuration,
     formatNumber,
     formatPercent,
     toSafeArray,
-} from '@/lib/safe-data';
+} from "@/lib/safe-data";
 import type {
+    CtaData,
+    DeviceData,
     FunnelItem,
+    HeatmapData,
     LabsPageProps,
     MatrixItem,
+    QualityItem,
     QualityMetrics,
+    ReaderData,
     SectionHeatmapItem,
-} from '@/types/analytics';
+} from "@/types/analytics";
 
 // ==================== HELPERS ====================
 
@@ -84,12 +89,12 @@ const transformFunnelData = (
     }
 
     const stages = [
-        'Visits',
-        'Engaged',
-        'Intent',
-        'Initiate Checkout',
-        'Leads',
-        'Sales',
+        "Visits",
+        "Engaged",
+        "Intent",
+        "Initiate Checkout",
+        "Leads",
+        "Sales",
     ];
 
     return stages.map((stage) => {
@@ -110,11 +115,11 @@ const transformFunnelData = (
 };
 
 const CHART_COLORS = [
-    'var(--chart-1)',
-    'var(--chart-2)',
-    'var(--chart-3)',
-    'var(--chart-4)',
-    'var(--chart-5)',
+    "var(--chart-1)",
+    "var(--chart-2)",
+    "var(--chart-3)",
+    "var(--chart-4)",
+    "var(--chart-5)",
 ];
 
 // ==================== MAIN COMPONENT ====================
@@ -134,36 +139,36 @@ export default function LabsIndex({
     // Normalise all props — PHP Collections can serialize as objects
     const matrix = toSafeArray<MatrixItem>(rawMatrix);
     const safeFunnel = toSafeArray<FunnelItem>(rawFunnel);
-    const quality = toSafeArray(rawQuality);
-    const devices = toSafeArray(rawDevices);
-    const cta = toSafeArray(rawCta);
-    const readers = toSafeArray(rawReaders);
-    const heatmap = toSafeArray(rawHeatmap);
+    const quality = toSafeArray<QualityItem>(rawQuality);
+    const devices = toSafeArray<DeviceData>(rawDevices);
+    const cta = toSafeArray<CtaData>(rawCta);
+    const readers = toSafeArray<ReaderData>(rawReaders);
+    const heatmap = toSafeArray<HeatmapData>(rawHeatmap);
     const sectionHeatmap = toSafeArray<SectionHeatmapItem>(rawSectionHeatmap);
     const availableSources = toSafeArray<string>(rawAvailableSources);
 
     // useHttp for cache-clear (replaces deprecated axios)
     const http = useHttp({
         range: filters.range,
-        source: filters.source ?? '',
+        source: filters.source ?? "",
         start_date: filters.start_date,
         end_date: filters.end_date,
     });
     // State
     const [isRefreshing, setIsRefreshing] = useState(false);
-    const [sortColumn, setSortColumn] = useState<keyof MatrixItem>('rpv');
-    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+    const [sortColumn, setSortColumn] = useState<keyof MatrixItem>("rpv");
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
     const [currentPage, setCurrentPage] = useState(1);
     const [showToast, setShowToast] = useState(false);
-    const [toastMessage, setToastMessage] = useState('');
-    const [toastType, setToastType] = useState<'success' | 'error'>('success');
+    const [toastMessage, setToastMessage] = useState("");
+    const [toastType, setToastType] = useState<"success" | "error">("success");
 
     // Date range state for custom filter
     const [dateRange, setDateRange] = useState<DateRange | undefined>(() => {
         if (filters.start_date && filters.end_date) {
             return {
-                from: parse(filters.start_date, 'yyyy-MM-dd', new Date()),
-                to: parse(filters.end_date, 'yyyy-MM-dd', new Date()),
+                from: parse(filters.start_date, "yyyy-MM-dd", new Date()),
+                to: parse(filters.end_date, "yyyy-MM-dd", new Date()),
             };
         }
 
@@ -172,28 +177,31 @@ export default function LabsIndex({
 
     // ── Page Filter (localStorage persisted) ──────────────────
     // Normalize any landing_source to a clean pathname (strip protocol+domain if present)
-    const normalizePath = (source: string): string => {
+    const normalizePath = useCallback((source: string): string => {
         try {
             // If it looks like a full URL, extract just the pathname
-            if (source.startsWith('http://') || source.startsWith('https://')) {
+            if (source.startsWith("http://") || source.startsWith("https://")) {
                 return new URL(source).pathname;
             }
         } catch {
             // ignore invalid URLs
         }
         // Already a path — ensure it starts with /
-        return source.startsWith('/') ? source : `/${source}`;
-    };
+        return source.startsWith("/") ? source : `/${source}`;
+    }, []);
 
     const availablePages = useMemo(
-        () => [...new Set(matrix.map((m) => normalizePath(m.landing_source)))].sort(),
-        [matrix],
+        () =>
+            [
+                ...new Set(matrix.map((m) => normalizePath(m.landing_source))),
+            ].sort(),
+        [matrix, normalizePath],
     );
 
     const [selectedPages, setSelectedPages] = useState<string[]>(() => {
-        if (typeof window === 'undefined') return [];
+        if (typeof window === "undefined") return [];
         try {
-            const stored = localStorage.getItem('labs_page_filter');
+            const stored = localStorage.getItem("labs_page_filter");
             if (stored) {
                 const parsed = JSON.parse(stored) as string[];
                 // Only keep pages that still exist in the data
@@ -207,8 +215,8 @@ export default function LabsIndex({
 
     // Persist page filter to localStorage
     useEffect(() => {
-        if (typeof window === 'undefined') return;
-        localStorage.setItem('labs_page_filter', JSON.stringify(selectedPages));
+        if (typeof window === "undefined") return;
+        localStorage.setItem("labs_page_filter", JSON.stringify(selectedPages));
     }, [selectedPages]);
 
     const togglePage = (page: string) => {
@@ -224,50 +232,53 @@ export default function LabsIndex({
     // ── Filtered data (page filter applied) ──────────────────
     const isPageFiltered = selectedPages.length > 0;
     // Normalize both sides so /test-v1 matches whether stored as path or full URL
-    const pageMatch = (source: string) =>
-        !isPageFiltered || selectedPages.includes(normalizePath(source));
+    const pageMatch = useCallback(
+        (source: string) =>
+            !isPageFiltered || selectedPages.includes(normalizePath(source)),
+        [isPageFiltered, normalizePath, selectedPages],
+    );
 
     const filteredMatrix = useMemo(
         () => matrix.filter((m) => pageMatch(m.landing_source)),
-        [matrix, selectedPages],
+        [matrix, pageMatch],
     );
     const filteredFunnel = useMemo(
         () => safeFunnel.filter((f) => pageMatch(f.landing_source)),
-        [safeFunnel, selectedPages],
+        [safeFunnel, pageMatch],
     );
     const filteredQuality = useMemo(
-        () => quality.filter((q: any) => pageMatch(q.landing_source)),
-        [quality, selectedPages],
+        () => quality.filter((q) => pageMatch(q.landing_source)),
+        [quality, pageMatch],
     );
     const filteredDevices = useMemo(
-        () => devices.filter((d: any) => pageMatch(d.landing_source)),
-        [devices, selectedPages],
+        () => devices.filter((d) => pageMatch(d.landing_source)),
+        [devices, pageMatch],
     );
     const filteredCta = useMemo(
-        () => cta.filter((c: any) => pageMatch(c.landing_source)),
-        [cta, selectedPages],
+        () => cta.filter((c) => pageMatch(c.landing_source)),
+        [cta, pageMatch],
     );
     const filteredReaders = useMemo(
-        () => readers.filter((r: any) => pageMatch(r.landing_source)),
-        [readers, selectedPages],
+        () => readers.filter((r) => pageMatch(r.landing_source)),
+        [readers, pageMatch],
     );
     const filteredHeatmap = useMemo(
-        () => heatmap.filter((h: any) => pageMatch(h.landing_source)),
-        [heatmap, selectedPages],
+        () => heatmap.filter((h) => pageMatch(h.landing_source)),
+        [heatmap, pageMatch],
     );
     const filteredSectionHeatmap = useMemo(
         () => sectionHeatmap.filter((s) => pageMatch(s.landing_source)),
-        [sectionHeatmap, selectedPages],
+        [sectionHeatmap, pageMatch],
     );
 
-    const triggerToast = (message: string, type: 'success' | 'error') => {
+    const triggerToast = (message: string, type: "success" | "error") => {
         setToastMessage(message);
         setToastType(type);
         setShowToast(true);
 
         setTimeout(() => {
             setShowToast(false);
-            setToastMessage('');
+            setToastMessage("");
         }, 4000);
     };
 
@@ -297,7 +308,7 @@ export default function LabsIndex({
             const aVal = a[sortColumn];
             const bVal = b[sortColumn];
 
-            if (sortDirection === 'asc') {
+            if (sortDirection === "asc") {
                 return (aVal as number) > (bVal as number) ? 1 : -1;
             }
 
@@ -321,12 +332,12 @@ export default function LabsIndex({
 
     // Handlers
     const handleRangeChange = (value: string) => {
-        if (value === 'custom') {
+        if (value === "custom") {
             // Just show the date picker, don't trigger router yet
             router.get(
-                '/admin/labs',
+                "/admin/labs",
                 {
-                    range: 'custom',
+                    range: "custom",
                     start_date: filters.start_date,
                     end_date: filters.end_date,
                     source: filters.source || undefined,
@@ -340,7 +351,7 @@ export default function LabsIndex({
         } else {
             // Preset range - trigger immediately
             router.get(
-                '/admin/labs',
+                "/admin/labs",
                 {
                     range: value,
                     source: filters.source || undefined,
@@ -360,11 +371,11 @@ export default function LabsIndex({
         // Only trigger router if both dates are selected
         if (date?.from && date?.to) {
             router.get(
-                '/admin/labs',
+                "/admin/labs",
                 {
-                    range: 'custom',
-                    start_date: format(date.from, 'yyyy-MM-dd'),
-                    end_date: format(date.to, 'yyyy-MM-dd'),
+                    range: "custom",
+                    start_date: format(date.from, "yyyy-MM-dd"),
+                    end_date: format(date.to, "yyyy-MM-dd"),
                     source: filters.source || undefined,
                 },
                 {
@@ -377,19 +388,19 @@ export default function LabsIndex({
     };
 
     const handleSourceChange = (value: string) => {
-        const sourceValue = value === 'all' ? undefined : value;
+        const sourceValue = value === "all" ? undefined : value;
         const params: Record<string, string | undefined> = {
             range: filters.range,
             source: sourceValue,
         };
 
         // Preserve custom date range parameters
-        if (filters.range === 'custom') {
+        if (filters.range === "custom") {
             params.start_date = filters.start_date;
             params.end_date = filters.end_date;
         }
 
-        router.get('/admin/labs', params, {
+        router.get("/admin/labs", params, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -403,12 +414,12 @@ export default function LabsIndex({
         };
 
         // Preserve custom date range parameters
-        if (filters.range === 'custom') {
+        if (filters.range === "custom") {
             params.start_date = filters.start_date;
             params.end_date = filters.end_date;
         }
 
-        router.get('/admin/labs', params, {
+        router.get("/admin/labs", params, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
@@ -417,13 +428,13 @@ export default function LabsIndex({
 
     const handleRefreshCache = () => {
         setIsRefreshing(true);
-        http.post('/admin/labs/clear-cache', {
+        http.post("/admin/labs/clear-cache", {
             onSuccess: () => {
-                triggerToast('Data cached successfully', 'success');
+                triggerToast("Data cached successfully", "success");
                 router.reload();
             },
             onError: () => {
-                triggerToast('Failed to cache data', 'error');
+                triggerToast("Failed to cache data", "error");
             },
             onFinish: () => {
                 setIsRefreshing(false);
@@ -433,10 +444,10 @@ export default function LabsIndex({
 
     const handleSort = (column: keyof MatrixItem) => {
         if (sortColumn === column) {
-            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+            setSortDirection(sortDirection === "asc" ? "desc" : "asc");
         } else {
             setSortColumn(column);
-            setSortDirection('desc');
+            setSortDirection("desc");
         }
     };
 
@@ -459,21 +470,21 @@ export default function LabsIndex({
                     <div className="animate-fade-in fixed top-20 right-4 z-50 w-auto max-w-sm">
                         <Alert
                             className={
-                                toastType === 'success'
-                                    ? 'border-primary/50 bg-primary/10 backdrop-blur-sm'
-                                    : 'border-red-500/50 bg-red-900/50 backdrop-blur-sm'
+                                toastType === "success"
+                                    ? "border-primary/50 bg-primary/10 backdrop-blur-sm"
+                                    : "border-red-500/50 bg-red-900/50 backdrop-blur-sm"
                             }
                         >
-                            {toastType === 'success' ? (
+                            {toastType === "success" ? (
                                 <CheckCircle className="h-4 w-4 text-primary" />
                             ) : (
                                 <AlertTriangle className="h-4 w-4 text-red-400" />
                             )}
                             <AlertDescription
                                 className={
-                                    toastType === 'success'
-                                        ? 'font-medium text-primary'
-                                        : 'font-medium text-red-300'
+                                    toastType === "success"
+                                        ? "font-medium text-primary"
+                                        : "font-medium text-red-300"
                                 }
                             >
                                 {toastMessage}
@@ -503,7 +514,7 @@ export default function LabsIndex({
                         <div className="flex items-center gap-2">
                             <Filter className="h-4 w-4 text-muted-foreground" />
                             <Select
-                                value={filters.source || 'all'}
+                                value={filters.source || "all"}
                                 onValueChange={handleSourceChange}
                             >
                                 <SelectTrigger className="w-[160px]">
@@ -515,8 +526,8 @@ export default function LabsIndex({
                                     </SelectItem>
                                     {availableSources.map((source) => (
                                         <SelectItem key={source} value={source}>
-                                            {source === 'direct'
-                                                ? 'Direct Traffic'
+                                            {source === "direct"
+                                                ? "Direct Traffic"
                                                 : source}
                                         </SelectItem>
                                     ))}
@@ -539,9 +550,13 @@ export default function LabsIndex({
                             <div className="flex items-center gap-2">
                                 <Globe className="h-4 w-4 text-muted-foreground" />
                                 <Select
-                                    value={selectedPages.length === 1 ? selectedPages[0] : '__multi__'}
+                                    value={
+                                        selectedPages.length === 1
+                                            ? selectedPages[0]
+                                            : "__multi__"
+                                    }
                                     onValueChange={(val) => {
-                                        if (val === '__all__') {
+                                        if (val === "__all__") {
                                             clearPageFilter();
                                         } else {
                                             togglePage(val);
@@ -551,7 +566,7 @@ export default function LabsIndex({
                                     <SelectTrigger className="w-[180px]">
                                         <SelectValue>
                                             {selectedPages.length === 0
-                                                ? 'All Pages'
+                                                ? "All Pages"
                                                 : selectedPages.length === 1
                                                   ? selectedPages[0]
                                                   : `${selectedPages.length} pages`}
@@ -564,9 +579,15 @@ export default function LabsIndex({
                                         {availablePages.map((page) => (
                                             <SelectItem key={page} value={page}>
                                                 <span className="flex items-center gap-2">
-                                                    <span className={`inline-block h-2 w-2 rounded-full ${
-                                                        selectedPages.includes(page) ? 'bg-primary' : 'bg-muted-foreground/30'
-                                                    }`} />
+                                                    <span
+                                                        className={`inline-block h-2 w-2 rounded-full ${
+                                                            selectedPages.includes(
+                                                                page,
+                                                            )
+                                                                ? "bg-primary"
+                                                                : "bg-muted-foreground/30"
+                                                        }`}
+                                                    />
                                                     {page}
                                                 </span>
                                             </SelectItem>
@@ -607,7 +628,7 @@ export default function LabsIndex({
                         </Select>
 
                         {/* Custom Date Range Picker - Conditional */}
-                        {filters.range === 'custom' && (
+                        {filters.range === "custom" && (
                             <DateRangePicker
                                 date={dateRange}
                                 onUpdate={handleDateUpdate}
@@ -622,7 +643,7 @@ export default function LabsIndex({
                             className="gap-2"
                         >
                             <RefreshCw
-                                className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`}
+                                className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
                             />
                             <span className="hidden sm:inline">
                                 Refresh Data
@@ -634,11 +655,11 @@ export default function LabsIndex({
                 {/* Date Range Info & Active Filters */}
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                     <span>
-                        Showing data from{' '}
+                        Showing data from{" "}
                         <span className="font-medium text-foreground">
                             {filters.start_date}
-                        </span>{' '}
-                        to{' '}
+                        </span>{" "}
+                        to{" "}
                         <span className="font-medium text-foreground">
                             {filters.end_date}
                         </span>
@@ -646,15 +667,16 @@ export default function LabsIndex({
                     {filters.source && (
                         <Badge variant="secondary" className="gap-1">
                             <Filter className="h-3 w-3" />
-                            {filters.source === 'direct'
-                                ? 'Direct Traffic'
+                            {filters.source === "direct"
+                                ? "Direct Traffic"
                                 : filters.source}
                         </Badge>
                     )}
                     {isPageFiltered && (
                         <Badge variant="secondary" className="gap-1">
                             <Globe className="h-3 w-3" />
-                            {selectedPages.length} page{selectedPages.length > 1 ? 's' : ''} selected
+                            {selectedPages.length} page
+                            {selectedPages.length > 1 ? "s" : ""} selected
                         </Badge>
                     )}
                 </div>
@@ -703,11 +725,11 @@ export default function LabsIndex({
                                                 <th className="p-4 text-left text-sm font-medium text-muted-foreground">
                                                     <button
                                                         onClick={() =>
-                                                            handleSort('visits')
+                                                            handleSort("visits")
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
                                                     >
-                                                        <Eye className="h-4 w-4" />{' '}
+                                                        <Eye className="h-4 w-4" />{" "}
                                                         Visits
                                                         <ArrowUpDown className="h-3 w-3" />
                                                     </button>
@@ -716,7 +738,7 @@ export default function LabsIndex({
                                                     <button
                                                         onClick={() =>
                                                             handleSort(
-                                                                'bounce_rate',
+                                                                "bounce_rate",
                                                             )
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
@@ -729,12 +751,12 @@ export default function LabsIndex({
                                                     <button
                                                         onClick={() =>
                                                             handleSort(
-                                                                'conversions',
+                                                                "conversions",
                                                             )
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
                                                     >
-                                                        <MousePointerClick className="h-4 w-4" />{' '}
+                                                        <MousePointerClick className="h-4 w-4" />{" "}
                                                         Intent
                                                         <ArrowUpDown className="h-3 w-3" />
                                                     </button>
@@ -743,12 +765,12 @@ export default function LabsIndex({
                                                     <button
                                                         onClick={() =>
                                                             handleSort(
-                                                                'initiate_checkout_rate',
+                                                                "initiate_checkout_rate",
                                                             )
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
                                                     >
-                                                        <ShoppingCart className="h-4 w-4" />{' '}
+                                                        <ShoppingCart className="h-4 w-4" />{" "}
                                                         Initiate Checkout
                                                         <ArrowUpDown className="h-3 w-3" />
                                                     </button>
@@ -757,7 +779,7 @@ export default function LabsIndex({
                                                     <button
                                                         onClick={() =>
                                                             handleSort(
-                                                                'lead_cr',
+                                                                "lead_cr",
                                                             )
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
@@ -770,12 +792,12 @@ export default function LabsIndex({
                                                     <button
                                                         onClick={() =>
                                                             handleSort(
-                                                                'strict_cr',
+                                                                "strict_cr",
                                                             )
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
                                                     >
-                                                        <Target className="h-4 w-4" />{' '}
+                                                        <Target className="h-4 w-4" />{" "}
                                                         Sales CR
                                                         <ArrowUpDown className="h-3 w-3" />
                                                     </button>
@@ -783,11 +805,11 @@ export default function LabsIndex({
                                                 <th className="p-4 text-left text-sm font-medium text-muted-foreground">
                                                     <button
                                                         onClick={() =>
-                                                            handleSort('rpv')
+                                                            handleSort("rpv")
                                                         }
                                                         className="flex items-center gap-1 hover:text-foreground"
                                                     >
-                                                        <TrendingUp className="h-4 w-4" />{' '}
+                                                        <TrendingUp className="h-4 w-4" />{" "}
                                                         RPV
                                                         <ArrowUpDown className="h-3 w-3" />
                                                     </button>
@@ -825,7 +847,7 @@ export default function LabsIndex({
                                                                         variant="default"
                                                                         className="gap-1 bg-chart-4 text-foreground"
                                                                     >
-                                                                        <Trophy className="h-3 w-3" />{' '}
+                                                                        <Trophy className="h-3 w-3" />{" "}
                                                                         Winner
                                                                     </Badge>
                                                                 )}
@@ -840,8 +862,8 @@ export default function LabsIndex({
                                                             <span
                                                                 className={
                                                                     isHighBounce
-                                                                        ? 'font-medium text-destructive'
-                                                                        : 'text-foreground'
+                                                                        ? "font-medium text-destructive"
+                                                                        : "text-foreground"
                                                                 }
                                                             >
                                                                 {formatPercent(
@@ -885,7 +907,7 @@ export default function LabsIndex({
                                                         </td>
                                                         <td className="p-4">
                                                             <span
-                                                                className={`font-bold ${isWinner ? 'text-chart-4' : 'text-foreground'}`}
+                                                                className={`font-bold ${isWinner ? "text-chart-4" : "text-foreground"}`}
                                                             >
                                                                 {formatCurrency(
                                                                     item.rpv,
@@ -917,7 +939,7 @@ export default function LabsIndex({
                                         return (
                                             <Card
                                                 key={item.landing_source}
-                                                className={`${isWinner ? 'border-2 border-chart-4' : ''}`}
+                                                className={`${isWinner ? "border-2 border-chart-4" : ""}`}
                                             >
                                                 <CardContent className="space-y-3 pt-4">
                                                     <div className="flex items-center justify-between">
@@ -931,7 +953,7 @@ export default function LabsIndex({
                                                                 variant="default"
                                                                 className="gap-1 bg-chart-4 text-foreground"
                                                             >
-                                                                <Trophy className="h-3 w-3" />{' '}
+                                                                <Trophy className="h-3 w-3" />{" "}
                                                                 Winner
                                                             </Badge>
                                                         )}
@@ -940,7 +962,7 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 Visits:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <span className="font-medium text-foreground">
                                                                 {formatNumber(
                                                                     item.visits,
@@ -950,12 +972,12 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 Bounce:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <span
                                                                 className={
                                                                     isHighBounce
-                                                                        ? 'text-destructive'
-                                                                        : 'text-foreground'
+                                                                        ? "text-destructive"
+                                                                        : "text-foreground"
                                                                 }
                                                             >
                                                                 {formatPercent(
@@ -968,7 +990,7 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 Checkout:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <span className="text-foreground">
                                                                 {formatPercent(
                                                                     item.initiate_checkout_rate,
@@ -980,7 +1002,7 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 Lead CR:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <Badge variant="secondary">
                                                                 {formatPercent(
                                                                     item.lead_cr,
@@ -992,7 +1014,7 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 Sales CR:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <Badge variant="outline">
                                                                 {formatPercent(
                                                                     item.strict_cr,
@@ -1004,9 +1026,9 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 RPV:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <span
-                                                                className={`font-bold ${isWinner ? 'text-chart-4' : 'text-foreground'}`}
+                                                                className={`font-bold ${isWinner ? "text-chart-4" : "text-foreground"}`}
                                                             >
                                                                 {formatCurrency(
                                                                     item.rpv,
@@ -1016,7 +1038,7 @@ export default function LabsIndex({
                                                         <div>
                                                             <span className="text-muted-foreground">
                                                                 Revenue:
-                                                            </span>{' '}
+                                                            </span>{" "}
                                                             <span className="text-foreground">
                                                                 {formatCurrency(
                                                                     item.revenue,
@@ -1156,10 +1178,10 @@ export default function LabsIndex({
                                                 <Tooltip
                                                     contentStyle={{
                                                         backgroundColor:
-                                                            'var(--popover)',
-                                                        border: '1px solid var(--border)',
-                                                        borderRadius: '8px',
-                                                        color: 'var(--popover-foreground)',
+                                                            "var(--popover)",
+                                                        border: "1px solid var(--border)",
+                                                        borderRadius: "8px",
+                                                        color: "var(--popover-foreground)",
                                                     }}
                                                     formatter={(
                                                         value,
@@ -1168,7 +1190,7 @@ export default function LabsIndex({
                                                         formatNumber(
                                                             Number(value ?? 0),
                                                         ),
-                                                        String(name ?? ''),
+                                                        String(name ?? ""),
                                                     ]}
                                                 />
                                                 <Legend />
@@ -1226,12 +1248,12 @@ export default function LabsIndex({
                                             </thead>
                                             <tbody>
                                                 {[
-                                                    'Visits',
-                                                    'Engaged',
-                                                    'Intent',
-                                                    'Initiate Checkout',
-                                                    'Leads',
-                                                    'Sales',
+                                                    "Visits",
+                                                    "Engaged",
+                                                    "Intent",
+                                                    "Initiate Checkout",
+                                                    "Leads",
+                                                    "Sales",
                                                 ].map((stage) => (
                                                     <tr
                                                         key={stage}
@@ -1301,12 +1323,15 @@ export default function LabsIndex({
                         )}
 
                         {/* ==================== SECTION D: CTA ANALYSIS ==================== */}
-                        {filteredCta && filteredCta.length > 0 && <CtaAnalysis data={filteredCta} />}
+                        {filteredCta && filteredCta.length > 0 && (
+                            <CtaAnalysis data={filteredCta} />
+                        )}
 
                         {/* ==================== SECTION E: AUDIENCE SEGMENTATION ==================== */}
                         {((filteredReaders && filteredReaders.length > 0) ||
                             (filteredHeatmap && filteredHeatmap.length > 0) ||
-                            (filteredSectionHeatmap && filteredSectionHeatmap.length > 0)) && (
+                            (filteredSectionHeatmap &&
+                                filteredSectionHeatmap.length > 0)) && (
                             <AudienceSegmentation
                                 readers={filteredReaders || []}
                                 heatmap={filteredHeatmap || []}
@@ -1355,8 +1380,8 @@ export default function LabsIndex({
                                             key={item.landing_source}
                                             className={
                                                 hasSignificantGap
-                                                    ? 'border-chart-4/50'
-                                                    : ''
+                                                    ? "border-chart-4/50"
+                                                    : ""
                                             }
                                         >
                                             <CardHeader className="pb-3">
@@ -1379,7 +1404,7 @@ export default function LabsIndex({
                                                 <div className="space-y-2">
                                                     <div className="flex items-center justify-between text-sm">
                                                         <span className="flex items-center gap-1 text-muted-foreground">
-                                                            <TrendingUp className="h-3 w-3" />{' '}
+                                                            <TrendingUp className="h-3 w-3" />{" "}
                                                             Scroll Depth
                                                         </span>
                                                     </div>
@@ -1434,7 +1459,7 @@ export default function LabsIndex({
                                                 <div className="space-y-2">
                                                     <div className="flex items-center justify-between text-sm">
                                                         <span className="flex items-center gap-1 text-muted-foreground">
-                                                            <Clock className="h-3 w-3" />{' '}
+                                                            <Clock className="h-3 w-3" />{" "}
                                                             Dwell Time
                                                         </span>
                                                     </div>

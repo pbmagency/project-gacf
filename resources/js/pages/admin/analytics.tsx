@@ -27,7 +27,7 @@ import type { BreadcrumbItem } from "@/types";
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Dashboard", href: "/admin" },
-    { title: "Analytics", href: "/admin/analytics" },
+    { title: "Analytics", href: "/admin" },
 ];
 interface AnalyticsProps {
     stats: {
@@ -44,7 +44,7 @@ interface AnalyticsProps {
         total_revenue: number;
         payments: number;
     };
-    chartData: Record<string, any[]>;
+    chartData: Record<string, ChartEventPoint[]>;
     referralData: Array<{
         referral_source: string;
         count: number;
@@ -55,6 +55,11 @@ interface AnalyticsProps {
         percentage: number;
     }>;
     dateRange: string;
+}
+
+interface ChartEventPoint {
+    date: string;
+    total: number;
 }
 
 export default function Analytics({
@@ -68,7 +73,7 @@ export default function Analytics({
 
     const handleRangeChange = (range: string) => {
         setSelectedRange(range);
-        router.get("/admin/analytics", { range }, { preserveState: true });
+        router.get("/admin", { range }, { preserveState: true });
     };
 
     const handleExport = () => {

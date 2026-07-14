@@ -14,13 +14,16 @@ use Illuminate\Support\Facades\Log;
 
 class MetaConversionService
 {
-    private string $pixelId;
+    /**
+     * @var array<int, string>
+     */
+    private array $pixelIds;
 
     private string $accessToken;
 
     public function __construct()
     {
-        $this->pixelId = config('services.meta.pixel_id', '');
+        $this->pixelIds = config('services.meta.pixel_ids', []);
         $this->accessToken = config('services.meta.access_token', '');
 
         if ($this->isConfigured()) {
@@ -33,7 +36,7 @@ class MetaConversionService
      */
     public function isConfigured(): bool
     {
-        return $this->pixelId !== '' && $this->accessToken !== '';
+        return $this->pixelIds !== [] && $this->accessToken !== '';
     }
 
     /**
@@ -166,20 +169,24 @@ class MetaConversionService
      */
     private function sendEvents(array $events): void
     {
-        try {
-            $eventRequest = (new EventRequest($this->pixelId))
-                ->setEvents($events);
+        foreach ($this->pixelIds as $pixelId) {
+            try {
+                $eventRequest = (new EventRequest($pixelId))
+                    ->setEvents($events);
 
-            $response = $eventRequest->execute();
+                $response = $eventRequest->execute();
 
-            Log::debug('Meta CAPI response', [
-                'events_received' => $response->getEventsReceived(),
-                'messages' => $response->getMessages(),
-            ]);
-        } catch (\Throwable $e) {
-            Log::warning('Meta CAPI request failed', [
-                'error' => $e->getMessage(),
-            ]);
+                Log::debug('Meta CAPI response', [
+                    'pixel_id' => $pixelId,
+                    'events_received' => $response->getEventsReceived(),
+                    'messages' => $response->getMessages(),
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('Meta CAPI request failed', [
+                    'pixel_id' => $pixelId,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
     }
 }

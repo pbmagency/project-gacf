@@ -112,7 +112,7 @@ export default function GacfCourse() {
                 location,
                 skip_browser_pixel: true,
             });
-            trackConversion("gacf_order_form_submit", {
+            trackConversion("registration", {
                 ...productPayload,
                 button_text: text,
                 destination,
