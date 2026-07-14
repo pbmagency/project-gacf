@@ -69,9 +69,10 @@ export const testimonialItems: TestimonialItem[] = [
         isPublished: true,
     },
     {
-        title: "Testimoni Bu Yulie",
+        title: "Bu Yulie Member GACF",
         type: "video",
-        description: "Cerita setelah belajar dan praktik di GACF.",
+        description:
+            "Dari semua kursus, menurut bu Yuli ini kursus yang paling memuaskan",
         embedSrc:
             "https://player.mediadelivery.net/embed/701542/bb50e777-cdbe-4fc1-b662-685ee30daad4?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:
@@ -80,24 +81,26 @@ export const testimonialItems: TestimonialItem[] = [
         isPublished: true,
     },
     {
-        title: "Testimoni Pak Agus",
+        title: "Pak Agus Member GACF",
         type: "video",
-        description: "Cerita setelah belajar dan praktik di GACF.",
+        description:
+            "CTR naik, konversi juga naik setelah belajar di E-course GACF.",
         embedSrc:
             "https://player.mediadelivery.net/embed/701542/0a8f19a3-c4c0-4bcb-a28e-8c7058db9738?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:
             "https://vz-e2df73f9-1fd.b-cdn.net/0a8f19a3-c4c0-4bcb-a28e-8c7058db9738/thumbnail.jpg",
-        isPublished: false,
+        isPublished: true,
     },
     {
-        title: "Testimoni Member 3",
+        title: "Testimoni Member GACF",
         type: "video",
-        description: "Cerita setelah belajar dan praktik di GACF.",
+        description:
+            "Pak x berhasil mendapatkan klien dari hasil belajar di E-course GACF",
         embedSrc:
             "https://player.mediadelivery.net/embed/701542/dde65514-a908-403d-bd2f-31790bd4bb0e?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:
             "https://vz-e2df73f9-1fd.b-cdn.net/dde65514-a908-403d-bd2f-31790bd4bb0e/thumbnail.jpg",
-        isPublished: false,
+        isPublished: true,
     },
 ];
 

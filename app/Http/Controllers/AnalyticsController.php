@@ -80,14 +80,8 @@ class AnalyticsController extends Controller
 
             $metaEvent = data_get($validated, 'event_data.meta_event');
 
-            if ($eventType === 'lead' && $metaEvent === 'AddToCart') {
-                $metaService->sendAddToCart($request, $eventId);
-            }
-
-            if ($eventType === 'lead' && $metaEvent === 'Purchase') {
-                $amount   = (float) (data_get($validated, 'event_data.amount') ?? 0);
-                $currency = data_get($validated, 'event_data.currency', 'IDR');
-                $metaService->sendPurchase($request, $eventId, $amount, $currency);
+            if ($eventType === 'lead' && $metaEvent === 'Lead') {
+                $metaService->sendLead($request, $eventId);
             }
         }
 

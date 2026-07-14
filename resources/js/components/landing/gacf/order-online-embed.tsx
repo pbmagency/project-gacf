@@ -2,11 +2,11 @@ import { useEffect } from "react";
 
 import type { OrderFormTrack } from "./types";
 
-const orderOnlineFormId = "oo-embed-form-gacf-2026-ref-mic-1205";
+const orderOnlineFormId = "oo-embed-form-gacf-2026-ref-pbm-878";
 const orderOnlineRedirectUrl = "https://dimancy.orderonline.id";
 const orderOnlineAccountId = "5e93168a84d0731f526c543e";
-const orderOnlineProductId = "69c50016fe45e02571074f61";
-const orderOnlineVariantId = "69c50016fe45e02571074f62";
+const orderOnlineProductId = "6a55c19a6c3395434f0baf8d";
+const orderOnlineVariantId = "6a55c19a6c3395434f0baf8e";
 
 const loaderCss = `
 .ooef-loader{visibility:hidden;opacity:0;position:absolute;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;flex-direction:column;animation:ooLoadingIn 10s ease;-webkit-animation:ooLoadingIn 10s ease;animation-fill-mode:forwards;overflow:hidden}
@@ -36,9 +36,9 @@ type OrderOnlineWindow = Window & {
 };
 
 function appendScript(src: string, id: string, onLoad?: () => void) {
-    const existingScript = document.getElementById(id) as
-        | HTMLScriptElement
-        | null;
+    const existingScript = document.getElementById(
+        id,
+    ) as HTMLScriptElement | null;
 
     if (existingScript) {
         if (!onLoad) {
@@ -109,14 +109,17 @@ function logOrderOnlineError(error: unknown) {
 
     const request = new XMLHttpRequest();
     request.open("POST", "https://api.orderonline.id/log", true);
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.setRequestHeader(
+        "Content-type",
+        "application/x-www-form-urlencoded",
+    );
     request.send(params);
 }
 
 function initOrderOnlineEmbed() {
-    const form = document.getElementById(orderOnlineFormId) as
-        | HTMLFormElement
-        | null;
+    const form = document.getElementById(
+        orderOnlineFormId,
+    ) as HTMLFormElement | null;
 
     if (!form || form.dataset.ooEmbedInitialized === "true") {
         return;
@@ -137,7 +140,7 @@ function initOrderOnlineEmbed() {
                 action: "Klik untuk pemesanan",
                 mode: "page",
                 title: "Form Pemesanan",
-                triggerGtm: false,
+                triggerGtm: true,
                 triggerPixel: false,
             },
         );
@@ -238,7 +241,7 @@ export function OrderOnlineEmbed({
                     className="orderonline-embed-form relative min-h-[32rem] overflow-hidden rounded-md bg-white"
                     data-origin="orderonline"
                     data-product-id={orderOnlineProductId}
-                    data-product-slug="gacf-2026-ref-mic"
+                    data-product-slug="gacf-2026-ref-pbm"
                     data-username="dimancy"
                     id={orderOnlineFormId}
                 >

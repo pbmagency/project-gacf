@@ -102,6 +102,36 @@ class MetaConversionService
     }
 
     /**
+     * Send a Lead event to Meta Conversions API.
+     */
+    public function sendLead(Request $request, string $eventId): void
+    {
+        if (! $this->isConfigured()) {
+            return;
+        }
+
+        $userData = $this->buildUserData($request);
+        $eventData = $request->input('event_data', []);
+        $contentName = $eventData['content_name'] ?? 'GACF 2026';
+        $contentCategory = $eventData['content_category'] ?? 'E-Course';
+
+        $customData = (new CustomData)
+            ->setContentName($contentName)
+            ->setContentCategory($contentCategory);
+
+        $event = (new Event)
+            ->setEventName('Lead')
+            ->setEventTime(time())
+            ->setEventId($eventId)
+            ->setEventSourceUrl($request->header('Referer', $request->url()))
+            ->setActionSource(ActionSource::WEBSITE)
+            ->setUserData($userData)
+            ->setCustomData($customData);
+
+        $this->sendEvents([$event]);
+    }
+
+    /**
      * Send a Purchase event to Meta Conversions API.
      *
      * @param  float   $value     Order value in the given currency

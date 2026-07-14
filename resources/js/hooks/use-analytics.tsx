@@ -317,15 +317,9 @@ export function useAnalytics() {
                     : generateEventId();
             const shouldFireBrowserPixel = data?.skip_browser_pixel !== true;
 
-            // 1. Browser-side Meta Pixel AddToCart
+            // 1. Browser-side Meta Pixel Lead
             if (shouldFireBrowserPixel && typeof window.fbq === "function") {
-                const value = data?.value;
-                const currency =
-                    typeof data?.currency === "string" ? data.currency : "IDR";
-                const pixelPayload = value ? { value, currency } : {};
-                window.fbq("track", "AddToCart", pixelPayload, {
-                    eventID: eventId,
-                });
+                window.fbq("track", "Lead", {}, { eventID: eventId });
             }
 
             // 2. Server-side CAPI via backend (dedup via same eventId)
@@ -336,7 +330,7 @@ export function useAnalytics() {
                     page: window.location.pathname,
                     timestamp: new Date().toISOString(),
                     event_id: eventId,
-                    meta_event: "AddToCart",
+                    meta_event: "Lead",
                     _fbp: getCookieValue("_fbp"),
                     _fbc: getCookieValue("_fbc"),
                     ...data,

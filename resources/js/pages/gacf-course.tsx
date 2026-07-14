@@ -32,13 +32,8 @@ type MetaPixel = (
 ) => void;
 
 export default function GacfCourse() {
-    const {
-        trackVisit,
-        trackCTA,
-        trackConversion,
-        trackInitiateCheckout,
-        trackLead,
-    } = useAnalytics();
+    const { trackVisit, trackCTA, trackInitiateCheckout, trackLead } =
+        useAnalytics();
     const hasTrackedVisit = useRef(false);
 
     useScrollTracking();
@@ -90,20 +85,22 @@ export default function GacfCourse() {
                 currency: "IDR",
             };
 
-            const fbq =
-                typeof window !== "undefined"
-                    ? (window as Window & { fbq?: MetaPixel }).fbq
-                    : undefined;
-
-            if (typeof fbq === "function") {
-                fbq("track", "AddToCart", productPayload, {
-                    eventID: eventId,
-                });
+            // Browser-side Meta Pixel Lead (fired once here)
+            if (typeof window.fbq === "function") {
+                (window as Window & { fbq?: MetaPixel }).fbq?.(
+                    "track",
+                    "Lead",
+                    {},
+                    { eventID: eventId },
+                );
             }
 
-            trackCTA(location, text, destination, "AddToCart", eventId, {
+            // Internal CTA click analytics (no browser pixel, used by Labs dashboard)
+            trackCTA(location, text, destination, "Lead", eventId, {
                 fireBrowserPixel: false,
             });
+
+            // Server-side CAPI Lead via backend (dedup via same eventId)
             trackLead("order-online-form-submit", {
                 ...productPayload,
                 button_text: text,
@@ -112,16 +109,23 @@ export default function GacfCourse() {
                 location,
                 skip_browser_pixel: true,
             });
-            trackConversion("registration", {
-                ...productPayload,
-                button_text: text,
-                destination,
-                event_id: eventId,
-                location,
-                meta_event: "AddToCart",
-            });
+
+            // Push ke GTM dataLayer → GA4 conversion tag (event: generate_lead)
+            // if (
+            //     typeof window !== "undefined" &&
+            //     Array.isArray((window as Window & { dataLayer?: unknown[] }).dataLayer)
+            // ) {
+            //     (window as Window & { dataLayer?: unknown[] }).dataLayer!.push({
+            //         event: "generate_lead",
+            //         form_location: location,
+            //         form_text: text,
+            //         product_id: "gacf-2026",
+            //         value: price,
+            //         currency: "IDR",
+            //     });
+            // }
         },
-        [trackCTA, trackConversion, trackLead],
+        [trackCTA, trackLead],
     );
 
     return (
