@@ -92,10 +92,10 @@ export const testimonialItems: TestimonialItem[] = [
         isPublished: true,
     },
     {
-        title: "Testimoni Member GACF",
+        title: "Mas Ilham Member GACF",
         type: "video",
         description:
-            "Pak x berhasil mendapatkan klien dari hasil belajar di E-course GACF",
+            "Mas Ilham berhasil mendapatkan klien dari hasil belajar di E-course GACF",
         embedSrc:
             "https://player.mediadelivery.net/embed/701542/dde65514-a908-403d-bd2f-31790bd4bb0e?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:

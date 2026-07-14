@@ -1,15 +1,15 @@
-import '../css/app.css';
+import "../css/app.css";
 
-import { createInertiaApp } from '@inertiajs/react';
-import { lazy, Suspense } from 'react';
-import { createRoot, type Root } from 'react-dom/client';
-import { initializeTheme } from '@/hooks/use-appearance';
+import { createInertiaApp } from "@inertiajs/react";
+import { lazy, Suspense } from "react";
+import { createRoot, type Root } from "react-dom/client";
+import { initializeTheme } from "@/hooks/use-appearance";
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-const AppLayout = lazy(() => import('@/layouts/app-layout'));
-const AuthLayout = lazy(() => import('@/layouts/auth-layout'));
-const SettingsLayout = lazy(() => import('@/layouts/settings/layout'));
-const AppProviders = lazy(() => import('@/components/app-providers'));
+const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const AppLayout = lazy(() => import("@/layouts/app-layout"));
+const AuthLayout = lazy(() => import("@/layouts/auth-layout"));
+const SettingsLayout = lazy(() => import("@/layouts/settings/layout"));
+const AppProviders = lazy(() => import("@/components/app-providers"));
 
 declare global {
     interface Window {
@@ -18,24 +18,19 @@ declare global {
 }
 
 function shouldWrapWithAppProviders(componentName: string) {
-    return componentName !== 'welcome' && componentName !== 'gacf-course';
+    return componentName !== "welcome" && componentName !== "gacf-course";
 }
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) => (title ? `${title}` : appName),
     layout: (name) => {
         switch (true) {
-            case name === 'welcome':
-            case name === 'gacf-course':
-                return undefined;
-            case name.startsWith('admin/'):
-                return undefined;
-            case name.startsWith('auth/'):
+            case name.startsWith("auth/"):
                 return AuthLayout;
-            case name.startsWith('settings/'):
+            case name.startsWith("settings/"):
                 return [AppLayout, SettingsLayout];
             default:
-                return AppLayout;
+                return null;
         }
     },
     strictMode: true,
@@ -63,7 +58,7 @@ createInertiaApp({
         window.__inertiaReactRoot.render(wrappedApp);
     },
     progress: {
-        color: '#4B5563',
+        color: "#4B5563",
     },
 });
 

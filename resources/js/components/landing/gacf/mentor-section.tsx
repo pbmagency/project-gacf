@@ -1,5 +1,5 @@
 import { Award, CheckCircle2, Quote } from "lucide-react";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { mentorBullets } from "@/data/gacf-landing";
 
@@ -38,56 +38,116 @@ const mentorPhotos = [
 ] as const;
 
 // ---------------------------------------------------------------------------
-// Photo card (shared between slider & grid)
+// Photo card — always lazy-loaded (mentor section is below the fold)
 // ---------------------------------------------------------------------------
-function MentorPhotoCard({
-    photo,
-    priority = false,
-}: {
-    photo: (typeof mentorPhotos)[number];
-    priority?: boolean;
-}) {
+function MentorPhotoCard({ photo }: { photo: (typeof mentorPhotos)[number] }) {
     return (
         <div className="group relative h-full w-full overflow-hidden rounded-lg border border-white/10 bg-[#0b0b0f]">
             <img
                 alt={photo.alt}
                 className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                 decoding="async"
+                fetchPriority="low"
                 height={500}
-                loading={priority ? "eager" : "lazy"}
+                loading="lazy"
                 src={photo.src}
                 width={400}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <p className="absolute bottom-2 left-2 right-2 rounded-md bg-black/50 px-2 py-1 text-center text-xs font-semibold tracking-wide text-amber-200 backdrop-blur-sm">
-                {photo.caption}
-            </p>
         </div>
     );
 }
 
 // ---------------------------------------------------------------------------
-// Mobile slider
-// — Critical: outer wrapper must be overflow-hidden to prevent viewport bleed
+// Mobile slider — auto-advances slowly, pauses on touch/out-of-view
 // ---------------------------------------------------------------------------
 function MentorSlider() {
     const trackRef = useRef<HTMLDivElement>(null);
+    // Current card index tracked via ref (no re-render needed)
+    const indexRef = useRef(0);
+    // Pause flag: set true while user touches or element is off-screen
+    const pausedRef = useRef(false);
+    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-    const scrollTo = (dir: -1 | 1) => {
+    const total = mentorPhotos.length;
+
+    /** Scroll track to a specific card index */
+    const scrollToIndex = useCallback((idx: number) => {
         const track = trackRef.current;
         if (!track) return;
-        // scroll by the width of one card + gap
-        const card = track.firstElementChild as HTMLElement | null;
-        const cardW = card ? card.offsetWidth + 12 : 180;
-        track.scrollBy({ left: dir * cardW, behavior: "smooth" });
+        const card = track.children[idx] as HTMLElement | undefined;
+        if (!card) return;
+        track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    }, []);
+
+    /** Advance one card forward, loop back at end */
+    const advance = useCallback(() => {
+        if (pausedRef.current) return;
+        const next = (indexRef.current + 1) % total;
+        indexRef.current = next;
+        scrollToIndex(next);
+    }, [scrollToIndex, total]);
+
+    /** Reset and restart the auto-advance timer */
+    const restartTimer = useCallback(() => {
+        if (timerRef.current) clearInterval(timerRef.current);
+        timerRef.current = setInterval(advance, 3500);
+    }, [advance]);
+
+    /** Manual prev/next (also resets timer so user doesn't fight auto-slide) */
+    const manualScroll = (dir: -1 | 1) => {
+        const next = Math.max(0, Math.min(total - 1, indexRef.current + dir));
+        indexRef.current = next;
+        scrollToIndex(next);
+        restartTimer();
     };
+
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
+
+        // ── IntersectionObserver: pause when section scrolls off-screen ──────
+        // This is the main performance guard — no work is done when not visible.
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                pausedRef.current = !entry?.isIntersecting;
+            },
+            { threshold: 0.2 },
+        );
+        observer.observe(track);
+
+        // ── Touch: pause while finger is on screen, resume 2s after lift ────
+        const onTouchStart = () => {
+            pausedRef.current = true;
+        };
+        const onTouchEnd = () => {
+            // Sync index to whichever card the user scrolled to
+            const cardW =
+                (track.firstElementChild as HTMLElement | null)?.offsetWidth ??
+                1;
+            indexRef.current = Math.round(track.scrollLeft / (cardW + 12));
+            // Resume auto-advance after a short delay
+            setTimeout(() => {
+                pausedRef.current = false;
+            }, 2000);
+        };
+        track.addEventListener("touchstart", onTouchStart, { passive: true });
+        track.addEventListener("touchend", onTouchEnd, { passive: true });
+
+        // ── Start timer ──────────────────────────────────────────────────────
+        restartTimer();
+
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+            observer.disconnect();
+            track.removeEventListener("touchstart", onTouchStart);
+            track.removeEventListener("touchend", onTouchEnd);
+        };
+    }, [restartTimer]);
 
     return (
         <div className="lg:hidden">
-            {/*
-             * overflow-hidden here is the key fix:
-             * it clips the flex track so it cannot push the section wider
-             */}
+            {/* overflow-hidden clips the flex track — prevents section width bleed */}
             <div className="overflow-hidden rounded-lg py-6">
                 <div
                     ref={trackRef}
@@ -97,31 +157,23 @@ function MentorSlider() {
                 >
                     {mentorPhotos.map((photo, i) => (
                         <div
-                            /*
-                             * w-[calc(50%-6px)] = show ~2 cards on mobile
-                             * (gap=12px, so each card = (100% - 12px) / 2)
-                             * sm: show ~3 cards
-                             */
                             className="w-[calc(50%-6px)] shrink-0 snap-start sm:w-[calc(33.333%-8px)]"
                             key={photo.id}
                         >
                             <div className="aspect-[3/4]">
-                                <MentorPhotoCard
-                                    photo={photo}
-                                    priority={i < 2}
-                                />
+                                <MentorPhotoCard photo={photo} />
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* prev / next */}
+            {/* prev / next buttons */}
             <div className="mt-0 flex items-center justify-center gap-3">
                 <button
                     aria-label="Previous photo"
                     className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:bg-white/15"
-                    onClick={() => scrollTo(-1)}
+                    onClick={() => manualScroll(-1)}
                     type="button"
                 >
                     <svg
@@ -139,11 +191,11 @@ function MentorSlider() {
                         />
                     </svg>
                 </button>
-                <span className="text-xs text-zinc-500"></span>
+                <span className="text-xs text-zinc-500" />
                 <button
                     aria-label="Next photo"
                     className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:bg-white/15"
-                    onClick={() => scrollTo(1)}
+                    onClick={() => manualScroll(1)}
                     type="button"
                 >
                     <svg
@@ -172,9 +224,9 @@ function MentorSlider() {
 function MentorPhotoGrid() {
     return (
         <div className="hidden grid-cols-2 gap-2 lg:grid xl:gap-3">
-            {mentorPhotos.map((photo, i) => (
+            {mentorPhotos.map((photo) => (
                 <div className="aspect-[3/4]" key={photo.id}>
-                    <MentorPhotoCard photo={photo} priority={i < 2} />
+                    <MentorPhotoCard photo={photo} />
                 </div>
             ))}
         </div>
@@ -259,6 +311,7 @@ export function MentorSection() {
                                 alt="Google Premier Partner 2026"
                                 className="h-14 w-auto object-contain"
                                 decoding="async"
+                                fetchPriority="low"
                                 height={56}
                                 loading="lazy"
                                 src={googlePremierBadge}
