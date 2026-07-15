@@ -68,44 +68,43 @@ export const testimonialItems: TestimonialItem[] = [
             "https://vz-e2df73f9-1fd.b-cdn.net/9545f93b-3f1e-4974-96dc-19d08c2024af/thumbnail.jpg",
         isPublished: true,
     },
+    // {
+    //     title: "Bu Yulie Member GACF",
+    //     type: "video",
+    //     description:
+    //         "Dari semua kursus, menurut bu Yuli ini kursus yang paling memuaskan",
+    //     embedSrc:
+    //         "https://player.mediadelivery.net/embed/701542/bb50e777-cdbe-4fc1-b662-685ee30daad4?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+    //     posterSrc:
+    //         "https://vz-e2df73f9-1fd.b-cdn.net/bb50e777-cdbe-4fc1-b662-685ee30daad4/thumbnail.jpg",
+    //     posterPosition: "center",
+    //     isPublished: true,
+    // },
     {
-        title: "Bu Yulie Member GACF",
+        title: "Mas Gilang Member GACF",
         type: "video",
-        description:
-            "Dari semua kursus, menurut bu Yuli ini kursus yang paling memuaskan",
-        embedSrc:
-            "https://player.mediadelivery.net/embed/701542/bb50e777-cdbe-4fc1-b662-685ee30daad4?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
-        posterSrc:
-            "https://vz-e2df73f9-1fd.b-cdn.net/bb50e777-cdbe-4fc1-b662-685ee30daad4/thumbnail.jpg",
-        posterPosition: "center",
-        isPublished: true,
-    },
-    {
-        title: "Pak Agus Member GACF",
-        type: "video",
-        description:
-            "CTR naik, konversi juga naik setelah belajar di E-course GACF.",
+        description: "Potential Leads Lebih Banyak Sejak Belajar Di GACF",
         embedSrc:
             "https://player.mediadelivery.net/embed/701542/1dcc6aba-aab2-49b6-843e-722bf57553e4?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:
             "https://vz-e2df73f9-1fd.b-cdn.net/1dcc6aba-aab2-49b6-843e-722bf57553e4/thumbnail.jpg",
         isPublished: true,
     },
-    {
-        title: "Mas Ilham Member GACF",
-        type: "video",
-        description:
-            "Mas Ilham berhasil mendapatkan klien dari hasil belajar di E-course GACF",
-        embedSrc:
-            "https://player.mediadelivery.net/embed/701542/dde65514-a908-403d-bd2f-31790bd4bb0e?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
-        posterSrc:
-            "https://vz-e2df73f9-1fd.b-cdn.net/dde65514-a908-403d-bd2f-31790bd4bb0e/thumbnail.jpg",
-        isPublished: true,
-    },
+    // {
+    //     title: "Mas Ilham Member GACF",
+    //     type: "video",
+    //     description:
+    //         "Mas Ilham berhasil mendapatkan klien dari hasil belajar di E-course GACF",
+    //     embedSrc:
+    //         "https://player.mediadelivery.net/embed/701542/dde65514-a908-403d-bd2f-31790bd4bb0e?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
+    //     posterSrc:
+    //         "https://vz-e2df73f9-1fd.b-cdn.net/dde65514-a908-403d-bd2f-31790bd4bb0e/thumbnail.jpg",
+    //     isPublished: true,
+    // },
     {
         title: "Testimoni Member GACF",
         type: "video",
-        description: "Cerita member setelah belajar dan praktik di E-course GACF.",
+        description: "Cerita member setelah pasang Offline Conversion Tracking",
         embedSrc:
             "https://player.mediadelivery.net/embed/701542/6856a01a-2b28-4b17-8930-6df98e5a3c05?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
         posterSrc:

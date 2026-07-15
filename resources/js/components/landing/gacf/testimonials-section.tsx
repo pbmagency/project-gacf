@@ -55,7 +55,7 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                 </Reveal>
 
                 {publishedTestimonials.length > 0 && (
-                    <div className="mx-auto mt-10 grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="mx-auto mt-10 grid max-w-4xl gap-5 sm:grid-cols-2 ">
                         {publishedTestimonials.map((item, index) => {
                             const hasPlayableMedia = Boolean(
                                 item.embedSrc || item.mediaSrc,
@@ -198,10 +198,7 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                     ))}
                 </div>
 
-                <Reveal
-                    className="mx-auto mt-8 max-w-3xl"
-                    delay={120}
-                >
+                <Reveal className="mx-auto mt-8 max-w-3xl" delay={120}>
                     <button
                         aria-label="Perbesar screenshot feedback WhatsApp member GACF"
                         className="block w-full cursor-pointer"
