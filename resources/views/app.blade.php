@@ -6,22 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @if (config('services.gtm.id') || config('services.ga4.measurement_id') || config('services.clarity.id') || !empty(config('services.meta.pixel_ids', [])))
+        <script>
+            window.__gacfLoadWhenIdle = window.__gacfLoadWhenIdle || function(callback) {
+                var schedule = function() {
+                    if ('requestIdleCallback' in window) {
+                        window.requestIdleCallback(callback, {
+                            timeout: 3500
+                        });
+                        return;
+                    }
+
+                    window.setTimeout(callback, 1400);
+                };
+
+                if (document.readyState === 'complete') {
+                    schedule();
+                    return;
+                }
+
+                window.addEventListener('load', schedule, {
+                    once: true
+                });
+            };
+        </script>
+    @endif
+
     @if (config('services.gtm.id'))
         <!-- Google Tag Manager -->
         <script>
             (function(w, d, s, l, i) {
                 w[l] = w[l] || [];
-                w[l].push({
-                    'gtm.start': new Date().getTime(),
-                    event: 'gtm.js'
+                w.__gacfLoadWhenIdle(function() {
+                    w[l].push({
+                        'gtm.start': new Date().getTime(),
+                        event: 'gtm.js'
+                    });
+                    var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s),
+                        dl = l != 'dataLayer' ? '&l=' + l : '';
+                    j.async = true;
+                    j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                    f.parentNode.insertBefore(j, f);
                 });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s),
-                    dl = l != 'dataLayer' ? '&l=' + l : '';
-                j.async = true;
-                j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                f.parentNode.insertBefore(j, f);
             })(window, document, 'script', 'dataLayer', '{{ config('services.gtm.id') }}');
         </script>
         <!-- End Google Tag Manager -->
@@ -29,7 +57,6 @@
 
     @if (config('services.ga4.measurement_id'))
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.ga4.measurement_id') }}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -38,6 +65,12 @@
             }
             gtag('js', new Date());
             gtag('config', '{{ config('services.ga4.measurement_id') }}');
+            window.__gacfLoadWhenIdle(function() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id={{ config('services.ga4.measurement_id') }}';
+                document.head.appendChild(script);
+            });
         </script>
     @endif
 
@@ -45,7 +78,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+    </noscript>
 
     {{-- Microsoft Clarity --}}
     @if (config('services.clarity.id'))
@@ -54,11 +91,13 @@
                 c[a] = c[a] || function() {
                     (c[a].q = c[a].q || []).push(arguments)
                 };
-                t = l.createElement(r);
-                t.async = 1;
-                t.src = "https://www.clarity.ms/tag/" + i;
-                y = l.getElementsByTagName(r)[0];
-                y.parentNode.insertBefore(t, y);
+                c.__gacfLoadWhenIdle(function() {
+                    t = l.createElement(r);
+                    t.async = 1;
+                    t.src = "https://www.clarity.ms/tag/" + i;
+                    y = l.getElementsByTagName(r)[0];
+                    y.parentNode.insertBefore(t, y);
+                });
             })(window, document, "clarity", "script", "{{ config('services.clarity.id') }}");
         </script>
     @endif
@@ -79,11 +118,13 @@
                 n.loaded = !0;
                 n.version = '2.0';
                 n.queue = [];
-                t = b.createElement(e);
-                t.async = !0;
-                t.src = v;
-                s = b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t, s)
+                f.__gacfLoadWhenIdle(function() {
+                    t = b.createElement(e);
+                    t.async = !0;
+                    t.src = v;
+                    s = b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t, s)
+                });
             }(window, document, 'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
             @foreach ($metaPixelIds as $pixelId)

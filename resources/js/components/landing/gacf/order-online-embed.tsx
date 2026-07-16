@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { OrderFormTrack } from "./types";
 
@@ -178,7 +178,68 @@ export function OrderOnlineEmbed({
     onFormStart,
     onFormSubmit,
 }: OrderOnlineEmbedProps) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [shouldLoadEmbed, setShouldLoadEmbed] = useState(false);
+
     useEffect(() => {
+        if (shouldLoadEmbed || typeof window === "undefined") {
+            return;
+        }
+
+        const node = containerRef.current;
+
+        if (!node || !("IntersectionObserver" in window)) {
+            const timeoutId = window.setTimeout(
+                () => setShouldLoadEmbed(true),
+                2500,
+            );
+
+            return () => window.clearTimeout(timeoutId);
+        }
+
+        const loadEmbed = () => setShouldLoadEmbed(true);
+        const loadFromHash = () => {
+            if (
+                window.location.hash === "#pricing" ||
+                window.location.hash === "#order-form"
+            ) {
+                loadEmbed();
+            }
+        };
+
+        loadFromHash();
+
+        if (shouldLoadEmbed) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry?.isIntersecting) {
+                    loadEmbed();
+                    observer.disconnect();
+                }
+            },
+            {
+                rootMargin: "900px 0px",
+                threshold: 0.01,
+            },
+        );
+
+        observer.observe(node);
+        window.addEventListener("hashchange", loadFromHash);
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("hashchange", loadFromHash);
+        };
+    }, [shouldLoadEmbed]);
+
+    useEffect(() => {
+        if (!shouldLoadEmbed) {
+            return;
+        }
+
         initOrderOnlineEmbed();
 
         const form = document.getElementById(orderOnlineFormId);
@@ -229,12 +290,13 @@ export function OrderOnlineEmbed({
             form.removeEventListener("change", trackStart, true);
             form.removeEventListener("submit", trackSubmit, true);
         };
-    }, [onFormStart, onFormSubmit]);
+    }, [onFormStart, onFormSubmit, shouldLoadEmbed]);
 
     return (
         <div
             className="scroll-mt-28 rounded-lg border border-amber-300/20 bg-white p-2 text-zinc-950 shadow-[0_22px_70px_rgba(0,0,0,0.24)] sm:p-3"
             id="order-form"
+            ref={containerRef}
         >
             <div className="ooef">
                 <form
