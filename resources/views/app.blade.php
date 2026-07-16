@@ -9,7 +9,25 @@
     @if (config('services.gtm.id') || config('services.ga4.measurement_id') || config('services.clarity.id') || !empty(config('services.meta.pixel_ids', [])))
         <script>
             window.__gacfLoadWhenIdle = window.__gacfLoadWhenIdle || function(callback) {
-                var schedule = function() {
+                var hasRun = false;
+                var events = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+
+                var cleanup = function() {
+                    events.forEach(function(eventName) {
+                        window.removeEventListener(eventName, run, {
+                            capture: true
+                        });
+                    });
+                };
+
+                var run = function() {
+                    if (hasRun) {
+                        return;
+                    }
+
+                    hasRun = true;
+                    cleanup();
+
                     if ('requestIdleCallback' in window) {
                         window.requestIdleCallback(callback, {
                             timeout: 3500
@@ -20,12 +38,22 @@
                     window.setTimeout(callback, 1400);
                 };
 
+                events.forEach(function(eventName) {
+                    window.addEventListener(eventName, run, {
+                        capture: true,
+                        once: true,
+                        passive: true
+                    });
+                });
+
                 if (document.readyState === 'complete') {
-                    schedule();
+                    window.setTimeout(run, 8000);
                     return;
                 }
 
-                window.addEventListener('load', schedule, {
+                window.addEventListener('load', function() {
+                    window.setTimeout(run, 8000);
+                }, {
                     once: true
                 });
             };
