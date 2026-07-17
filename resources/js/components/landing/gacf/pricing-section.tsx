@@ -104,13 +104,15 @@ export function PricingSection({
                                 />
                                 <p className="mx-auto mt-5 max-w-md text-base leading-8 text-zinc-200">
                                     <span className="font-black text-white">
-                                        Garansi Setup Auto Campaign 3 Minggu:
+                                        Garansi Setup Auto Campaign
                                     </span>{" "}
-                                    Kalau dalam 3 minggu lo sudah praktikkan
-                                    semua materi dan masih belum bisa, tim kami
-                                    yang akan setup campaign Google Ads-mu
-                                    langsung mulai dari strategy, keyword, ads
-                                    copy, GTM, GA4, sampai conversion tracking.
+                                    Kalau dalam 3 minggu sudah praktikkan semua
+                                    materi dan masih belum bisa, tim kami yang
+                                    akan setup campaign Google Ads-mu langsung
+                                    mulai dari strategi, keyword, ads copy, GTM,
+                                    GA4, sampai conversion tracking. Kamu
+                                    tinggal duduk manis saja, tim kami yang
+                                    setupkan semuanya.
                                 </p>
                             </Reveal>
 
