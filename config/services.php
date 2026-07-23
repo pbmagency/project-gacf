@@ -44,7 +44,7 @@ return [
     ],
 
     'clarity' => [
-        'id' => env('VITE_CLARITY_ID', ''),
+        'id' => env('VITE_CLARITY_ID', 'xnezvqpy7h'),
     ],
 
     'gtm' => [
