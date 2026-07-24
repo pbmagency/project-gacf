@@ -18,7 +18,7 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
             id="oct"
         >
             <div className="gacf-grid absolute inset-0 opacity-25" />
-            <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-7xl">
                 <Reveal>
                     <SectionHeading
                         eyebrow="Metode Offline Conversion Tracking (OCT)"
@@ -26,32 +26,20 @@ export function SolutionOctSection({ onCtaClick }: SolutionOctSectionProps) {
                     />
                 </Reveal>
 
-                <div className="relative mt-10 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+                <div className="relative mt-10 grid gap-5 lg:grid-cols-2 lg:items-stretch">
                     <ComparisonCard
                         delay={70}
                         direction="left"
                         icon="bad"
                         items={octComparison.without}
-                        title="Sebelum OCT"
+                        title="❌ SEBELUM PASANG OCT"
                     />
-                    <Reveal
-                        className="flex items-center justify-center lg:w-12"
-                        delay={140}
-                        direction="scale"
-                    >
-                        <div className="grid h-11 w-11 place-items-center rounded-lg border border-amber-300/35 bg-amber-300 text-zinc-950 shadow-[0_0_36px_rgba(251,191,36,0.2)] lg:h-12 lg:w-12">
-                            <ArrowRight
-                                aria-hidden="true"
-                                className="h-6 w-6 rotate-90 lg:rotate-0"
-                            />
-                        </div>
-                    </Reveal>
                     <ComparisonCard
                         delay={210}
                         direction="right"
                         icon="good"
                         items={octComparison.with}
-                        title="Sesudah OCT"
+                        title="✅ SESUDAH PASANG OCT"
                     />
                 </div>
 
@@ -76,7 +64,7 @@ function ComparisonCard({
     direction = "up",
 }: {
     title: string;
-    items: string[];
+    items: { icon: string; title: string; description: string }[];
     icon: "good" | "bad";
     delay?: number;
     direction?: "up" | "down" | "left" | "right" | "scale";
@@ -85,42 +73,31 @@ function ComparisonCard({
 
     return (
         <Reveal
-            className={`rounded-lg border p-5 sm:p-6 ${
+            className={`rounded-lg border p-6 sm:p-8 ${
                 isGood
-                    ? "border-amber-300/30 bg-[linear-gradient(180deg,rgba(251,191,36,0.10),rgba(255,255,255,0.025))]"
-                    : "border-red-400/20 bg-[linear-gradient(180deg,rgba(248,113,113,0.08),rgba(255,255,255,0.02))]"
+                    ? "border-green-600/30 bg-[linear-gradient(180deg,rgba(22,163,74,0.05),rgba(255,255,255,0.01))]"
+                    : "border-red-600/30 bg-[linear-gradient(180deg,rgba(220,38,38,0.05),rgba(255,255,255,0.01))]"
             }`}
             delay={delay}
             direction={direction}
         >
-            <h3 className="flex items-center justify-between gap-4 text-xl font-black text-white sm:text-2xl">
+            <h3 className={`text-lg font-bold sm:text-xl uppercase ${
+                isGood ? "text-green-500" : "text-red-500"
+            }`}>
                 {title}
-                <span
-                    className={`h-2 w-2 rounded-full ${
-                        isGood ? "bg-emerald-300" : "bg-red-300"
-                    }`}
-                />
             </h3>
-            <ul className="mt-5 grid gap-3">
-                {items.map((item) => (
+            <ul className="mt-8 grid gap-6">
+                {items.map((item, index) => (
                     <li
-                        className="flex gap-3 text-sm leading-6 text-zinc-200 sm:text-base"
-                        key={item}
+                        className="flex gap-3 text-sm leading-relaxed text-zinc-300 sm:text-base"
+                        key={index}
                     >
-                        <span
-                            className={`mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full ${
-                                isGood
-                                    ? "bg-amber-300 text-zinc-950"
-                                    : "bg-red-500/15 text-red-300"
-                            }`}
-                        >
-                            {isGood ? (
-                                <Check aria-hidden="true" className="h-4 w-4" />
-                            ) : (
-                                <X aria-hidden="true" className="h-4 w-4" />
-                            )}
-                        </span>
-                        <span>{item}</span>
+                        <span className="shrink-0 text-base">{item.icon}</span>
+                        <div>
+                            <strong className="text-white font-semibold">{item.title}</strong>
+                            <span className="mx-1">-</span>
+                            <span>{item.description}</span>
+                        </div>
                     </li>
                 ))}
             </ul>

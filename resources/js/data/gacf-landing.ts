@@ -1,13 +1,47 @@
 export const octComparison = {
     without: [
-        "Google cuma lihat klik, form, atau tombol WhatsApp",
-        "Closing chat/manual berhenti di luar dashboard",
-        "Campaign makin pintar cari pengklik, bukan pembeli",
+        {
+            icon: "📊",
+            title: "Tracking Data Tombol Tidak Akurat",
+            description: "Data conversion hanya dari form fill, tidak tercatat closing asli dari WhatsApp atau chat. Google hanya lihat klik, bukan penjualan nyata."
+        },
+        {
+            icon: "🎯",
+            title: "Targeting Random Banyak Leads Sampah",
+            description: "Algoritma Google tidak tahu siapa pembeli asli. Campaign targeting random ke semua orang, hasilnya banyak leads tidak qualified atau tidak closing."
+        },
+        {
+            icon: "💸",
+            title: "Hasil Iklan: Banyak Klik Sedikit Closing BONCOS",
+            description: "Klik tinggi tapi closing minim, budget terbang percuma. Performa terlihat bagus di dashboard tapi sebenarnya tidak profitable."
+        },
+        {
+            icon: "🐌",
+            title: "Learning Google: Lambat & Tidak Efisien",
+            description: "Sistem belajar dari data salah, optimasi jadi lambat dan tidak efektif. Campaign stuck di performance biasa saja, susah untuk naik."
+        }
     ],
     with: [
-        "Data closing WhatsApp/manual dikirim balik ke Google",
-        "Google mulai belajar dari pembeli nyata",
-        "Optimasi dan scale jadi lebih masuk akal",
+        {
+            icon: "📊",
+            title: "Tracking Data: Penjualan/Closing (Data Valid)",
+            description: "Setiap closing dari WhatsApp, chat, atau telepon tercatat otomatis ke Google Ads system. Data pembeli asli, bukan sekadar klik."
+        },
+        {
+            icon: "🎯",
+            title: "Targeting: Spesifik ke Pembeli Nyata (Tepat Sasaran)",
+            description: "Algoritma Google jadi tahu pembeli asli dan optimize targeting ke profil yang sama. Targeting jadi presisi dan efektif ke audiens qualified."
+        },
+        {
+            icon: "💸",
+            title: "Hasil Iklan: Closing Naik Signifikan (PROFIT)",
+            description: "Closing rate meningkat drastis dengan targeting tepat. Budget efisien, tidak terbuang untuk leads sampah. Lebih sedikit klik, lebih banyak profit."
+        },
+        {
+            icon: "⚡",
+            title: "Learning Google: Cepat & Akurat (Otomatisasi)",
+            description: "Sistem belajar dari data benar, keputusan optimasi cepat. Machine learning powerful dan campaign terus meningkat secara otomatis."
+        }
     ],
 };
 
