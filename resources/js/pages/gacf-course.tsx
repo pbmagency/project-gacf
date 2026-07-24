@@ -161,8 +161,8 @@ export default function GacfCourse() {
                     <CurriculumSection onCtaClick={handleCtaClick} />
                     <BonusSection />
                     <ProofVideoSection/>
-                    <StatsSection />
                     <TestimonialsSection onCtaClick={handleCtaClick} />
+                    <StatsSection />
                     <MentorSection />
                     <PricingSection
                         onOrderFormStart={trackOrderFormStart}
