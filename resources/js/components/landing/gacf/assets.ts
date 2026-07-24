@@ -57,3 +57,12 @@ export const mockupGacfImage = new URL(
     "../../../../../storage/app/public/Mockup-GACF.webp",
     import.meta.url,
 ).href;
+export const testiVideoBuYulie = new URL(
+    "../../../../../storage/app/public/testi-video/Testimoni Bu Yulie Terkait E-course GACF Vol 2.webm",
+    import.meta.url,
+).href;
+
+export const testiVideoPakAgus = new URL(
+    "../../../../../storage/app/public/testi-video/Testimoni Pak Agus Terkait E-course GACF Vol 2.webm",
+    import.meta.url,
+).href;
