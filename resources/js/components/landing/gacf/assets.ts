@@ -52,3 +52,8 @@ export const pakSandiTestimonialImage = new URL(
     "../../../../../storage/app/public/Testimoni/Pak-Sandi.webp",
     import.meta.url,
 ).href;
+
+export const mockupGacfImage = new URL(
+    "../../../../../storage/app/public/Mockup-GACF.webp",
+    import.meta.url,
+).href;
