@@ -1,7 +1,7 @@
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
-// Import the MP4 videos directly! Vite will automatically process these.
+
 import videoBuYulie from "../../../../../storage/app/public/testi-video/TestimoniVol.mp4";
 import videoPakAgus from "../../../../../storage/app/public/testi-video/TestimoniVol1.mp4";
 
