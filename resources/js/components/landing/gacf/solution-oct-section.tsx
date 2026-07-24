@@ -73,10 +73,10 @@ function ComparisonCard({
 
     return (
         <Reveal
-            className={`rounded-lg border p-6 sm:p-8 ${
+            className={`rounded-xl border p-6 sm:p-8 ${
                 isGood
-                    ? "border-green-600/30 bg-[linear-gradient(180deg,rgba(22,163,74,0.05),rgba(255,255,255,0.01))]"
-                    : "border-red-600/30 bg-[linear-gradient(180deg,rgba(220,38,38,0.05),rgba(255,255,255,0.01))]"
+                    ? "border-green-500/20 bg-[#061208]"
+                    : "border-red-500/20 bg-[#120606]"
             }`}
             delay={delay}
             direction={direction}
@@ -89,15 +89,13 @@ function ComparisonCard({
             <ul className="mt-8 grid gap-6">
                 {items.map((item, index) => (
                     <li
-                        className="flex gap-3 text-sm leading-relaxed text-zinc-300 sm:text-base"
+                        className="text-sm leading-relaxed text-zinc-400 sm:text-base"
                         key={index}
                     >
-                        <span className="shrink-0 text-base">{item.icon}</span>
-                        <div>
-                            <strong className="text-white font-semibold">{item.title}</strong>
-                            <span className="mx-1">-</span>
-                            <span>{item.description}</span>
-                        </div>
+                        <span className="mr-1.5">{item.icon}</span>
+                        <strong className="text-zinc-100 font-semibold">{item.title}</strong>
+                        <span className="mx-1.5 text-zinc-500">-</span>
+                        <span>{item.description}</span>
                     </li>
                 ))}
             </ul>
