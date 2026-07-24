@@ -20,6 +20,7 @@ import { useScrollTracking } from "@/hooks/use-scroll-tracking";
 import { useSectionTracking } from "@/hooks/use-section-tracking";
 import { IntroSection } from "@/components/landing/gacf/intro-section";
 import { VideoTestimonialsSection } from "@/components/landing/gacf/video-testimonials-section";
+import { ProofVideoSection } from "@/components/landing/gacf/proof-video-section";
 if (typeof document !== "undefined") {
     document.documentElement.classList.add("dark");
 }
@@ -157,8 +158,9 @@ export default function GacfCourse() {
                     <SolutionOctSection onCtaClick={handleCtaClick} />
                     <IntroSection/>
                     <VideoTestimonialsSection />
-                    <BonusSection />
                     <CurriculumSection onCtaClick={handleCtaClick} />
+                    <BonusSection />
+                    <ProofVideoSection/>
                     <StatsSection />
                     <TestimonialsSection onCtaClick={handleCtaClick} />
                     <MentorSection />
