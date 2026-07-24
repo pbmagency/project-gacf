@@ -1,4 +1,3 @@
-import { testiVideoBuYulie, testiVideoPakAgus } from "./assets";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
@@ -17,7 +16,7 @@ export function VideoTestimonialsSection() {
                     <Reveal delay={100} className="w-full max-w-3xl">
                         <div className="overflow-hidden rounded-xl bg-zinc-900 shadow-2xl ring-1 ring-white/10">
                             <video
-                                src={testiVideoBuYulie}
+                                src="/storage/app/public/testi-video/TestimoniVol.webm"
                                 controls
                                 preload="metadata"
                                 className="w-full aspect-video object-cover"
@@ -28,7 +27,7 @@ export function VideoTestimonialsSection() {
                     <Reveal delay={200} className="w-full max-w-3xl">
                         <div className="overflow-hidden rounded-xl bg-zinc-900 shadow-2xl ring-1 ring-white/10">
                             <video
-                                src={testiVideoPakAgus}
+                                src="/storage/app/public/testi-video/TestimoniVol1.webm"
                                 controls
                                 preload="metadata"
                                 className="w-full aspect-video object-cover"
