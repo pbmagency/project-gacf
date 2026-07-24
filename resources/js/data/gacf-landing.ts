@@ -135,16 +135,6 @@ export const testimonialItems: TestimonialItem[] = [
     //         "https://vz-e2df73f9-1fd.b-cdn.net/dde65514-a908-403d-bd2f-31790bd4bb0e/thumbnail.jpg",
     //     isPublished: true,
     // },
-    {
-        title: "Testimoni Member GACF",
-        type: "video",
-        description: "Cerita member setelah pasang Offline Conversion Tracking",
-        embedSrc:
-            "https://player.mediadelivery.net/embed/701542/6856a01a-2b28-4b17-8930-6df98e5a3c05?autoplay=false&loop=false&muted=false&preload=false&responsive=true",
-        posterSrc:
-            "https://vz-e2df73f9-1fd.b-cdn.net/6856a01a-2b28-4b17-8930-6df98e5a3c05/thumbnail.jpg",
-        isPublished: true,
-    },
 ];
 
 export const imageTestimonials = [

@@ -36,6 +36,7 @@ const fourColumnDirections = ["left", "up", "up", "right"] as const;
 
 export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
     const [selected, setSelected] = useState<TestimonialItem | null>(null);
+    const [playingTitle, setPlayingTitle] = useState<string | null>(null);
     const [isProofOpen, setIsProofOpen] = useState(false);
     const publishedTestimonials = testimonialItems.filter(
         (item) => item.isPublished,
@@ -72,79 +73,101 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                                     }
                                     key={item.title}
                                 >
-                                    <button
+                                    <div
                                         className={`group flex h-full min-h-[33rem] w-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#111114] text-left shadow-[0_24px_70px_rgba(0,0,0,0.24)] transition duration-200 sm:min-h-[35rem] lg:min-h-[34rem] ${
-                                            hasPlayableMedia
-                                                ? "cursor-pointer hover:-translate-y-1 hover:border-amber-300/45 hover:bg-[#16161a]"
-                                                : "cursor-default"
+                                            hasPlayableMedia && playingTitle !== item.title
+                                                ? "hover:-translate-y-1 hover:border-amber-300/45 hover:bg-[#16161a]"
+                                                : ""
                                         }`}
-                                        disabled={!hasPlayableMedia}
-                                        onClick={() => setSelected(item)}
-                                        type="button"
                                     >
-                                        <div className="relative isolate overflow-hidden bg-[#0b0b0f]">
-                                            <div className="gacf-grid absolute inset-0 opacity-30" />
-                                            <div className="relative grid aspect-square place-items-center">
-                                                {item.posterSrc ? (
-                                                    <>
-                                                        <img
-                                                            alt={`${item.title} preview`}
-                                                            className="absolute inset-0 h-full w-full object-cover"
-                                                            decoding="async"
-                                                            loading="lazy"
-                                                            src={item.posterSrc}
-                                                            style={{
-                                                                objectPosition:
-                                                                    item.posterPosition ??
-                                                                    "center top",
-                                                            }}
-                                                        />
-                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-black/5" />
-                                                        <div className="absolute inset-x-0 -bottom-px h-12 bg-gradient-to-t from-[#111114] via-[#111114]/75 to-transparent" />
-                                                        <div className="relative grid justify-items-center">
-                                                            <div className="grid h-16 w-16 place-items-center rounded-full bg-amber-300 text-[#0b0b0f] shadow-[0_18px_48px_rgba(250,204,21,0.28)] transition duration-200 group-hover:scale-105">
-                                                                <Play
-                                                                    aria-hidden="true"
-                                                                    className="ml-1 h-8 w-8 fill-current"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                ) : item.mediaSrc &&
-                                                  item.type === "image" ? (
-                                                    <img
-                                                        alt={item.title}
-                                                        className="h-full w-full object-cover"
-                                                        decoding="async"
-                                                        loading="lazy"
-                                                        src={item.mediaSrc}
+                                        {playingTitle === item.title ? (
+                                            <div className="relative isolate overflow-hidden bg-black aspect-square flex items-center justify-center w-full">
+                                                {item.embedSrc ? (
+                                                    <iframe
+                                                        src={item.embedSrc.includes('?') ? `${item.embedSrc}&autoplay=true` : `${item.embedSrc}?autoplay=true`}
+                                                        allow="autoplay; fullscreen"
+                                                        className="w-full h-full"
+                                                        allowFullScreen
                                                     />
                                                 ) : item.mediaSrc ? (
                                                     <video
-                                                        className="h-full w-full object-cover"
-                                                        muted
-                                                        playsInline
-                                                        preload="metadata"
                                                         src={item.mediaSrc}
+                                                        autoPlay
+                                                        controls
+                                                        className="w-full h-full object-cover"
                                                     />
-                                                ) : (
-                                                    <div className="relative grid h-full w-full place-items-center overflow-hidden px-4 text-center">
-                                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(250,204,21,0.18),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_45%)]" />
-                                                        <div className="relative grid gap-3 justify-items-center">
-                                                            <div className="grid h-12 w-12 place-items-center rounded-full border border-amber-300/50 bg-black/55 shadow-[0_18px_40px_rgba(0,0,0,0.45)] backdrop-blur-sm transition duration-200 group-hover:scale-105 group-hover:border-amber-300">
-                                                                <PlayCircle
-                                                                    aria-hidden="true"
-                                                                    className="h-7 w-7 fill-amber-300/20 text-amber-300"
-                                                                />
-                                                            </div>
-                                                            <span className="text-xs font-black uppercase tracking-[0.16em] text-amber-300">
-                                                                Putar video
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                )}
+                                                ) : null}
                                             </div>
-                                        </div>
+                                        ) : (
+                                            <button
+                                                className={`relative isolate overflow-hidden bg-[#0b0b0f] w-full ${hasPlayableMedia ? 'cursor-pointer' : 'cursor-default'}`}
+                                                disabled={!hasPlayableMedia}
+                                                onClick={() => setPlayingTitle(item.title)}
+                                                type="button"
+                                            >
+                                                <div className="gacf-grid absolute inset-0 opacity-30" />
+                                                <div className="relative grid aspect-square place-items-center w-full">
+                                                    {item.posterSrc ? (
+                                                        <>
+                                                            <img
+                                                                alt={`${item.title} preview`}
+                                                                className="absolute inset-0 h-full w-full object-cover"
+                                                                decoding="async"
+                                                                loading="lazy"
+                                                                src={item.posterSrc}
+                                                                style={{
+                                                                    objectPosition:
+                                                                        item.posterPosition ??
+                                                                        "center top",
+                                                                }}
+                                                            />
+                                                            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-black/5" />
+                                                            <div className="absolute inset-x-0 -bottom-px h-12 bg-gradient-to-t from-[#111114] via-[#111114]/75 to-transparent" />
+                                                            <div className="relative grid justify-items-center">
+                                                                <div className="grid h-16 w-16 place-items-center rounded-full bg-amber-300 text-[#0b0b0f] shadow-[0_18px_48px_rgba(250,204,21,0.28)] transition duration-200 group-hover:scale-105">
+                                                                    <Play
+                                                                        aria-hidden="true"
+                                                                        className="ml-1 h-8 w-8 fill-current"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </>
+                                                    ) : item.mediaSrc &&
+                                                      item.type === "image" ? (
+                                                        <img
+                                                            alt={item.title}
+                                                            className="h-full w-full object-cover"
+                                                            decoding="async"
+                                                            loading="lazy"
+                                                            src={item.mediaSrc}
+                                                        />
+                                                    ) : item.mediaSrc ? (
+                                                        <video
+                                                            className="h-full w-full object-cover"
+                                                            muted
+                                                            playsInline
+                                                            preload="metadata"
+                                                            src={item.mediaSrc}
+                                                        />
+                                                    ) : (
+                                                        <div className="relative grid h-full w-full place-items-center overflow-hidden px-4 text-center">
+                                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(250,204,21,0.18),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_45%)]" />
+                                                            <div className="relative grid gap-3 justify-items-center">
+                                                                <div className="grid h-12 w-12 place-items-center rounded-full border border-amber-300/50 bg-black/55 shadow-[0_18px_40px_rgba(0,0,0,0.45)] backdrop-blur-sm transition duration-200 group-hover:scale-105 group-hover:border-amber-300">
+                                                                    <PlayCircle
+                                                                        aria-hidden="true"
+                                                                        className="h-7 w-7 fill-amber-300/20 text-amber-300"
+                                                                    />
+                                                                </div>
+                                                                <span className="text-xs font-black uppercase tracking-[0.16em] text-amber-300">
+                                                                    Putar video
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </button>
+                                        )}
                                         <div className="flex flex-1 flex-col p-5 sm:p-6">
                                             <h3 className="text-lg font-black leading-tight text-white">
                                                 {item.title}
@@ -153,7 +176,7 @@ export function TestimonialsSection({ onCtaClick }: TestimonialsSectionProps) {
                                                 {item.description}
                                             </p>
                                         </div>
-                                    </button>
+                                    </div>
                                 </Reveal>
                             );
                         })}
