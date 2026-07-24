@@ -183,35 +183,35 @@ export const mentorBullets = [
 export const curriculumModules = [
     {
         title: "Fundamental Anti-Boncos",
-        copy: "Benerin pondasi biar dari awal nggak asal bakar budget.",
+        copy: "Setup pondasi dan mindset yang bener dari nol. Lo bakal diajarin gimana algoritma Google Ads bekerja biar nggak salah langkah dari hari pertama beriklan.",
     },
     {
         title: "Setup Intel Website (GTM & GA4)",
-        copy: "Pasang GTM dan GA4 supaya gerak pengunjung kebaca rapi.",
+        copy: "Jangan nebak-nebak! Di sini lo belajar pasang Google Tag Manager & GA4 biar semua pergerakan pengunjung di website atau landing page lo terekam akurat.",
     },
     {
         title: "Racik Campaign Search Yang Nendang",
-        copy: "Riset keyword dan struktur campaign buat orang yang lebih siap beli.",
+        copy: "Cara riset keyword dan bikin struktur iklan Search yang nargetin orang-orang 'Siap Beli', bukan orang yang cuma mau cari informasi gratisan.",
     },
     {
         title: "Bedah & Optimasi Iklan",
-        copy: "Baca data, cut yang boncos, dan bikin campaign lebih efisien.",
+        copy: "Iklan udah jalan, terus ngapain? Di modul ini dibahas tuntas cara baca data, nge-cut keyword yang bikin boncos, dan nekan biaya per klik (CPC) biar makin efisien.",
     },
     {
         title: "Remarketing Anti-Ghosting",
-        copy: "Kejar lagi orang yang sudah klik atau chat tapi belum beli.",
+        copy: "Udah klik tombol WA tapi ngilang? Kita kejar mereka! Belajar strategi nampilin iklan lagi khusus ke orang-orang yang belum jadi beli biar akhirnya transfer.",
     },
     {
         title: "Scale-Up Pakai PMax & Demand Gen",
-        copy: "Scale pakai PMax dan Demand Gen tanpa asal naikin budget.",
+        copy: "Kalau campaign udah cuan, saatnya scale-up! Lo bakal belajar framework pakai Performance Max & Demand Gen buat ngelipatgandain leads pakai bantuan AI Google.",
     },
     {
         title: "Upload Offline Conversion (OCT)",
-        copy: "Upload data real buyer supaya Google belajar dari pembeli asli.",
+        copy: "Ini rahasia terbesarnya. Panduan lengkap upload data real buyer lo ke sistem, buat 'maksa' Google nyariin orang-orang yang profilnya mirip sama pembeli lo. Bye-bye klik sampah!",
     },
     {
         title: "Analisa Keyword Winning Google",
-        copy: "Cari keyword yang punya peluang profit dari data yang lebih nyata.",
+        copy: "Temukan keyword paling profitable yang kompetitor garap. Strategi keyword research dengan data real.",
     },
 ];
 
